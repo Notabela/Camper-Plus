@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block headcontent %}
+<link rel='stylesheet' href="{{ url_for('static', filename='css/spectrum.css') }}" />
+{% endblock headcontent %}
+
+{% block navbar_right %}
+	{% include "schedule_link.html" %}
+	{% include "campers_link_active.html" %}
+{% endblock navbar_right %}
+
+{% block bodycontent %}
+<a class="btn modal-trigger" href="#groupModal">Test</a>
+
+<div id="groupModal" class="modal">
+  <form>
+  <div class="modal-content">
+    <h4 style="display: inline;">New Group</h4>
+    <a href="#!" style="display: inline; float: right;" class="modal-action modal-close btn">Create</a>
+    <div class="row" style="margin-top: 1em">
+      <div class="input-field col s4">
+        <input placeholder="Group1" id="groupName" type="text">
+        <label for="groupName">Group Name</label>
+      </div>
+      <div class="input-field col s3">
+        <input type='text' id="custom" />
+        <label for="custom">Group Color</label>
+      </div>
+      <div class="input-field col s5">
+        <input placeholder="Search" id="search" type="text">
+        <label for="search">Search Campers</label>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock bodycontent %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/campers.js') }}" ></script>
+  <script src="{{ url_for('static', filename='js/spectrum.js') }}" ></script>
+{% endblock scripts %}
