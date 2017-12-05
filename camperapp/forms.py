@@ -47,7 +47,7 @@ class CreateChildForm(FlaskForm):
     zipcode = IntegerField('Zip Code')
     parent_first_name = StringField("Parent's first name")
     parent_last_name = StringField("Parent's last name")
-    group = SelectField(label='Group', choices=_group_choices)
+    #group = SelectField(label='Group', choices=_group_choices)
     submit = SubmitField('SAVE')
 
 
