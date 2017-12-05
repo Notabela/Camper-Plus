@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, SelectField, TextAreaField
-from camperapp.models import CampGroup
+from .models import CampGroup
 from wtforms.validators import DataRequired, Email, Length
 
 
