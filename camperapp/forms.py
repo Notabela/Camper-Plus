@@ -32,8 +32,8 @@ class CreateParentForm(FlaskForm):
 
 
 class CreateChildForm(FlaskForm):
-    _groups = CampGroup.query.order_by(CampGroup.name).all()
-    _group_choices = [(group.id, group.name) for group in _groups]
+    #_groups = CampGroup.query.order_by(CampGroup.name).all()
+    #_group_choices = [(group.id, group.name) for group in _groups]
 
     first_name = StringField('First name')
     last_name = StringField('Last name')
