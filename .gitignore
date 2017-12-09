@@ -104,3 +104,6 @@ ENV/
 .DS_Store
 .idea/*
 dist/*
+
+#Nametag Testing
+test.png
