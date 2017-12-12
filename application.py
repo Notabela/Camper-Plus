@@ -1,4 +1,4 @@
-"Temporary file to quickly run flask App in Debug Mode"
+"""Run flask App Locally in Debug Mode"""
 
 from camperapp import app
 

@@ -151,8 +151,8 @@ class TestUrls(unittest.TestCase):
         json_data = {
             'id': CampEvent.query.filter_by(title="basketball").first().id,
             'title': new_title,
-            'start':  CampEvent.convert_py_datetime_to_ISO_datetime(start),
-            'end': CampEvent.convert_py_datetime_to_ISO_datetime(end),
+            'start':  CampEvent.convert_py_datetime_to_iso_datetime(start),
+            'end': CampEvent.convert_py_datetime_to_iso_datetime(end),
             'group_id': CampEvent.query.filter_by(title="basketball").first().group_id
         }
 
@@ -186,8 +186,8 @@ class TestUrls(unittest.TestCase):
         json_data = {
             'id': CampEvent.query.filter_by(title="basketball").first().id,
             'title': 'basketball',
-            'start':  CampEvent.convert_py_datetime_to_ISO_datetime(start),
-            'end': CampEvent.convert_py_datetime_to_ISO_datetime(end),
+            'start':  CampEvent.convert_py_datetime_to_iso_datetime(start),
+            'end': CampEvent.convert_py_datetime_to_iso_datetime(end),
             'group_id': CampEvent.query.filter_by(title="basketball").first().group_id
         }
 
@@ -227,8 +227,8 @@ class TestUrls(unittest.TestCase):
         json_data = {
             'id': CampEvent.query.filter_by(title="basketball").first().id,
             'title': new_title,
-            'start':  CampEvent.convert_py_datetime_to_ISO_datetime(start),
-            'end': CampEvent.convert_py_datetime_to_ISO_datetime(end),
+            'start':  CampEvent.convert_py_datetime_to_iso_datetime(start),
+            'end': CampEvent.convert_py_datetime_to_iso_datetime(end),
             'group_id': CampEvent.query.filter_by(title="basketball").first().group_id
         }
 
@@ -251,8 +251,8 @@ class TestUrls(unittest.TestCase):
         json_data = {
             'id': CampEvent.query.filter_by(title="basketball").first().id,
             'title': 'basketball',
-            'start':  CampEvent.convert_py_datetime_to_ISO_datetime(start),
-            'end': CampEvent.convert_py_datetime_to_ISO_datetime(end),
+            'start':  CampEvent.convert_py_datetime_to_iso_datetime(start),
+            'end': CampEvent.convert_py_datetime_to_iso_datetime(end),
             'group_id': CampEvent.query.filter_by(title="basketball").first().group_id
         }
 
@@ -268,5 +268,5 @@ class TestUrls(unittest.TestCase):
         db.session.add(event)
         db.session.commit()
 
-        response = self.app.get('/getCampEvents?start=2013-12-01&end=2014-01-12')
+        response = self.app.get('/getCampEvents?start=2014-12-01&end=2020-01-12')
         self.assertTrue(response.data is not None)

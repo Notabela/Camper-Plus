@@ -58,7 +58,7 @@ class TestApp(unittest.TestCase):
     def test_CampEvent_convert_ISO_py_datetime(self, mock_datetime):
         ISO_datetime = "2017-10-10T12:25:27"
         self.assertTrue(camperapp.models.datetime is mock_datetime)
-        CampEvent.convert_ISO_datetime_to_py_datetime(ISO_datetime)
+        CampEvent.convert_iso_datetime_to_py_datetime(ISO_datetime)
         mock_datetime.strptime.assert_called_once_with(ISO_datetime, '%Y-%m-%dT%H:%M:%S')
 
     @patch.object(CampEvent, 'convert_ISO_datetime_to_py_datetime')
