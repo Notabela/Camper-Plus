@@ -21,7 +21,7 @@ class TestApp(unittest.TestCase):
         db.session.remove()
         db.drop_all()
 
-    def test_schedule_gets_calls_render_template(self):
+    def test_schedule_calls_render_template(self):
         """Test that the Schedule endpoint calls render_template"""
         with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
                 mock_funcs:
@@ -37,7 +37,7 @@ class TestApp(unittest.TestCase):
             render_template = mock_funcs['render_template']
             call_args = render_template.call_args
             template_name = call_args[0][0]
-            self.assertEqual(template_name, "schedule.html")
+            self.assertEqual(template_name, "admin_schedule.html")
 
     def test_campers_gets_calls_render_template(self):
         """Test that the Schedule endpoint calls the schedule Page"""
@@ -75,7 +75,7 @@ class TestApp(unittest.TestCase):
         CampEvent.convert_iso_datetime_to_py_datetime(ISO_datetime)
         mock_datetime.strptime.assert_called_once_with(ISO_datetime, '%Y-%m-%dT%H:%M:%S')
 
-    @patch.object(CampEvent, 'convert_ISO_datetime_to_py_datetime')
+    @patch.object(CampEvent, 'convert_iso_datetime_to_py_datetime')
     def test_CampEvent_convert_calevent_to_campevent_args(self, mock_parser):
         full_cal_event = {
             'title': 'basketball',
@@ -103,13 +103,15 @@ class TestApp(unittest.TestCase):
         self.assertEqual(campevent.group_id, int(full_cal_event['group_id']))
 
     def test_camper_save(self):
-        name = 'daniel'
-        age = 12
-        camper = Camper(name, age)
+        first_name = 'daniel'
+        last_name = 'obeng'
+        camper = Camper()
+        camper.first_name = first_name
+        camper.last_name = last_name
         db.session.add(camper)
         db.session.commit()
 
-        queried_camper = Camper.query.filter_by(name=name).one()
+        queried_camper = Camper.query.filter_by(first_name=first_name).one()
         self.assertTrue(queried_camper is not None)
 
     def test_campevent_save(self):
@@ -123,7 +125,7 @@ class TestApp(unittest.TestCase):
         queried_camp_event = CampEvent.query.filter_by(title=title).one()
         self.assertTrue(queried_camp_event is not None)
 
-    def test_campevent_add_color(self):
+    def test_campevent_add_no_color(self):
         group_name = 'falcons'
         group_color = 'yellow'
         event_title = "basketball"
@@ -139,6 +141,19 @@ class TestApp(unittest.TestCase):
         # no group yet, should fail
         camp_event.add_color_attr()
         self.assertTrue(camp_event.color is None)
+
+    def test_campevent_add_color(self):
+        group_name = 'falcons'
+        group_color = 'yellow'
+        event_title = "basketball"
+        event_start = datetime.now()
+        event_end = datetime.now()
+
+        camp_event = CampEvent(event_title, event_start, event_end)
+        camp_group = CampGroup(group_name, group_color)
+        db.session.add(camp_event)
+        db.session.add(camp_group)
+        db.session.commit()
 
         camp_group.events.append(camp_event)
         db.session.commit()
@@ -160,17 +175,21 @@ class TestApp(unittest.TestCase):
     def test_campgroup_relationship(self):
         group_name = 'falcons'
         group_color = 'yellow'
-        camper_name = 'daniel'
+        camper_first_name = 'daniel'
+        camper_last_name = 'obeng'
         camper_age = 12
 
         camp_group = CampGroup(group_name, group_color)
-        camper = Camper(camper_name, camper_age)
+        camper = Camper()
+        camper.first_name = camper_first_name
+        camper.last_name = camper_last_name
+        camper.age = camper_age
         camp_group.campers.append(camper)
         db.session.add(camp_group)
         db.session.add(camper)
         db.session.commit()
 
-        queried_camp_group = Camper.query.filter_by(name=camper_name).one()\
+        queried_camp_group = Camper.query.filter_by(first_name=camper_first_name).one()\
             .campgroup
         self.assertEqual(queried_camp_group, camp_group)
 
