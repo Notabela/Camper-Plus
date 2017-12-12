@@ -2,7 +2,7 @@
 
 import unittest
 import camperapp
-from camperapp.models import db, CampEvent, CampGroup, Camper , Admin
+from camperapp.models import db, CampEvent, CampGroup, Camper, Admin
 from camperapp.forms import LoginForm
 import mock
 from unittest.mock import patch, DEFAULT
@@ -58,22 +58,22 @@ class TestApp(unittest.TestCase):
             self.assertEqual(template_name, "campers.html")
 
     def test_login_gets_login_template(self):
-         """Test that the login route exists"""
-        with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
-                 mock_functions:
-             camperapp.routes.login()
-             render_template = mock_functions["render_template"]
-             self.assertTrue(render_template.called)
-             call_args = render_template.call_args
-             file_name = call_args[0][0]
-             self.assertEqual(file_name, "login.html")
+        """"Test that the login route exists"""
+        with patch.multiple('camperapp.routes', render_template=DEFAULT) \
+                as mock_functions:
+            camperapp.routes.login()
+            render_template = mock_functions["render_template"]
+            self.assertTrue(render_template.called)
+            call_args = render_template.call_args
+            file_name = call_args[0][0]
+            self.assertEqual(file_name, "login.html")
 
     @mock.patch('camperapp.models.datetime')
     def test_CampEvent_convert_ISO_py_datetime(self, mock_datetime):
-        ISO_datetime = "2017-10-10T12:25:27"
+        iso_datetime = "2017-10-10T12:25:27"
         self.assertTrue(camperapp.models.datetime is mock_datetime)
-        CampEvent.convert_iso_datetime_to_py_datetime(ISO_datetime)
-        mock_datetime.strptime.assert_called_once_with(ISO_datetime, '%Y-%m-%dT%H:%M:%S')
+        CampEvent.convert_iso_datetime_to_py_datetime(iso_datetime)
+        mock_datetime.strptime.assert_called_once_with(iso_datetime, '%Y-%m-%dT%H:%M:%S')
 
     @patch.object(CampEvent, 'convert_iso_datetime_to_py_datetime')
     def test_CampEvent_convert_calevent_to_campevent_args(self, mock_parser):
@@ -87,7 +87,6 @@ class TestApp(unittest.TestCase):
         CampEvent.convert_calevent_to_campevent(full_cal_event)
         mock_parser.assert_any_call(full_cal_event['start'])
         mock_parser.assert_any_call(full_cal_event['end'])
-
 
     def test_CampEvent_convert_calevent_to_campevent(self):
         full_cal_event = {
@@ -103,7 +102,6 @@ class TestApp(unittest.TestCase):
         self.assertTrue(campevent.end is not None)
         self.assertEqual(campevent.group_id, int(full_cal_event['group_id']))
 
-
     def test_camper_save(self):
         first_name = 'daniel'
         last_name = 'obeng'
@@ -115,13 +113,14 @@ class TestApp(unittest.TestCase):
 
         queried_camper = Camper.query.filter_by(first_name=first_name).one()
         self.assertTrue(queried_camper is not None)
-    def test_admin_signup(self):
-        id='1'
-        name='jay'
-        email='jay@yahoo.com'
-        pwdhash='zzzzxxxx'
 
-        admin = Admin(id,name,email,pwdhash)
+    def test_admin_signup(self):
+        id = '1'
+        name = 'jay'
+        email = 'jay@yahoo.com'
+        pwdhash = 'zzzzxxxx'
+
+        admin = Admin(id, name, email, pwdhash)
         db.session.add(admin)
         db.session.commit()
 
