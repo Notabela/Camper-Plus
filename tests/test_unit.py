@@ -2,7 +2,7 @@
 
 import unittest
 import camperapp
-from camperapp.models import db, CampEvent, CampGroup, Camper
+from camperapp.models import db, CampEvent, CampGroup, Camper , Admin
 from camperapp.forms import LoginForm
 import mock
 from unittest.mock import patch, DEFAULT
@@ -21,16 +21,31 @@ class TestApp(unittest.TestCase):
         db.session.remove()
         db.drop_all()
 
+    def test_schedule_gets_calls_render_template(self):
+        """Test that the Schedule endpoint calls render_template"""
+        with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
+                mock_funcs:
+            camperapp.routes.schedule()
+            render_template = mock_funcs['render_template']
+            self.assertTrue(render_template.called)
+
     def test_schedule_gets_schedule_template(self):
         """Test that the Schedule endpoint calls the schedule Page"""
         with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
                 mock_funcs:
             camperapp.routes.schedule()
             render_template = mock_funcs['render_template']
-            self.assertTrue(render_template.called)
             call_args = render_template.call_args
             template_name = call_args[0][0]
             self.assertEqual(template_name, "schedule.html")
+
+    def test_campers_gets_calls_render_template(self):
+        """Test that the Schedule endpoint calls the schedule Page"""
+        with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
+                mock_funcs:
+            camperapp.routes.campers()
+            render_template = mock_funcs['render_template']
+            self.assertTrue(render_template.called)
 
     def test_campers_gets_campers_template(self):
         """Test that the Schedule endpoint calls the schedule Page"""
@@ -38,21 +53,20 @@ class TestApp(unittest.TestCase):
                 mock_funcs:
             camperapp.routes.campers()
             render_template = mock_funcs['render_template']
-            self.assertTrue(render_template.called)
             call_args = render_template.call_args
             template_name = call_args[0][0]
             self.assertEqual(template_name, "campers.html")
 
-    # def test_login_gets_login_template(self):
-    #     """Test that the login route exists"""
-    #     with patch.multiple("camperapp.routes", render_template=DEFAULT) as \
-    #             mock_functions:
-    #         camperapp.routes.login()
-    #         render_template = mock_functions["render_template"]
-    #         self.assertTrue(render_template.called)
-    #         call_args = render_template.call_args
-    #         file_name = call_args[0][0]
-    #         self.assertEqual(file_name, "login.html")
+    def test_login_gets_login_template(self):
+         """Test that the login route exists"""
+        with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
+                 mock_functions:
+             camperapp.routes.login()
+             render_template = mock_functions["render_template"]
+             self.assertTrue(render_template.called)
+             call_args = render_template.call_args
+             file_name = call_args[0][0]
+             self.assertEqual(file_name, "login.html")
 
     @mock.patch('camperapp.models.datetime')
     def test_CampEvent_convert_ISO_py_datetime(self, mock_datetime):
@@ -74,6 +88,7 @@ class TestApp(unittest.TestCase):
         mock_parser.assert_any_call(full_cal_event['start'])
         mock_parser.assert_any_call(full_cal_event['end'])
 
+
     def test_CampEvent_convert_calevent_to_campevent(self):
         full_cal_event = {
             'title': 'basketball',
@@ -88,6 +103,7 @@ class TestApp(unittest.TestCase):
         self.assertTrue(campevent.end is not None)
         self.assertEqual(campevent.group_id, int(full_cal_event['group_id']))
 
+
     def test_camper_save(self):
         name = 'daniel'
         age = 12
@@ -97,6 +113,18 @@ class TestApp(unittest.TestCase):
 
         queried_camper = Camper.query.filter_by(name=name).one()
         self.assertTrue(queried_camper is not None)
+    def test_admin_signup(self):
+        id='1'
+        name='jay'
+        email='jay@yahoo.com'
+        pwdhash='zzzzxxxx'
+
+        admin = Admin(id,name,email,pwdhash)
+        db.session.add(admin)
+        db.session.commit()
+
+        queried_admin = Admin.query.filter_by(name=name).one()
+        self.assertTrue(queried_admin is not None)
 
     def test_campevent_save(self):
         title = "basketball"

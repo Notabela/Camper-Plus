@@ -1,11 +1,13 @@
 """Integration Tests for Camper+ App"""
 
 import unittest
+from unittest import TestCase
 import camperapp
 from camperapp.models import db, CampEvent, CampGroup
 import json
 from datetime import datetime
 
+"""<<<<<<< HEAD
 class LoginTests(TestCase):
     def setUp(self):
         self.client = Client()
@@ -13,7 +15,7 @@ class LoginTests(TestCase):
                                              password='testpass',
                                              last_name="test")
 
-    """def test_auth_view_redirect(self):
+    def test_auth_view_redirect(self):
         response = self.client.post('/auth/',
                                     {'username': 'sam123', 'password': 'abc123'})
         self.assertEqual(response.status_code, 302)
@@ -89,6 +91,8 @@ class LogoutTests(TestCase):
         message = list(response.context['messages'])
         self.assertEqual(str(message[0]), 'You have successfully logged out.')
         self.assertNotIn('_auth_user_id', self.client.session)"""
+=======
+>>>>>>> refs/remotes/Notabela/master"""
 
 class TestUrls(unittest.TestCase):
     def setUp(self):

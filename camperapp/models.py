@@ -1,8 +1,8 @@
 """Models in Camper APP"""
-from marshmallow import Schema, fields
 from datetime import datetime
+from marshmallow import Schema, fields
 from camperapp import db
-from werkzeug import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class CampEvent(db.Model):
@@ -136,7 +136,8 @@ class Camper(db.Model):
         today = date.today()
         try:
             birthday = born.replace(year=today.year)
-        except ValueError:  # raised when birth date is February 29 and the current year is not a leap year
+        except ValueError:
+            # raised when birth date is February 29 and the current year is not a leap year
             birthday = born.replace(year=today.year, day=born.day - 1)
         if birthday > today:
             return today.year - born.year - 1
@@ -170,6 +171,7 @@ class CampGroup(db.Model):
 
 
 class Admin(db.Model):
+    """Camp Administrator Model"""
     __tablename__ = 'admin'
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(db.String())
