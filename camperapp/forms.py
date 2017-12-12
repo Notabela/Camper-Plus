@@ -1,23 +1,31 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, SelectField, TextAreaField
-from camperapp.models import CampGroup
+from wtforms import StringField, PasswordField,\
+    SubmitField, DateField, IntegerField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length
+from camperapp.models import CampGroup
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired("Please enter your email address."), Email("Please enter your email address.")])
+    """Login Form for Admins and Parents"""
+    email = StringField('Email', validators=[DataRequired("Please enter your email address."),
+                                             Email("Please enter your email address.")])
     password = PasswordField('Password', validators=[DataRequired("Please enter a password.")])
     submit = SubmitField("Sign in")
 
 
 class SignupFormAdmin(FlaskForm):
+    """Signup Form for Admin - Not Used Yet"""
     name = StringField('First name', validators=[DataRequired("Please enter your first name.")])
-    email = StringField('Email', validators=[DataRequired("Please enter your email address."), Email("Please enter your email address.")])
-    password = PasswordField('Password', validators=[DataRequired("Please enter a password."), Length(min=6, message="Passwords must be 6 characters or more.")])
+    email = StringField('Email', validators=[DataRequired("Please enter your email address."),
+                                             Email("Please enter your email address.")])
+    password = PasswordField('Password',
+                             validators=[DataRequired("Please enter a password."),
+                                         Length(min=6, message="Passwords must be 6 characters or more.")])
     submit = SubmitField('Sign up')
 
 
 class CreateParentForm(FlaskForm):
+    """Form for Admin to Create a New Parent"""
     first_name = StringField('First name')
     last_name = StringField('Last name')
     birth_date = DateField("Birthday")
@@ -32,6 +40,7 @@ class CreateParentForm(FlaskForm):
 
 
 class CreateChildForm(FlaskForm):
+    """Form for Admin to Create New Child"""
     _groups = CampGroup.query.order_by(CampGroup.name).all()
     _group_choices = [(group.id, group.name) for group in _groups]
 
@@ -52,6 +61,7 @@ class CreateChildForm(FlaskForm):
 
 
 class ChildEnrollmentForm(FlaskForm):
+    """Form for Parent to Enroll a new Child"""
     child_first_name = StringField('First name')
     child_last_name = StringField('Last name')
     child_birth_date = DateField('Birthday')

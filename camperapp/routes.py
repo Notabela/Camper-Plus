@@ -1,12 +1,13 @@
 """Routes for Camper+ app."""
 
+from datetime import datetime
 from camperapp import app
 from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent
+from camperapp.forms import SignupFormAdmin, LoginForm, \
+    ChildEnrollmentForm, CreateParentForm, CreateChildForm
 from flask import render_template, session, redirect, url_for
 from flask import jsonify
 from flask import request
-from datetime import datetime
-from camperapp.forms import SignupFormAdmin, LoginForm, ChildEnrollmentForm, CreateParentForm, CreateChildForm
 
 
 @app.route('/', methods=['GET'])
@@ -51,8 +52,8 @@ def parent_enrollments():
             self.status = status
             self.name = name
 
-    children = [Child(1, 'John Redcorn', 12, 6, 'Falcons','green','Enrolled'), Child(1, 'Bobby Hill', 13, 7,
-                                                                                     'Dodgers', 'brown', 'Enrolled')]
+    children = [Child(1, 'John Redcorn', 12, 6, 'Falcons', 'green', 'Enrolled'),
+                Child(1, 'Bobby Hill', 13, 7, 'Dodgers', 'brown', 'Enrolled')]
     return render_template("parent_enrollments.html", children=children)
 
 
@@ -62,7 +63,8 @@ def parent_register():
     form = ChildEnrollmentForm()
     camp_season = "Summer 2018"
     parent_name = "Jane Armadillo"
-    return render_template("parent_register.html", form=form, camp_season=camp_season, parent_name=parent_name)
+    return render_template("parent_register.html", form=form,
+                           camp_season=camp_season, parent_name=parent_name)
 
 
 @app.route('/parent/account', methods=['GET'])
@@ -88,7 +90,8 @@ def campers():
     all_parents = Parent.query.order_by(Parent.last_name).all()
     all_groups = CampGroup.query.order_by(CampGroup.name).all()
 
-    return render_template('admin_manage.html', groups=all_groups, parents=all_parents, campers=all_campers, parent_form=parent_form, child_form=child_form)
+    return render_template('admin_manage.html', groups=all_groups, parents=all_parents,
+                           campers=all_campers, parent_form=parent_form, child_form=child_form)
 
 
 @app.route('/manage/parent', methods=['POST', 'PUT', 'DELETE'])
@@ -96,7 +99,7 @@ def submit_parent_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
     parent_form = CreateParentForm(request.form)
-    child_form = CreateChildForm()
+    # child_form = CreateChildForm()
 
     # Add Validation Later
     parent = Parent()
@@ -196,8 +199,8 @@ def submit_handler():
 
         event_id = int(event_data['id'])
         new_title = event_data['title']
-        new_start = CampEvent.convert_ISO_datetime_to_py_datetime(event_data['start'])
-        new_end = CampEvent.convert_ISO_datetime_to_py_datetime(event_data['end'])
+        new_start = CampEvent.convert_iso_datetime_to_py_datetime(event_data['start'])
+        new_end = CampEvent.convert_iso_datetime_to_py_datetime(event_data['end'])
         new_group_id = int(event_data['group_id'])
 
         CampEvent.query.filter_by(id=event_id).update({'title': new_title, 'start': new_start,
@@ -235,6 +238,7 @@ def get_camp_events():
 
     return jsonify(result)
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Camp Admin and Parent login endpoint
@@ -249,13 +253,10 @@ def login():
             email = form.email.data
             password = form.password.data
 
-
             useradmin = Admin.query.filter_by(email=email).first()
             if useradmin is not None and useradmin.check_password(password):
                 session['email'] = form.email.data
                 return redirect(url_for('campers'))
-            else:
-                return redirect(url_for('login'))
 
             userparent = Parent.query.filter_by(email=email).first()
             if userparent is not None and userparent.check_password(password):
@@ -264,24 +265,18 @@ def login():
             else:
                 return redirect(url_for('login'))
 
-
-
-
-
-
     elif request.method == 'GET':
         return render_template('login.html', form=form)
 
 
-
 @app.route('/signupAdmin', methods=['GET', 'POST'])
-def signupAdmin():
-
+def signup_admin():
+    """Sign up administrator"""
     form = SignupFormAdmin()
 
     if request.method == 'POST':
-        if form.validate() == False:
-          return render_template('signupAdmin.html', form=form)
+        if not form.validate():
+            return render_template('signupAdmin.html', form=form)
         else:
             email = form.email.data
             user = Admin.query.filter_by(email=email).first()
@@ -298,7 +293,9 @@ def signupAdmin():
     elif request.method == 'GET':
         return render_template('signupAdmin.html', form=form)
 
+
 @app.route("/logout")
 def logout():
-  session.pop('email', None)
-  return redirect(url_for('index'))
+    """Logout Admin or Parent"""
+    session.pop('email', None)
+    return redirect(url_for('index'))
