@@ -294,7 +294,7 @@ def signup_admin():
 @app.route('/documentation', methods=['GET'])
 def documentation():
     """Sphinx documentation"""
-    retyrn render_template('docindex.html')
+    return render_template('docindex.html')
 
 
 @app.route("/logout")
