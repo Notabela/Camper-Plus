@@ -298,7 +298,7 @@ def documentation():
 
 
 @app.route("/logout")
-"""Logout"""
+"""logout"""
 def logout():
     session.pop('email', None)
     return redirect(url_for('index'))
