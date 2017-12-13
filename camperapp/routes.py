@@ -7,6 +7,7 @@ from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
 from flask import render_template, session, redirect, url_for, jsonify, request
 from wtforms import SelectField
+from wtforms.validators import DataRequired
 
 
 @app.route('/', methods=['GET'])
@@ -85,7 +86,8 @@ def campers():
     # Dynamically Add the Groups to the the Child Form
     _groups = CampGroup.query.order_by(CampGroup.name).all()
     _group_choices = [(group.id, group.name) for group in _groups]
-    CreateChildForm.group = SelectField(label='Group', choices=_group_choices)
+    CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
+                                        validators=[DataRequired("Please select a group.")])
 
     parent_form = CreateParentForm()
     child_form = CreateChildForm()
