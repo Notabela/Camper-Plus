@@ -98,7 +98,6 @@ class Parent(db.Model):
     email = db.Column(db.String())
     phone = db.Column(db.String())
     street_address = db.Column(db.String())
-    tokenused = db.Column(db.Boolean())
     city = db.Column(db.String())
     state = db.Column(db.String())
     zip_code = db.Column(db.Integer())
@@ -176,7 +175,6 @@ class Admin(db.Model):
     __tablename__ = 'admin'
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(db.String())
-    tokenused = db.Column(db.Boolean())
     email = db.Column(db.String(), unique=True)
     pwdhash = db.Column(db.String())
 
