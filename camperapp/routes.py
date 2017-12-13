@@ -293,8 +293,14 @@ def signup_admin():
     elif request.method == 'GET':
         return render_template('signupAdmin.html', form=form)
 
+@app.route('/documentation', methods=['GET'])
+def documentation():
+    """Sphinx documentation"""
+    return render_template('docindex.html')
+
 
 @app.route("/logout")
+"""logout"""
 def logout():
     """Logout Admin or Parent"""
     session.pop('email', None)
