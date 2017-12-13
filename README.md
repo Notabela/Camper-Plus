@@ -19,7 +19,7 @@ A wesbite to ease the work of camp administrators and the lives of parents
     
 ##### Code Coverage
     pip install pytest-cov
-    pytest (in base directory)
+    pytest --cov=camperapp tests/ (in base directory)
     
 ##### Pylint Score
     pip install pylint
