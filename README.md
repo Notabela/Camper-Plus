@@ -54,8 +54,8 @@ A wesbite to ease the work of camp administrators and the lives of parents
 
     To get this project to work on Heroku, you need to:
 
-    1. comment out `db_path` in camperapp/__init.py__
-    2. comment out `app.config['SQLALCHEMY_DATABASE_URI'] = db_path` in camperapp/__init.py__
+    1. comment out db_path in camperapp/__init.py__
+    2. comment out python app.config['SQLALCHEMY_DATABASE_URI'] = db_path in camperapp/__init.py__
     
      * More to come
 
