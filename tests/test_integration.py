@@ -7,6 +7,7 @@ from camperapp import app, db
 from camperapp.models import CampEvent, CampGroup, Camper, Admin
 from config import basedir
 import json
+from bs4 import BeautifulSoup
 
 
 class TestUrls(unittest.TestCase):
@@ -220,3 +221,17 @@ class TestUrls(unittest.TestCase):
 
         response = self.app.get('/getCampEvents?start=2014-12-01&end=2020-01-12')
         self.assertTrue(response.data is not None)
+
+    def test_campers_add_camper_page_shows_groups(self):
+        group_name = 'falcons'
+        group = CampGroup(group_name, 'green')
+        db.session.add(group)
+        db.session.commit()
+        response = self.app.get('/campers')
+        soup = BeautifulSoup(response.data, 'html.parser')
+        groups_field = soup.find("select", {"id": "group"})
+        option_tag = groups_field.find('option')
+        self.assertTrue(option_tag)
+        self.assertEqual(option_tag.text, group_name)
+
+
