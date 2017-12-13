@@ -5,7 +5,7 @@ from datetime import datetime
 import unittest
 from camperapp import app, db
 from camperapp.models import CampEvent, CampGroup, Camper, Admin
-from config import basedir
+# from config import basedir
 import json
 from bs4 import BeautifulSoup
 
@@ -15,7 +15,8 @@ class TestUrls(unittest.TestCase):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join('.', 'app.db')
+        # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
         self.app = app.test_client()
         self.app_context = app.app_context()
         self.app_context.push()
@@ -30,7 +31,8 @@ class TestUrls(unittest.TestCase):
         db.session.remove()
         db.drop_all()
         try:
-            os.remove(os.path.join(basedir, 'app.db'))
+            os.remove(os.path.join('.', 'app.db'))
+            # os.remove(os.path.join(basedir, 'app.db'))
         except OSError:
             pass
 
@@ -233,5 +235,3 @@ class TestUrls(unittest.TestCase):
         option_tag = groups_field.find('option')
         self.assertTrue(option_tag)
         self.assertEqual(option_tag.text, group_name)
-
-
