@@ -38,7 +38,7 @@ class TestUrls(unittest.TestCase):
     def registration(self):
         """Test that the Calendar Page can be accessed"""
         response = self.app.get("/registration")
-        self.assertTrue(response.status_code, 200)
+        self.assertTrue(response.status_code, 200)""""""
 
     def test_post_event_on_schedule_page(self):
         """Test that roups passed to the schedule page are all displayed"""
