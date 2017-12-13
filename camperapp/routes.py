@@ -5,9 +5,8 @@ from camperapp import app
 from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
-from flask import render_template, session, redirect, url_for
-from flask import jsonify
-from flask import request
+from flask import render_template, session, redirect, url_for, jsonify, request
+from wtforms import SelectField
 
 
 @app.route('/', methods=['GET'])
@@ -82,6 +81,12 @@ def parent_forms():
 @app.route('/campers', methods=['GET'])
 def campers():
     """View displays the camper organization page"""
+
+    # Dynamically Add the Groups to the the Child Form
+    # _groups = CampGroup.query.order_by(CampGroup.name).all()
+    # _group_choices = [(group.id, group.name) for group in _groups]
+    # CreateChildForm.group = SelectField(label='Group', choices=_group_choices)
+
     parent_form = CreateParentForm()
     child_form = CreateChildForm()
 
@@ -100,6 +105,9 @@ def submit_parent_management():
     # a = request.get_json(force=True)
     parent_form = CreateParentForm(request.form)
     # child_form = CreateChildForm()
+    # _groups = CampGroup.query.order_by(CampGroup.name).all()
+    # _group_choices = [(group.id, group.name) for group in _groups]
+    # child_form.group = SelectField(label='Group', choices=_group_choices)
 
     # Add Validation Later
     parent = Parent()
@@ -124,7 +132,7 @@ def submit_parent_management():
 def submit_camper_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
-    child_form = CreateChildForm(request.form)
+    child_form = CreateChildForm(request.form)  # Needs Testing
 
     # Add Validation Later
     camper = Camper()
@@ -293,6 +301,7 @@ def signup_admin():
     elif request.method == 'GET':
         return render_template('signupAdmin.html', form=form)
 
+
 @app.route('/documentation', methods=['GET'])
 def documentation():
     """Sphinx documentation"""
@@ -300,7 +309,6 @@ def documentation():
 
 
 @app.route("/logout")
-"""logout"""
 def logout():
     """Logout Admin or Parent"""
     session.pop('email', None)
