@@ -53,6 +53,24 @@ class TestApp(unittest.TestCase):
             template_name = call_args[0][0]
             self.assertEqual(template_name, "admin_schedule.html")
 
+    def test_faq_calls_faq_template(self):
+        """Test that the Schedule endpoint calls render_template"""
+        with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
+                mock_funcs:
+            camperapp.routes.faq()
+            render_template = mock_funcs['render_template']
+            self.assertTrue(render_template.called)
+
+    def test_faq_gets_faq_template(self):
+        """Test that the Schedule endpoint calls the schedule Page"""
+        with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
+                mock_funcs:
+            camperapp.routes.faq()
+            render_template = mock_funcs['render_template']
+            call_args = render_template.call_args
+            template_name = call_args[0][0]
+            self.assertEqual(template_name, "faq.html")
+
     def test_campers_gets_calls_render_template(self):
         """Test that the Schedule endpoint calls the schedule Page"""
         with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
