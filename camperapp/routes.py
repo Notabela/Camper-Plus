@@ -17,6 +17,12 @@ def index():
     return render_template("home.html", form=form)
 
 
+@app.route('/faq', methods=['GET'])
+def faq():
+    """View displays the FAQ page"""
+    return render_template("faq.html")
+
+
 @app.route('/schedule', methods=['GET', 'POST'])
 def schedule():
     """View displays the schedule-making page"""
