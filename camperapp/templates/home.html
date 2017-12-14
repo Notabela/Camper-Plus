@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/materialize.min.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!--<link href="{{ url_for('static', filename='css/materialize.min.css') }}" rel="stylesheet" type="text/css">-->
     <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet" type="text/css">
     <title>Camper +</title>
 </head>
@@ -137,8 +138,10 @@
       </div>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>
-    <script src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>
+  <!--<script src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>-->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js" ></script>
+  <!--<script src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>-->
     <script>
       $(document).ready(function(){
         $('.parallax').parallax();
