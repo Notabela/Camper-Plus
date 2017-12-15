@@ -58,3 +58,29 @@ $(document).ready(function () {
         $('#menu').attr('href', '#' + $(event.target).attr('data-modal'));
     });
 });
+
+//Functions
+function deleteCamper(camper_id)
+{
+  var result = confirm("Are you sure you want to delete? This cannot be undone");
+  if (result)
+  {
+    //Logic to delete the item
+    console.log(camper_id);
+    $.ajax({
+        url: "/manage/camper",
+        type: "DELETE",
+        contentType: "application/json",
+        data: JSON.stringify({ 'camper_id': camper_id }),
+        dataType: "json"
+    })
+    .done( function (response) {
+        if (response) {
+            window.location.reload();
+        }
+    })
+    .fail(function () {
+        Materialize.toast('An Error Occurred', 4000)
+    })
+  }
+}

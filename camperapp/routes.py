@@ -138,55 +138,68 @@ def submit_parent_management():
     return redirect(url_for('campers'))
 
 
-@app.route('/manage/camper', methods=['POST'])
+@app.route('/manage/camper', methods=['POST', 'DELETE'])
 def submit_camper_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
-    child_form = CreateChildForm(request.form)
 
-    # Search for Parent and Populate field
-    parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data.lower(),
-                                    last_name=child_form.parent_last_name.data.lower()).first()
-    if not parent:
-        # Return and show an error
-        flash("Selected Parent does not exist", category='error')
+    if request.method == 'POST':
+        child_form = CreateChildForm(request.form)
+
+        # Search for Parent and Populate field
+        parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data.lower(),
+                                        last_name=child_form.parent_last_name.data.lower()).first()
+        if not parent:
+            # Return and show an error
+            flash("Selected Parent does not exist", category='error')
+            return redirect(url_for('campers'))
+
+        camper = Camper()
+        camper.first_name = child_form.first_name.data
+        camper.last_name = child_form.last_name.data
+        camper.birth_date = datetime.strptime(child_form.birth_date._value(), "%d %B, %Y")
+        camper.grade = child_form.grade.data
+        camper.gender = child_form.gender.data
+        camper.medical_notes = child_form.medical_notes.data
+
+        if child_form.street_address.data == "":
+            # No address supplied, set address to parent address
+            camper.street_address = parent.street_address
+            camper.city = parent.city
+            camper.state = parent.state
+            camper.zip_code = parent.zip_code
+
+        else:
+            camper.street_address = child_form.street_address.data
+            camper.city = child_form.city.data
+            camper.state = child_form.state.data
+            camper.zip_code = child_form.zipcode.data
+
+        camper.is_active = False
+        camper.group_id = int(child_form.group.data)
+
+        camper.parent = parent
+
+        db.session.add(camper)
+        db.session.commit()
+
+        # group_id = db.Column(db.Integer(), db.ForeignKey('campgroup.id'))
+        # parent_id = db.Column(db.Integer(), db.ForeignKey('parent.id'))
+
+        # tell template to default to parent tab
+        flash("campers", category='tab_choice')
         return redirect(url_for('campers'))
 
-    camper = Camper()
-    camper.first_name = child_form.first_name.data
-    camper.last_name = child_form.last_name.data
-    camper.birth_date = datetime.strptime(child_form.birth_date._value(), "%d %B, %Y")
-    camper.grade = child_form.grade.data
-    camper.gender = child_form.gender.data
-    camper.medical_notes = child_form.medical_notes.data
+    elif request.method == 'DELETE':
+        try:
+            camper_id = request.json['camper_id']
+            camper = Camper.query.filter_by(id=camper_id).first()
+            db.session.delete(camper)
+            db.session.commit()
+        except Exception:
+            return 'Error', 404
 
-    if child_form.street_address.data == "":
-        # No address supplied, set address to parent address
-        camper.street_address = parent.street_address
-        camper.city = parent.city
-        camper.state = parent.state
-        camper.zip_code = parent.zip_code
-
-    else:
-        camper.street_address = child_form.street_address.data
-        camper.city = child_form.city.data
-        camper.state = child_form.state.data
-        camper.zip_code = child_form.zipcode.data
-
-    camper.is_active = False
-    camper.group_id = int(child_form.group.data)
-
-    camper.parent = parent
-
-    db.session.add(camper)
-    db.session.commit()
-
-    # group_id = db.Column(db.Integer(), db.ForeignKey('campgroup.id'))
-    # parent_id = db.Column(db.Integer(), db.ForeignKey('parent.id'))
-
-    # tell template to default to parent tab
-    flash("campers", category='tab_choice')
-    return redirect(url_for('campers'))
+        return jsonify({'msg': 'success'})
 
 
 @app.route('/manage/campgroup', methods=['POST'])
