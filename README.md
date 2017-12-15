@@ -2,7 +2,16 @@
 
 A wesbite to ease the work of camp administrators and the lives of parents
 
-## Usage (Command Line - MacOS)
+## Application Demo
+##### Live Application
+    https://camperapp.herokuapp.com
+    admin_sample_login   - email: admin@camperapp.com  password: Notabela
+    parent_sameple_login - email: parent@camperapp.com password: Notabela
+    
+##### FAQ
+    https://camperapp.herokuapp.com/faq
+
+## Usage (MacOS)
 
 ### Environment
 ##### Set up Python Virtual Environment
@@ -13,6 +22,11 @@ A wesbite to ease the work of camp administrators and the lives of parents
 ##### Set up App Environment
     python setup.py install
     pip install -r requirements.txt
+    
+##### Run Application Locally (debug Mode)
+    change `db_path` in camperapp/__init.py__ to `'sqlite:///./app.db'`
+    python application.py
+    Runs at http://127.0.0.1:5000
     
 ### Tests and Linter
 ##### Run Tests
@@ -26,21 +40,6 @@ A wesbite to ease the work of camp administrators and the lives of parents
 ##### Pylint Score
     pip install pylint
     pylint camperapp (in base directory)
-
-### Application Demo
-##### Run Application Locally (debug Mode)
-    change `db_path` in camperapp/__init.py__ to `'sqlite:///./app.db'`
-    python application.py
-    Runs on > 127.0.0.1:5000
-
-##### Live Application at
-    https://camperapp.herokuapp.com
-    admin_sample_login   - email: admin@camperapp.com  password: Notabela
-    parent_sameple_login - email: parent@camperapp.com password: Notabela
-    
-##### FAQ
-    https://camperapp.herokuapp.com/faq
-  
   
 ### Developer
 ##### Developer Documentation
