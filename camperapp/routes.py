@@ -91,7 +91,7 @@ def campers():
 
     # Dynamically Add the Groups to the the Child Form
     _groups = CampGroup.query.order_by(CampGroup.name).all()
-    _group_choices = [(group.id, group.name) for group in _groups]
+    _group_choices = [(group.id, group.name.capitalize()) for group in _groups]
     CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
                                         validators=[DataRequired("Please select a group.")])
 

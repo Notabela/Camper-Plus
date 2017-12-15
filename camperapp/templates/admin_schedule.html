@@ -26,7 +26,7 @@
     <li>
       <div style="text-align: center" id="groups" class="groups">
         {% for group in groups %}
-          <button class="group" id="group{{ group.id }}" style="background-color:{{ group.color }};">{{ group.name }}</button><br>
+          <button class="group" id="group{{ group.id }}" style="background-color:{{ group.color }};">{{ group.name.capitalize() }}</button><br>
         {% endfor %}
       </div>
     </li>
@@ -59,7 +59,7 @@
           <select id="sched-groups" required>
             <option value="" disabled selected>Select Group</option>
             {% for group in groups %}
-                <option value="{{ group.id }}">{{ group.name }}</option>
+                <option value="{{ group.id }}">{{ group.name.capitalize() }}</option>
             {% endfor %}
           </select>
         </div>

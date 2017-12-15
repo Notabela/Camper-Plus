@@ -26,7 +26,7 @@
         <li>
           <div style="text-align: center">
             {% for child in children %}
-              <button class="child" id="child{{ child.id }}" style="background-color:{{ child.color }};">{{ child.name }}</button><br>
+              <button class="child" id="child{{ child.id }}" style="background-color:{{ child.color }};">{{ child.name.capitalize() }}</button><br>
             {% endfor %}
           </div>
         </li>

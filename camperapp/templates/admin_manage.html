@@ -42,11 +42,11 @@
 
           {% for camper in campers %}
           <tr>
-            <td>{{ camper.last_name }}, {{ camper.first_name }}</td>
+            <td>{{ camper.last_name.capitalize() }}, {{ camper.first_name.capitalize() }}</td>
             <td>{{ camper.age() }}</td>
             <td>{{ camper.grade }}</td>
-            <td>{{ camper.campgroup.name }}</td>
-            <td>{{ camper.parent.last_name }}, {{ camper.parent.first_name }}</td>
+            <td>{{ camper.campgroup.name.capitalize() }}</td>
+            <td>{{ camper.parent.last_name.capitalize() }}, {{ camper.parent.first_name.capitalize() }}</td>
             <td>
               <div class="switch">
                 <label>
@@ -85,13 +85,13 @@
         <tbody>
           {% for parent in parents %}
           <tr>
-            <td>{{ parent.last_name }}, {{ parent.first_name }}</td>
+            <td>{{ parent.last_name.capitalize() }}, {{ parent.first_name.capitalize() }}</td>
             <td>{{ parent.email }}</td>
             <td>{{ parent.phone }}</td>
             <td>
               <ul>
                  {% for camper in parent.campers %}
-                    <li>{{ camper.first_name }} {{ camper.last_name }}</li>
+                    <li>{{ camper.first_name.capitalize() }} {{ camper.last_name.capitalize() }}</li>
                  {% endfor %}
               </ul>
             </td>
@@ -119,14 +119,14 @@
         <tbody>
          {% for group in groups %}
           <tr>
-            <td>{{ group.name }}</td>
+            <td>{{ group.name.capitalize() }}</td>
             <td class="color-patch"><div style="background-color: {{ group.color }}; width: 30px; height: 30px" ></div></td>
             <td>
               <details class="browser-default">
                 <summary class="browser-default">Click to Expand/Collapse</summary>
                 <ul>
                   {% for camper in group.campers %}
-                  <li>{{ camper.first_name }} {{ camper.last_name }}</li>
+                  <li>{{ camper.first_name.capitalize() }} {{ camper.last_name.capitalize() }}</li>
                   {% endfor %}
                 </ul>
               </details>
