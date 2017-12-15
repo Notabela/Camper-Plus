@@ -310,7 +310,7 @@ def signup_admin():
         return render_template('signupAdmin.html', form=form)
 
 
-@app.route('/documentation', methods=['GET'])
+@app.route('/dev_docs', methods=['GET'])
 def documentation():
     """Sphinx documentation"""
     return render_template('docindex.html')
