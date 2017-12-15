@@ -338,9 +338,22 @@
 {% endblock bodycontent %}
 
 {% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+<!--<script src="{{ url_for('static', filename='js/spectrum.js') }}" ></script>-->
+<script src="{{ url_for('static', filename='js/admin_manage.js') }}" ></script>
+
 <script>
 $(document).ready(function () {
     //$('.tap-target').tapTarget('open');
+  // Display the tab where the application came from
+  {% with tab_choices = get_flashed_messages(category_filter=["tab_choice"]) %}
+  {% if tab_choices %}
+    {% for tab_choice in tab_choices %}
+        $('#{{ tab_choice }}').click();
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
   {% with errors = get_flashed_messages(category_filter=["error"]) %}
   {% if errors %}
     {% for msg in errors %}
@@ -349,17 +362,6 @@ $(document).ready(function () {
   {% endif %}
   {% endwith %}
 
-{#  {% with messages = get_flashed_messages() %}#}
-{#  {% if messages %}#}
-{#    {% for message in messages %}#}
-{#        console.log(message);#}
-{#    {% endfor %}#}
-{#  {% endif %}#}
-{#{% endwith %}#}
-
 });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
-<!--<script src="{{ url_for('static', filename='js/spectrum.js') }}" ></script>-->
-<script src="{{ url_for('static', filename='js/admin_manage.js') }}" ></script>
 {% endblock scripts %}

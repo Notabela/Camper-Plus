@@ -133,6 +133,8 @@ def submit_parent_management():
     db.session.add(parent)
     db.session.commit()
 
+    # tell template to default to parent tab
+    flash("parents", category='tab_choice')
     return redirect(url_for('campers'))
 
 
@@ -182,6 +184,8 @@ def submit_camper_management():
     # group_id = db.Column(db.Integer(), db.ForeignKey('campgroup.id'))
     # parent_id = db.Column(db.Integer(), db.ForeignKey('parent.id'))
 
+    # tell template to default to parent tab
+    flash("campers", category='tab_choice')
     return redirect(url_for('campers'))
 
 
@@ -197,6 +201,8 @@ def submit_camper_group_management():
     db.session.add(group)
     db.session.commit()
 
+    # tell template to default to campgroup tab
+    flash("groups", category='tab_choice')
     return redirect(url_for('campers'))
 
 
