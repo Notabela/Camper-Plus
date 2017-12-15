@@ -5,10 +5,10 @@ $(document).ready(function () {
     $("#enrollments_drop").addClass("active");
     $("#enrollments_bar").addClass("active");
     $('select').material_select();
-    $("#custom").spectrum({
+    $("#colorPicker").spectrum({
       color: "#00f",
       preferredFormat: "hex",
-      showInput: true,
+      showInput: true
     });
     $('.datepicker').pickadate({
       selectMonths: true, // Creates a dropdown to control month
@@ -44,6 +44,9 @@ $(document).ready(function () {
 
         //Set the href attribute to bring up the correct Modal
         $('#menu').attr('href', '#' + $(event.target).attr('data-modal'));
+
+        //Set custom value for color picker
+        $("#colorPicker").val("#00f");
     });
 
 });

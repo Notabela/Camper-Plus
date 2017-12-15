@@ -308,11 +308,11 @@
     <!--<a href="#!" style="display: inline; float: right;" class="modal-action modal-close btn">Create</a>-->
     <div class="row" style="margin-top: 1em">
       <div class="input-field col s4">
-        <input placeholder="Group1" name="groupName" id="groupName" type="text" required>
+        <input name="groupName" id="groupName" type="text" required oninvalid="this.setCustomValidity('Please enter a group name')">
         <label for="groupName">Group Name</label>
       </div>
       <div style="text-align: center" class="input-field col s3">
-        <input type='text' name="color" id="custom" required/>
+        <input type='text' name="color" id="colorPicker"/>
       </div>
       <div class="input-field col s5">
         <input placeholder="Search" id="search" type="text">

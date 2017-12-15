@@ -159,8 +159,8 @@ def submit_camper_management():
     camper.group_id = int(child_form.group.data)
 
     # Search for Parent and Populate field
-    parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data,
-                                    last_name=child_form.parent_last_name.data).first()
+    parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data.lower(),
+                                    last_name=child_form.parent_last_name.data.lower()).first()
     if not parent:
         return "<h1>Error</h1>"
 
