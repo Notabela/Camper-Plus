@@ -341,6 +341,22 @@
 <script>
 $(document).ready(function () {
     //$('.tap-target').tapTarget('open');
+  {% with errors = get_flashed_messages(category_filter=["error"]) %}
+  {% if errors %}
+    {% for msg in errors %}
+        Materialize.toast('{{ msg }}', 4000);
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+{#  {% with messages = get_flashed_messages() %}#}
+{#  {% if messages %}#}
+{#    {% for message in messages %}#}
+{#        console.log(message);#}
+{#    {% endfor %}#}
+{#  {% endif %}#}
+{#{% endwith %}#}
+
 });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>

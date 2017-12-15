@@ -5,7 +5,7 @@ from camperapp import app
 from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
-from flask import render_template, session, redirect, url_for, jsonify, request
+from flask import render_template, session, redirect, url_for, jsonify, request, flash
 from wtforms import SelectField
 from wtforms.validators import DataRequired
 
@@ -140,9 +140,16 @@ def submit_parent_management():
 def submit_camper_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
-    child_form = CreateChildForm(request.form)  # Needs Testing
+    child_form = CreateChildForm(request.form)
 
-    # Add Validation Later
+    # Search for Parent and Populate field
+    parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data.lower(),
+                                    last_name=child_form.parent_last_name.data.lower()).first()
+    if not parent:
+        # Return and show an error
+        flash("Selected Parent does not exist", category='error')
+        return redirect(url_for('campers'))
+
     camper = Camper()
     camper.first_name = child_form.first_name.data
     camper.last_name = child_form.last_name.data
@@ -150,19 +157,22 @@ def submit_camper_management():
     camper.grade = child_form.grade.data
     camper.gender = child_form.gender.data
     camper.medical_notes = child_form.medical_notes.data
-    camper.street_address = child_form.street_address.data
-    camper.city = child_form.city.data
-    camper.state = child_form.state.data
-    camper.zip_code = child_form.zipcode.data
+
+    if child_form.street_address.data == "":
+        # No address supplied, set address to parent address
+        camper.street_address = parent.street_address
+        camper.city = parent.city
+        camper.state = parent.state
+        camper.zip_code = parent.zip_code
+
+    else:
+        camper.street_address = child_form.street_address.data
+        camper.city = child_form.city.data
+        camper.state = child_form.state.data
+        camper.zip_code = child_form.zipcode.data
 
     camper.is_active = False
     camper.group_id = int(child_form.group.data)
-
-    # Search for Parent and Populate field
-    parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data.lower(),
-                                    last_name=child_form.parent_last_name.data.lower()).first()
-    if not parent:
-        return "<h1>Error</h1>"
 
     camper.parent = parent
 
