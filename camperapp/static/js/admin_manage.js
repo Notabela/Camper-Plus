@@ -60,27 +60,49 @@ $(document).ready(function () {
 });
 
 //Functions
-function deleteCamper(camper_id)
-{
-  var result = confirm("Are you sure you want to delete? This cannot be undone");
-  if (result)
-  {
-    //Logic to delete the item
-    console.log(camper_id);
-    $.ajax({
-        url: "/manage/camper",
-        type: "DELETE",
-        contentType: "application/json",
-        data: JSON.stringify({ 'camper_id': camper_id }),
-        dataType: "json"
-    })
-    .done( function (response) {
-        if (response) {
-            window.location.reload();
-        }
-    })
-    .fail(function () {
-        Materialize.toast('An Error Occurred', 4000)
-    })
-  }
+function deleteCamper(camper_id) {
+    var result = confirm("Are you sure you want to delete? This cannot be undone");
+    if (result) {
+        //Logic to delete the item
+        console.log(camper_id);
+        $.ajax({
+            url: "/manage/camper",
+            type: "DELETE",
+            contentType: "application/json",
+            data: JSON.stringify({'camper_id': camper_id}),
+            dataType: "json"
+        })
+            .done(function (response) {
+                if (response) {
+                    $("#camper_entry" + camper_id).remove()
+                }
+            })
+            .fail(function () {
+                Materialize.toast('An Error Occurred', 4000)
+            })
+    }
 }
+
+  function deleteGroup(group_id)
+  {
+      var result = confirm("Are you sure you want to delete? This cannot be undone");
+      if (result)
+      {
+        $.ajax({
+            url: '/manage/campgroup',
+            type: 'DELETE',
+            contentType: 'application/json',
+            data: JSON.stringify({'group_id': group_id}),
+            dataType: 'json'
+        })
+            .done( function (response) {
+             if (response)
+             {
+               $("#group_entry" + group_id).remove()
+             }
+            })
+            .fail(function () {
+              Materialize.toast('An Error Occurred', 4000)
+            })
+      }
+  }

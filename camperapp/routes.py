@@ -202,21 +202,34 @@ def submit_camper_management():
         return jsonify({'msg': 'success'})
 
 
-@app.route('/manage/campgroup', methods=['POST'])
+@app.route('/manage/campgroup', methods=['POST', 'DELETE'])
 def submit_camper_group_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
-    form = request.form
-    name = form["groupName"]
-    color = form["color"]
 
-    group = CampGroup(name=name, color=color)
-    db.session.add(group)
-    db.session.commit()
+    if request.method == 'POST':
+        form = request.form
+        name = form["groupName"]
+        color = form["color"]
 
-    # tell template to default to campgroup tab
-    flash("groups", category='tab_choice')
-    return redirect(url_for('campers'))
+        group = CampGroup(name=name, color=color)
+        db.session.add(group)
+        db.session.commit()
+
+        # tell template to default to campgroup tab
+        flash("groups", category='tab_choice')
+        return redirect(url_for('campers'))
+
+    elif request.method == 'DELETE':
+        try:
+            group_id = request.json['group_id']
+            camp_group = CampGroup.query.filter_by(id=group_id).first()
+            db.session.delete(camp_group)
+            db.session.commit()
+        except Exception:
+            return 'Error', 404
+
+        return jsonify({'msg': 'success'})
 
 
 @app.route('/saveEvent', methods=['POST', 'PUT', 'DELETE'])

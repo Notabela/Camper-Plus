@@ -41,7 +41,7 @@
         <tbody>
 
           {% for camper in campers %}
-          <tr>
+          <tr id="camper_entry{{ camper.id }}">
             <td>{{ camper.last_name.capitalize() }}, {{ camper.first_name.capitalize() }}</td>
             <td>{{ camper.age() }}</td>
             <td>{{ camper.grade }}</td>
@@ -118,7 +118,7 @@
 
         <tbody>
          {% for group in groups %}
-          <tr>
+          <tr id="group_entry{{ group.id }}">
             <td>{{ group.name.capitalize() }}</td>
             <td class="color-patch"><div style="background-color: {{ group.color }}; width: 30px; height: 30px" ></div></td>
             <td>
@@ -133,7 +133,7 @@
             </td>
             <td>
                 <a class="waves-effect waves-light btn-floating"><i class="material-icons">edit</i></a>
-                <a class="waves-effect waves-light btn-floating"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-light btn-floating" onclick="deleteGroup({{ group.id }})"><i class="material-icons">delete</i></a>
             </td>
           </tr>
           {% endfor %}
