@@ -57,6 +57,25 @@ $(document).ready(function () {
         //Set the href attribute to bring up the correct Modal
         $('#menu').attr('href', '#' + $(event.target).attr('data-modal'));
     });
+    $(".camper_checkbox").click(function () {
+        var answer = confirm("Confirm Status Change")
+        if (answer) {
+            $.ajax({
+                url: '/manage/camper',
+                type: 'PATCH',
+                contentType: 'application/json',
+                data: {'camper_id': $(this).attr('data-camper-id'), 'status': $(this).is(':checked')},
+                dataType: 'json'
+            })
+                .done(function (response){
+                   console.log(response)
+                })
+
+                .fail(function (response) {
+                    Materialize.toast('An Error Occurred', 4000)
+                })
+        }
+    })
 });
 
 //Functions

@@ -6,8 +6,9 @@ from flask_heroku import Heroku
 
 app = Flask(__name__)
 
-db_path = "postgresql+psycopg2://localhost/camper_plus"
-app.config['SQLALCHEMY_DATABASE_URI'] = db_path
+# db_path = "postgresql+psycopg2://localhost/camper_plus"
+mock_db_path = "sqlite:///test.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = mock_db_path
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -16,3 +17,6 @@ heroku = Heroku(app)
 db = SQLAlchemy(app)
 
 import camperapp.routes
+
+db.create_all()
+db.session.commit()

@@ -51,9 +51,9 @@
               <div class="switch">
                 <label>
                   {% if camper.is_active %}
-                  <input type="checkbox" checked="checked" disabled="disabled">
+                  <input class="camper_checkbox" data-camper-id="{{ camper.id }}" type="checkbox" checked="checked" disabled="disabled">
                   {% else %}
-                  <input type="checkbox">
+                  <input class="camper_checkbox" data-camper-id="{{ camper.id }}" type="checkbox">
                   {% endif %}
                   <span class="lever"></span>
                 </label>

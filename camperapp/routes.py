@@ -156,7 +156,7 @@ def submit_parent_management():
         return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 
-@app.route('/manage/camper', methods=['POST', 'DELETE'])
+@app.route('/manage/camper', methods=['POST', 'DELETE', 'PATCH'])
 def submit_camper_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
@@ -216,6 +216,10 @@ def submit_camper_management():
             db.session.commit()
         except Exception:
             return jsonify({'success': False}), 400, {'ContentType': 'application/json'}
+
+        return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
+
+    elif request.method == "PATCH":
 
         return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
