@@ -84,7 +84,7 @@
 
         <tbody>
           {% for parent in parents %}
-          <tr>
+          <tr id="parent_entry{{ parent.id }}">
             <td>{{ parent.last_name.capitalize() }}, {{ parent.first_name.capitalize() }}</td>
             <td>{{ parent.email }}</td>
             <td>{{ parent.phone }}</td>
@@ -97,7 +97,7 @@
             </td>
             <td>
                 <a class="waves-effect waves-light btn-floating"><i class="material-icons">edit</i></a>
-                <a class="waves-effect waves-light btn-floating"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-light btn-floating" onclick="deleteParent({{ parent.id }})"><i class="material-icons">delete</i></a>
             </td>
           </tr>
           {% endfor %}

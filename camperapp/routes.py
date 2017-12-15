@@ -107,35 +107,53 @@ def campers():
                            campers=all_campers, parent_form=parent_form, child_form=child_form)
 
 
-@app.route('/manage/parent', methods=['POST', 'PUT', 'DELETE'])
+@app.route('/manage/parent', methods=['POST', 'DELETE'])
 def submit_parent_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
-    parent_form = CreateParentForm(request.form)
-    # child_form = CreateChildForm()
-    # _groups = CampGroup.query.order_by(CampGroup.name).all()
-    # _group_choices = [(group.id, group.name) for group in _groups]
-    # child_form.group = SelectField(label='Group', choices=_group_choices)
 
-    # Add Validation Later
-    parent = Parent()
-    parent.first_name = parent_form.first_name.data
-    parent.last_name = parent_form.last_name.data
-    parent.birth_date = datetime.strptime(parent_form.birth_date._value(), "%d %B, %Y")
-    parent.gender = parent_form.gender.data
-    parent.email = parent_form.email.data
-    parent.phone = parent_form.phone.data
-    parent.street_address = parent_form.street_address.data
-    parent.city = parent_form.city.data
-    parent.state = parent_form.state.data
-    parent.zip_code = parent_form.zipcode.data
+    if request.method == 'POST':
+        parent_form = CreateParentForm(request.form)
+        # child_form = CreateChildForm()
+        # _groups = CampGroup.query.order_by(CampGroup.name).all()
+        # _group_choices = [(group.id, group.name) for group in _groups]
+        # child_form.group = SelectField(label='Group', choices=_group_choices)
 
-    db.session.add(parent)
-    db.session.commit()
+        # Add Validation Later
+        parent = Parent()
+        parent.first_name = parent_form.first_name.data
+        parent.last_name = parent_form.last_name.data
+        parent.birth_date = datetime.strptime(parent_form.birth_date._value(), "%d %B, %Y")
+        parent.gender = parent_form.gender.data
+        parent.email = parent_form.email.data
+        parent.phone = parent_form.phone.data
+        parent.street_address = parent_form.street_address.data
+        parent.city = parent_form.city.data
+        parent.state = parent_form.state.data
+        parent.zip_code = parent_form.zipcode.data
 
-    # tell template to default to parent tab
-    flash("parents", category='tab_choice')
-    return redirect(url_for('campers'))
+        db.session.add(parent)
+        db.session.commit()
+
+        # tell template to default to parent tab
+        flash("parents", category='tab_choice')
+        return redirect(url_for('campers'))
+
+    elif request.method == 'DELETE':
+        try:
+            parent_id = request.json['parent_id']
+            parent = Parent.query.filter_by(id=parent_id).first()
+
+            if len(parent.campers.all()) > 0:
+                return jsonify({'success': False, 'msg': 'Cannot Delete Parent with Enrollments'}), \
+                       400, {'ContentType': 'application/json'}
+
+            db.session.delete(parent)
+            db.session.commit()
+        except Exception:
+            return jsonify({'success': False, 'msg': 'Exception occurred'}), 500, {'ContentType': 'application/json'}
+
+        return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/manage/camper', methods=['POST', 'DELETE'])
@@ -197,9 +215,9 @@ def submit_camper_management():
             db.session.delete(camper)
             db.session.commit()
         except Exception:
-            return 'Error', 404
+            return jsonify({'success': False}), 400, {'ContentType': 'application/json'}
 
-        return jsonify({'msg': 'success'})
+        return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/manage/campgroup', methods=['POST', 'DELETE'])
@@ -221,15 +239,16 @@ def submit_camper_group_management():
         return redirect(url_for('campers'))
 
     elif request.method == 'DELETE':
+
         try:
             group_id = request.json['group_id']
             camp_group = CampGroup.query.filter_by(id=group_id).first()
             db.session.delete(camp_group)
             db.session.commit()
         except Exception:
-            return 'Error', 404
+            return jsonify({'success': False}), 400, {'ContentType': 'application/json'}
 
-        return jsonify({'msg': 'success'})
+        return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/saveEvent', methods=['POST', 'PUT', 'DELETE'])

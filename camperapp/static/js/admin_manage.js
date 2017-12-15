@@ -64,7 +64,6 @@ function deleteCamper(camper_id) {
     var result = confirm("Are you sure you want to delete? This cannot be undone");
     if (result) {
         //Logic to delete the item
-        console.log(camper_id);
         $.ajax({
             url: "/manage/camper",
             type: "DELETE",
@@ -83,26 +82,56 @@ function deleteCamper(camper_id) {
     }
 }
 
-  function deleteGroup(group_id)
+function deleteGroup(group_id)
+{
+  var result = confirm("Are you sure you want to delete? This cannot be undone");
+  if (result)
   {
-      var result = confirm("Are you sure you want to delete? This cannot be undone");
-      if (result)
-      {
-        $.ajax({
-            url: '/manage/campgroup',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify({'group_id': group_id}),
-            dataType: 'json'
+    $.ajax({
+        url: '/manage/campgroup',
+        type: 'DELETE',
+        contentType: 'application/json',
+        data: JSON.stringify({'group_id': group_id}),
+        dataType: 'json'
+    })
+        .done( function (response) {
+         if (response)
+         {
+           $("#group_entry" + group_id).remove()
+         }
         })
-            .done( function (response) {
-             if (response)
-             {
-               $("#group_entry" + group_id).remove()
-             }
-            })
-            .fail(function () {
-              Materialize.toast('An Error Occurred', 4000)
-            })
-      }
+        .fail(function () {
+          Materialize.toast('An Error Occurred', 4000)
+        })
   }
+}
+
+function deleteParent(parent_id)
+{
+  var result = confirm("Are you sure you want to delete? This cannot be undone");
+  if (result)
+  {
+    $.ajax({
+        url: '/manage/parent',
+        type: 'DELETE',
+        contentType: 'application/json',
+        data: JSON.stringify({'parent_id': parent_id}),
+        dataType: 'json'
+    })
+        .done( function (response) {
+         if (response)
+         {
+           $("#parent_entry" + parent_id).remove()
+         }
+        })
+        .fail(function (response) {
+
+            if (response && response.responseJSON.msg)
+            {
+                Materialize.toast(response.responseJSON.msg, 4000)
+            } else {
+                Materialize.toast('An Error Occurred', 4000)
+            }
+        })
+  }
+}
