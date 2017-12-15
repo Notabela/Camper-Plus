@@ -151,18 +151,18 @@
 
       <div class="row">
         <div class="input-field col s6">
-            {{ parent_form.first_name }}
+            {{ parent_form.first_name(required="true") }}
             {{ parent_form.first_name.label }}
         </div>
         <div class="input-field col s6">
-            {{ parent_form.last_name }}
+            {{ parent_form.last_name(required="true") }}
             {{ parent_form.last_name.label }}
         </div>
       </div>
 
       <div class="row">
         <div class="input-field col s6">
-            {{ parent_form.birth_date(class="datepicker") }}
+            {{ parent_form.birth_date(class="datepicker", required="true") }}
             {{ parent_form.birth_date.label }}
         </div>
         <div class="input-field col s6">
@@ -173,11 +173,11 @@
 
       <div class="row">
         <div class="input-field col s6">
-            {{ parent_form.email(type="email") }}
+            {{ parent_form.email(type="email", required="true") }}
             {{ parent_form.email.label }}
         </div>
         <div class="input-field col s6">
-            {{ parent_form.phone(type="tel") }}
+            {{ parent_form.phone(type="tel", required="true") }}
             {{ parent_form.phone.label }}
         </div>
       </div>
@@ -185,27 +185,27 @@
       <div class="row">
         <h5>Address</h5>
         <div class="input-field col s12">
-            {{ parent_form.street_address }}
+            {{ parent_form.street_address(required="true") }}
             {{ parent_form.street_address.label }}
         </div>
         <div class="input-field col s4">
-            {{ parent_form.city }}
+            {{ parent_form.city(required="true") }}
             {{ parent_form.city.label }}
         </div>
         <div class="input-field col s4">
-            {{ parent_form.state }}
+            {{ parent_form.state(required="true") }}
             {{ parent_form.state.label }}
         </div>
         <div class="input-field col s4">
-            {{ parent_form.zipcode }}
+            {{ parent_form.zipcode(required="true") }}
             {{ parent_form.zipcode.label }}
         </div>
       </div>
 
     </div>
     <div class="modal-footer">
-      {{ parent_form.submit(class="waves-effect waves-light btn") }}
-      <!--<button class="btn waves-effect waves-light modal-action" type="submit" id="saveEvent">Save</button>-->
+      <!--{{ parent_form.submit(class="waves-effect waves-light btn") }}-->
+      <button class="btn waves-effect waves-light modal-action" type="submit" id="submitParent">Save</button>
       <button class="btn waves-effect waves-light modal-action modal-close red" type="reset" value="Cancel">Cancel</button>
     </div>
   </div>
@@ -220,22 +220,22 @@
 
       <div class="row">
         <div class="input-field col s6">
-            {{ child_form.first_name }}
+            {{ child_form.first_name(required="true") }}
             {{ child_form.first_name.label }}
         </div>
         <div class="input-field col s6">
-            {{ child_form.last_name }}
+            {{ child_form.last_name(required="true") }}
             {{ child_form.last_name.label }}
         </div>
       </div>
 
       <div class="row">
         <div class="input-field col s4">
-            {{ parent_form.birth_date(class="datepicker") }}
+            {{ parent_form.birth_date(class="datepicker", required="true") }}
             {{ parent_form.birth_date.label }}
         </div>
         <div class="input-field col s4">
-            {{ child_form.grade }}
+            {{ child_form.grade(required="true") }}
             {{ child_form.grade.label }}
         </div>
         <div class="input-field col s4">
@@ -253,6 +253,7 @@
 
       <div class="row">
         <h5>Address</h5>
+        <p class="grey-text lighten-2">Leave blank if same as Parent Address</p>
         <div class="input-field col s12">
             {{ child_form.street_address }}
             {{ child_form.street_address.label }}
@@ -274,11 +275,11 @@
       <div class="row">
         <h5>Parent Information</h5>
         <div class="input-field col s6">
-            {{ child_form.parent_first_name }}
+            {{ child_form.parent_first_name(required="true") }}
             {{ child_form.parent_first_name.label }}
         </div>
         <div class="input-field col s6">
-            {{ child_form.parent_last_name }}
+            {{ child_form.parent_last_name(required="true") }}
             {{ child_form.parent_last_name.label }}
         </div>
       </div>
@@ -292,8 +293,8 @@
     </div>
 
     <div class="modal-footer">
-      {{ child_form.submit(class="waves-effect waves-light modal-action btn") }}
-      <!--<button class="btn waves-effect waves-light modal-action" type="submit" id="saveEvent">Save</button>-->
+      <!--{{ child_form.submit(class="waves-effect waves-light modal-action btn", onClick="console.log('button press')") }}-->
+      <button class="btn waves-effect waves-light modal-action" type="submit" id="saveCamper">Save</button>
       <button class="btn waves-effect waves-light modal-action modal-close red" type="reset" value="Cancel">Cancel</button>
     </div>
   </div>

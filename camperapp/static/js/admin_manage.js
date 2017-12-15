@@ -10,14 +10,26 @@ $(document).ready(function () {
       preferredFormat: "hex",
       showInput: true
     });
+    $('.datepicker').each(function(){
+      var pickr = $(this).pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 80, // Creates a dropdown of 15 years to control year
+        editable: true
+      });
+      $(this).click(function(){
+          pickr.pickadate('open');
+      });
+      });
+    /*
     $('.datepicker').pickadate({
       selectMonths: true, // Creates a dropdown to control month
-      selectYears: 15, // Creates a dropdown of 15 years to control year,
+      selectYears: 80, // Creates a dropdown of 15 years to control year,
       today: 'Today',
       clear: 'Clear',
       close: 'Ok',
       closeOnSelect: false // Close upon selecting a date,
     });
+    */
     $('.dropdown-button').dropdown({
       inDuration: 300,
       outDuration: 225,
