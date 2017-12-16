@@ -58,13 +58,13 @@ $(document).ready(function () {
         $('#menu').attr('href', '#' + $(event.target).attr('data-modal'));
     });
     $(".camper_checkbox").click(function () {
-        var answer = confirm("Confirm Status Change")
+        var answer = confirm("Confirm Status Change");
         if (answer) {
             $.ajax({
                 url: '/manage/camper',
                 type: 'PATCH',
                 contentType: 'application/json',
-                data: {'camper_id': $(this).attr('data-camper-id'), 'status': $(this).is(':checked')},
+                data: JSON.stringify({'camper_id': $(this).attr('data-camper-id'), 'status': $(this).is(':checked')}),
                 dataType: 'json'
             })
                 .done(function (response){
@@ -74,6 +74,9 @@ $(document).ready(function () {
                 .fail(function (response) {
                     Materialize.toast('An Error Occurred', 4000)
                 })
+        } else {
+            if ($(this).is(':checked')) { $(this).prop('checked', false) }
+            else { $(this).prop('checked', true)}
         }
     })
 });

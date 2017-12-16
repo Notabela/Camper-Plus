@@ -220,7 +220,14 @@ def submit_camper_management():
         return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
     elif request.method == "PATCH":
+        # Patch handles case when camper enrollment status is changed
+        camper_id = request.json['camper_id']
+        camper_status = request.json['status']
 
+        camper = Camper.query.filter_by(id=camper_id).first()
+        camper.is_active = camper_status
+
+        db.session.commit()
         return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 
