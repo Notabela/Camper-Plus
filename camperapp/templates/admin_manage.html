@@ -45,7 +45,11 @@
             <td>{{ camper.last_name.capitalize() }}, {{ camper.first_name.capitalize() }}</td>
             <td>{{ camper.age() }}</td>
             <td>{{ camper.grade }}</td>
-            <td>{{ camper.campgroup.name.capitalize() }}</td>
+            {% if camper.campgroup.name %}
+                <td>{{ camper.campgroup.name.capitalize() }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
             <td>{{ camper.parent.last_name.capitalize() }}, {{ camper.parent.first_name.capitalize() }}</td>
             <td>
               <div class="switch">

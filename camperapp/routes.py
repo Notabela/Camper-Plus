@@ -169,7 +169,15 @@ def submit_camper_management():
                                         last_name=child_form.parent_last_name.data.lower()).first()
         if not parent:
             # Return and show an error
-            flash("Selected Parent does not exist", category='error')
+            flash("Error: Selected Parent does not exist", category='error')
+            return redirect(url_for('campers'))
+
+        # Make Sure groups exits
+        groups = CampGroup.query.all()
+
+        if not groups:
+            # Return and show an error
+            flash("Error: Please create a group First", category='error')
             return redirect(url_for('campers'))
 
         camper = Camper()
