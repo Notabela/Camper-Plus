@@ -95,6 +95,13 @@ def campers():
     CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
                                         validators=[DataRequired("Please select a group.")])
 
+    _parents = Parent.query.order_by(Parent.last_name).all()
+    _parent_choices = [(parent.id, "{}, {}".format(parent.last_name.capitalize(),
+                                                   parent.first_name.capitalize())) for parent in _parents]
+
+    CreateChildForm.parent = SelectField(label='Parent', choices=_parent_choices,
+                                         validators=[DataRequired("Please select a Parent")])
+
     parent_form = CreateParentForm()
     child_form = CreateChildForm()
 
@@ -165,11 +172,12 @@ def submit_camper_management():
         child_form = CreateChildForm(request.form)
 
         # Search for Parent and Populate field
-        parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data.lower(),
-                                        last_name=child_form.parent_last_name.data.lower()).first()
-        if not parent:
+        # parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data.lower(),
+        #                                 last_name=child_form.parent_last_name.data.lower()).first()
+        parents = Parent.query.all()
+        if not parents:
             # Return and show an error
-            flash("Error: Selected Parent does not exist", category='error')
+            flash("Error: Please add a parent First", category='error')
             return redirect(url_for('campers'))
 
         # Make Sure groups exits
@@ -177,7 +185,7 @@ def submit_camper_management():
 
         if not groups:
             # Return and show an error
-            flash("Error: Please create a group First", category='error')
+            flash("Error: Please add a group First", category='error')
             return redirect(url_for('campers'))
 
         camper = Camper()
@@ -187,6 +195,9 @@ def submit_camper_management():
         camper.grade = child_form.grade.data
         camper.gender = child_form.gender.data
         camper.medical_notes = child_form.medical_notes.data
+
+        camper.parent_id = int(child_form.parent.data)
+        parent = camper.parent
 
         if child_form.street_address.data == "":
             # No address supplied, set address to parent address
@@ -204,7 +215,7 @@ def submit_camper_management():
         camper.is_active = False
         camper.group_id = int(child_form.group.data)
 
-        camper.parent = parent
+        # camper.parent = parent
 
         db.session.add(camper)
         db.session.commit()

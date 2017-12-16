@@ -253,7 +253,12 @@
           {{ child_form.medical_notes.label }}
         </div>
       </div>
-
+      <div class="row">
+        <h5>Parent</h5>
+        <div class="input-field col s6">
+            {{ child_form.parent(required="true") }}
+        </div>
+      </div>
       <div class="row">
         <h5>Address</h5>
         <p class="grey-text lighten-2">Leave blank if same as Parent Address</p>
@@ -276,6 +281,7 @@
       </div>
 
       <div class="row">
+        <!--
         <h5>Parent Information</h5>
         <div class="input-field col s6">
             {{ child_form.parent_first_name(required="true") }}
@@ -286,9 +292,9 @@
             {{ child_form.parent_last_name.label }}
         </div>
       </div>
-      <div class="row">
-        <h5>Group</h5>
+      -->
         <div class="input-field col s6">
+        <h5>Group</h5>
           {{ child_form.group }}
         </div>
       </div>
