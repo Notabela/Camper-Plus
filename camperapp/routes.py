@@ -173,6 +173,14 @@ def submit_camper_group_management():
 
     return redirect(url_for('campers'))
 
+@app.route('/faq', methods=['GET'])
+def faq():
+    """
+    The route '/help/faq/' directs the user to the Frequently Asked Questions
+    page. This page contains the user documentation which will assist the
+    end users who are using the app.
+    """
+    return render_template("faq.html")
 
 @app.route('/saveEvent', methods=['POST', 'PUT', 'DELETE'])
 def submit_handler():
