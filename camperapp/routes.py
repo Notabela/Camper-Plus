@@ -7,7 +7,7 @@ from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
 import camperapp.login
 from flask import render_template, session, redirect, url_for, jsonify, request, flash
-from flask_login import login_user
+from flask_login import login_user, current_user, login_required, logout_user
 from wtforms import SelectField
 from wtforms.validators import DataRequired
 
@@ -26,6 +26,7 @@ def faq():
 
 
 @app.route('/schedule', methods=['GET', 'POST'])
+@login_required
 def schedule():
     """View displays the schedule-making page"""
     groups = CampGroup.query.all()
@@ -33,6 +34,7 @@ def schedule():
 
 
 @app.route('/parent/schedule', methods=['GET'])
+@login_required
 def parent_schedule():
     """View displays the schedule of Parent's enrolled children"""
     # Mock Children - to be replaced by real Campers
@@ -47,6 +49,7 @@ def parent_schedule():
 
 
 @app.route('/parent/enrollments', methods=['GET'])
+@login_required
 def parent_enrollments():
     """View displays the enrolled children of a parent"""
     # Mock Children - to be replaced by real Campers
@@ -66,6 +69,7 @@ def parent_enrollments():
 
 
 @app.route('/parent/register', methods=['GET', 'POST'])
+@login_required
 def parent_register():
     """View presents a registration form for enrolling a new child"""
     form = ChildEnrollmentForm()
@@ -76,18 +80,21 @@ def parent_register():
 
 
 @app.route('/parent/account', methods=['GET'])
+@login_required
 def parent_account():
     """View displays the parent's account settings"""
     return "Hello World"
 
 
 @app.route('/parent/forms', methods=['GET'])
+@login_required
 def parent_forms():
     """View displays the pending forms of the parent"""
     return "Hello World"
 
 
 @app.route('/campers', methods=['GET'])
+@login_required
 def campers():
     """View displays the camper organization page"""
 
@@ -117,6 +124,7 @@ def campers():
 
 
 @app.route('/manage/parent', methods=['POST', 'DELETE'])
+@login_required
 def submit_parent_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
@@ -166,6 +174,7 @@ def submit_parent_management():
 
 
 @app.route('/manage/camper', methods=['POST', 'DELETE', 'PATCH'])
+@login_required
 def submit_camper_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
@@ -253,6 +262,7 @@ def submit_camper_management():
 
 
 @app.route('/manage/campgroup', methods=['POST', 'DELETE'])
+@login_required
 def submit_camper_group_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
@@ -284,6 +294,7 @@ def submit_camper_group_management():
 
 
 @app.route('/saveEvent', methods=['POST', 'PUT', 'DELETE'])
+@login_required
 def submit_handler():
     """EndPoint for creating, updating and deleting Calendar Events"""
     # a = request.get_json(force=True)
@@ -331,6 +342,7 @@ def submit_handler():
 
 
 @app.route('/getCampEvents', methods=['GET'])
+@login_required
 def get_camp_events():
     """Endpoint for retrieving saved CampEvents"""
     start = request.args.get('start')  # get events on/after start
@@ -425,5 +437,10 @@ def documentation():
 @app.route("/logout")
 def logout():
     """Logout Admin or Parent"""
-    session.pop('email', None)
+    logout_user()
     return redirect(url_for('index'))
+
+
+@app.before_request
+def before_request():
+    g.user = current_user
