@@ -41,6 +41,14 @@ nav a.dropdown-button, nav a.dropdown-button i{
     margin-right: 10px;
 }
 
+#logout_tab {
+    font-size: 1em;
+}
+
+#acc_icon {
+    font-size: 1.7em;
+}
+
 nav ul.dropdown-content li a{
     color: #0268A6 !important; /* no need for !important :) */
 }

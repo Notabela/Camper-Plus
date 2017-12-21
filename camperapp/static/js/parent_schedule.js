@@ -27,4 +27,5 @@ $(document).ready(function () {
 
     $("#schedule_drop").addClass("active");
     $("#schedule_bar").addClass("active");
+    $("#logout_drop").addClass("active");
 });

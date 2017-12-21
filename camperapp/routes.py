@@ -11,18 +11,20 @@ from flask_login import login_user, current_user, login_required, logout_user
 from wtforms import SelectField
 from wtforms.validators import DataRequired
 
+account_name = None
+
 
 @app.route('/', methods=['GET'])
 def index():
     """View displays the homepage"""
     form = LoginForm()
-    return render_template("home.html", form=form)
+    return render_template("home.html", form=form, account_name=account_name)
 
 
 @app.route('/faq', methods=['GET'])
 def faq():
     """View displays the FAQ page"""
-    return render_template("faq.html")
+    return render_template("faq.html", account_name=account_name)
 
 
 @app.route('/schedule', methods=['GET', 'POST'])
@@ -31,7 +33,7 @@ def faq():
 def schedule():
     """View displays the schedule-making page"""
     groups = CampGroup.query.all()
-    return render_template("admin_schedule.html", groups=groups)
+    return render_template("admin_schedule.html", account_name=account_name, groups=groups)
 
 
 @app.route('/parent/schedule', methods=['GET'])
@@ -47,7 +49,7 @@ def parent_schedule():
             self.name = name
 
     children = [Child(1, 'John Redcorn', 'green'), Child(2, 'Bobby Hill', 'brown')]
-    return render_template("parent_schedule.html", children=children)
+    return render_template("parent_schedule.html", account_name=account_name, children=children)
 
 
 @app.route('/parent/enrollments', methods=['GET'])
@@ -68,7 +70,7 @@ def parent_enrollments():
 
     children = [Child(1, 'John Redcorn', 12, 6, 'Falcons', 'green', 'Enrolled'),
                 Child(1, 'Bobby Hill', 13, 7, 'Dodgers', 'brown', 'Enrolled')]
-    return render_template("parent_enrollments.html", children=children)
+    return render_template("parent_enrollments.html", account_name=account_name, children=children)
 
 
 @app.route('/parent/register', methods=['GET', 'POST'])
@@ -79,7 +81,7 @@ def parent_register():
     form = ChildEnrollmentForm()
     camp_season = "Summer 2018"
     parent_name = "Jane Armadillo"
-    return render_template("parent_register.html", form=form,
+    return render_template("parent_register.html", form=form, account_name=account_name,
                            camp_season=camp_season, parent_name=parent_name)
 
 
@@ -126,7 +128,7 @@ def campers():
     all_parents = Parent.query.order_by(Parent.last_name).all()
     all_groups = CampGroup.query.order_by(CampGroup.name).all()
 
-    return render_template('admin_manage.html', groups=all_groups, parents=all_parents,
+    return render_template('admin_manage.html', account_name=account_name, groups=all_groups, parents=all_parents,
                            campers=all_campers, parent_form=parent_form, child_form=child_form)
 
 
@@ -381,7 +383,7 @@ def login():
 
     if request.method == 'POST':
         if not form.validate():
-            return render_template('login.html', form=form)
+            return render_template('login.html', account_name=account_name, form=form)
         else:
             email = form.email.data
             password = form.password.data
@@ -412,7 +414,7 @@ def login():
             #     return redirect(url_for('login'))
 
     elif request.method == 'GET':
-        return render_template('login.html', form=form)
+        return render_template('login.html', account_name=account_name, form=form)
 
 
 @app.route('/signupAdmin', methods=['GET', 'POST'])

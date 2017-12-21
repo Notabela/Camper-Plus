@@ -122,8 +122,11 @@ class Parent(db.Model):
     campers = db.relationship('Camper', backref='parent', lazy='dynamic')
     user = db.relationship('User', uselist=False, backref='user')
 
+    def name(self):
+        return "{}, {}".format(self.last_name, self.first_name)
+
     def __repr__(self):
-        return '<Parent {}>'.format(self.name)
+        return '<Parent {}>'.format(self.name())
 
 
 class Camper(db.Model):

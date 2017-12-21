@@ -25,7 +25,17 @@
             <ul class="right hide-on-med-and-down">
                 <li id="enrollments_bar"><a href="{{ url_for('campers') }}"><i class="material-icons left">people</i>Manage</a></li>
                 <li id="schedule_bar"><a href="{{ url_for('schedule') }}"><i class="material-icons left">schedule</i>Schedule</a></li>
-                <li id="account_bar"><a href="#"><i class="material-icons left">account_circle</i>Account</a></li>
+                                    <!--Drop down for Account button to enable Logout -->
+                <ul id="logout_drop" class="dropdown-content">
+                    <li id="logout_drop"><a href="{{ url_for('logout') }}">Log out</a></li>
+                </ul>
+                <a class='right dropdown-button logout-button' id="logout_tab" href='#' data-activates='logout_drop'><i class="material-icons left" id="acc_icon">account_circle</i>
+                    {% if  account_name %}
+                    {{ account_name }}
+                    {% else %}
+                    Account
+                    {% endif %}
+                </a>
             </ul>
             <!-- id is duplicated on purpose -->
               <ul id='dropdown1' class='dropdown-content'>
