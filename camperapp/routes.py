@@ -2,11 +2,12 @@
 
 from datetime import datetime
 from camperapp import app
-from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent
+from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent, User, Role
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
+import camperapp.login
 from flask import render_template, session, redirect, url_for, jsonify, request, flash
-from flask_login import login_user, logout_user, current_user, login_required
+from flask_login import login_user
 from wtforms import SelectField
 from wtforms.validators import DataRequired
 
@@ -360,6 +361,17 @@ def login():
         else:
             email = form.email.data
             password = form.password.data
+            registered_user = User.query.filter_by(email=email.lower()).first()
+            if registered_user and registered_user.check_password(password):
+                # log the user In
+                login_user(registered_user)
+                if registered_user.role is Role.parent:
+                    return redirect(url_for('parent_enrollments'))
+                elif registered_user.role is Role.admin:
+                    return redirect(url_for('campers'))
+            else:
+                flash('Username or Password is invalid', 'error')
+                return redirect(url_for('login'))
 
 
 

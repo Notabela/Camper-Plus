@@ -120,7 +120,7 @@ class Parent(db.Model):
     state = db.Column(LowerCaseString)
     zip_code = db.Column(db.Integer())
     campers = db.relationship('Camper', backref='parent', lazy='dynamic')
-    user = db.relationship('User', uselist=False, backref='user', lazy='dynamic')
+    user = db.relationship('User', uselist=False, backref='user')
 
     def __repr__(self):
         return '<Parent {}>'.format(self.name)
@@ -199,7 +199,7 @@ class User(db.Model):
     role = db.Column(Enum(Role, name="role"), nullable=False)
     parent_id = db.Column(db.Integer, db.ForeignKey('parent.id'))  # will be blank if admin
 
-    def __init__(self, username, email, password, role):
+    def __init__(self, email, password, role):
         """
         User Initializer
         :param email: email address
@@ -221,6 +221,12 @@ class User(db.Model):
 
     def get_id(self):
         return self.id
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
 
 
 class Admin(db.Model):
