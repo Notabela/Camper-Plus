@@ -6,6 +6,7 @@ from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, C
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
 from flask import render_template, session, redirect, url_for, jsonify, request, flash
+from flask_login import login_user, logout_user, current_user, login_required
 from wtforms import SelectField
 from wtforms.validators import DataRequired
 
@@ -360,17 +361,19 @@ def login():
             email = form.email.data
             password = form.password.data
 
-            useradmin = Admin.query.filter_by(email=email).first()
-            if useradmin is not None and useradmin.check_password(password):
-                session['email'] = form.email.data
-                return redirect(url_for('campers'))
 
-            userparent = Parent.query.filter_by(email=email).first()
-            if userparent is not None and userparent.check_password(password):
-                session['email'] = form.email.data
-                return redirect(url_for('parent_enrollments'))
-            else:
-                return redirect(url_for('login'))
+
+            # useradmin = Admin.query.filter_by(email=email).first()
+            # if useradmin is not None and useradmin.check_password(password):
+            #     session['email'] = form.email.data
+            #     return redirect(url_for('campers'))
+            #
+            # userparent = Parent.query.filter_by(email=email).first()
+            # if userparent is not None and userparent.check_password(password):
+            #     session['email'] = form.email.data
+            #     return redirect(url_for('parent_enrollments'))
+            # else:
+            #     return redirect(url_for('login'))
 
     elif request.method == 'GET':
         return render_template('login.html', form=form)

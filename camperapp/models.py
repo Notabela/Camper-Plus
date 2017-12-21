@@ -1,9 +1,17 @@
 """Models in Camper APP"""
+import enum
 from datetime import datetime
 from marshmallow import Schema, fields
 from camperapp import db
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlalchemy.types as types
+from sqlalchemy import Enum
+
+
+class Role(enum.Enum):
+    """Role of Logged in User"""
+    admin = 'admin'
+    parent = 'parent'
 
 
 class LowerCaseString(types.TypeDecorator):
@@ -112,6 +120,7 @@ class Parent(db.Model):
     state = db.Column(LowerCaseString)
     zip_code = db.Column(db.Integer())
     campers = db.relationship('Camper', backref='parent', lazy='dynamic')
+    user = db.relationship('User', uselist=False, backref='user', lazy='dynamic')
 
     def __repr__(self):
         return '<Parent {}>'.format(self.name)
@@ -178,6 +187,40 @@ class CampGroup(db.Model):
 
     def __repr__(self):
         return '<Group {}>'.format(self.name)
+
+
+class User(db.Model):
+    """User table for Login"""
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # username = db.Column(db.String, unique=True)
+    email = db.Column(db.String, unique=True)
+    password = db.Column(db.String())
+    role = db.Column(Enum(Role, name="role"), nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('parent.id'))  # will be blank if admin
+
+    def __init__(self, username, email, password, role):
+        """
+        User Initializer
+        :param email: email address
+        :param password: hashed password
+        :param role: admin or parent
+        """
+        # self.username = username
+        self.email = email
+        self.role = role
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        """
+        Check Password against hashed password
+        :param password: password
+        :return: true if password matches
+        """
+        return check_password_hash(self.password, password)
+
+    def get_id(self):
+        return self.id
 
 
 class Admin(db.Model):
