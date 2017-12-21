@@ -132,7 +132,7 @@ def campers():
 
 @app.route('/manage/parent', methods=['POST', 'DELETE'])
 @login_required
-@requires_roles(Role.parent)
+@requires_roles(Role.admin)
 def submit_parent_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
