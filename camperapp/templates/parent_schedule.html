@@ -3,8 +3,12 @@
 {% block headcontent %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/parent_schedule.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css" />
+    <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.print.css" media="print"/>
+    <!--
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fullcalendar3.6.2/fullcalendar.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fullcalendar3.6.2/fullcalendar.print.min.css') }}" media='print' />
+    -->
     <link rel="stylesheet" type="text/css" href='https://code.jquery.com/ui/1.12.1/themes/flick/jquery-ui.css' />
 {% endblock headcontent %}
 
@@ -22,7 +26,7 @@
         <li>
           <div style="text-align: center">
             {% for child in children %}
-              <button class="child" id="child{{ child.id }}" style="background-color:{{ child.color }};">{{ child.name }}</button><br>
+              <button class="child" id="child{{ child.id }}" style="background-color:{{ child.color }};">{{ child.name.capitalize() }}</button><br>
             {% endfor %}
           </div>
         </li>
@@ -34,7 +38,9 @@
 {% endblock bodycontent %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/fullcalendar3.6.2/moment.min.js') }}" ></script>
-    <script src="{{ url_for('static', filename='js/fullcalendar3.6.2/fullcalendar.min.js') }}" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js" ></script>
+    <!--<script src="{{ url_for('static', filename='js/fullcalendar3.6.2/moment.min.js') }}" ></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js" ></script>
+    <!--<script src="{{ url_for('static', filename='js/fullcalendar3.6.2/fullcalendar.min.js') }}" ></script>-->
     <script src="{{ url_for('static', filename='js/parent_schedule.js') }}" ></script>
 {% endblock scripts %}

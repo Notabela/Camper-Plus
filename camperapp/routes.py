@@ -5,9 +5,9 @@ from camperapp import app
 from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
-from flask import render_template, session, redirect, url_for
-from flask import jsonify
-from flask import request
+from flask import render_template, session, redirect, url_for, jsonify, request, flash
+from wtforms import SelectField
+from wtforms.validators import DataRequired
 
 
 @app.route('/', methods=['GET'])
@@ -15,6 +15,12 @@ def index():
     """View displays the homepage"""
     form = LoginForm()
     return render_template("home.html", form=form)
+
+
+@app.route('/faq', methods=['GET'])
+def faq():
+    """View displays the FAQ page"""
+    return render_template("faq.html")
 
 
 @app.route('/schedule', methods=['GET', 'POST'])
@@ -82,6 +88,20 @@ def parent_forms():
 @app.route('/campers', methods=['GET'])
 def campers():
     """View displays the camper organization page"""
+
+    # Dynamically Add the Groups to the the Child Form
+    _groups = CampGroup.query.order_by(CampGroup.name).all()
+    _group_choices = [(group.id, group.name.capitalize()) for group in _groups]
+    CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
+                                        validators=[DataRequired("Please select a group.")])
+
+    _parents = Parent.query.order_by(Parent.last_name).all()
+    _parent_choices = [(parent.id, "{}, {}".format(parent.last_name.capitalize(),
+                                                   parent.first_name.capitalize())) for parent in _parents]
+
+    CreateChildForm.parent = SelectField(label='Parent', choices=_parent_choices,
+                                         validators=[DataRequired("Please select a Parent")])
+
     parent_form = CreateParentForm()
     child_form = CreateChildForm()
 
@@ -94,84 +114,171 @@ def campers():
                            campers=all_campers, parent_form=parent_form, child_form=child_form)
 
 
-@app.route('/manage/parent', methods=['POST', 'PUT', 'DELETE'])
+@app.route('/manage/parent', methods=['POST', 'DELETE'])
 def submit_parent_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
-    parent_form = CreateParentForm(request.form)
-    # child_form = CreateChildForm()
 
-    # Add Validation Later
-    parent = Parent()
-    parent.first_name = parent_form.first_name.data
-    parent.last_name = parent_form.last_name.data
-    parent.birth_date = datetime.strptime(parent_form.birth_date._value(), "%d %B, %Y")
-    parent.gender = parent_form.gender.data
-    parent.email = parent_form.email.data
-    parent.phone = parent_form.phone.data
-    parent.street_address = parent_form.street_address.data
-    parent.city = parent_form.city.data
-    parent.state = parent_form.state.data
-    parent.zip_code = parent_form.zipcode.data
+    if request.method == 'POST':
+        parent_form = CreateParentForm(request.form)
+        # child_form = CreateChildForm()
+        # _groups = CampGroup.query.order_by(CampGroup.name).all()
+        # _group_choices = [(group.id, group.name) for group in _groups]
+        # child_form.group = SelectField(label='Group', choices=_group_choices)
 
-    db.session.add(parent)
-    db.session.commit()
+        # Add Validation Later
+        parent = Parent()
+        parent.first_name = parent_form.first_name.data
+        parent.last_name = parent_form.last_name.data
+        parent.birth_date = datetime.strptime(parent_form.birth_date._value(), "%d %B, %Y")
+        parent.gender = parent_form.gender.data
+        parent.email = parent_form.email.data
+        parent.phone = parent_form.phone.data
+        parent.street_address = parent_form.street_address.data
+        parent.city = parent_form.city.data
+        parent.state = parent_form.state.data
+        parent.zip_code = parent_form.zipcode.data
 
-    return redirect(url_for('campers'))
+        db.session.add(parent)
+        db.session.commit()
+
+        # tell template to default to parent tab
+        flash("parents", category='tab_choice')
+        return redirect(url_for('campers'))
+
+    elif request.method == 'DELETE':
+        try:
+            parent_id = request.json['parent_id']
+            parent = Parent.query.filter_by(id=parent_id).first()
+
+            if len(parent.campers.all()) > 0:
+                return jsonify({'success': False, 'msg': 'Cannot Delete Parent with Enrollments'}), \
+                       400, {'ContentType': 'application/json'}
+
+            db.session.delete(parent)
+            db.session.commit()
+        except Exception:
+            return jsonify({'success': False, 'msg': 'Exception occurred'}), 500, {'ContentType': 'application/json'}
+
+        return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 
-@app.route('/manage/camper', methods=['POST'])
+@app.route('/manage/camper', methods=['POST', 'DELETE', 'PATCH'])
 def submit_camper_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
-    child_form = CreateChildForm(request.form)
 
-    # Add Validation Later
-    camper = Camper()
-    camper.first_name = child_form.first_name.data
-    camper.last_name = child_form.last_name.data
-    camper.birth_date = datetime.strptime(child_form.birth_date._value(), "%d %B, %Y")
-    camper.grade = child_form.grade.data
-    camper.gender = child_form.gender.data
-    camper.medical_notes = child_form.medical_notes.data
-    camper.street_address = child_form.street_address.data
-    camper.city = child_form.city.data
-    camper.state = child_form.state.data
-    camper.zip_code = child_form.zipcode.data
+    if request.method == 'POST':
+        child_form = CreateChildForm(request.form)
 
-    camper.is_active = False
-    camper.group_id = int(child_form.group.data)
+        # Search for Parent and Populate field
+        # parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data.lower(),
+        #                                 last_name=child_form.parent_last_name.data.lower()).first()
+        parents = Parent.query.all()
+        if not parents:
+            # Return and show an error
+            flash("Error: Please add a parent First", category='error')
+            return redirect(url_for('campers'))
 
-    # Search for Parent and Populate field
-    parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data,
-                                    last_name=child_form.parent_last_name.data).first()
-    if not parent:
-        return "<h1>Error</h1>"
+        # Make Sure groups exits
+        groups = CampGroup.query.all()
 
-    camper.parent = parent
+        if not groups:
+            # Return and show an error
+            flash("Error: Please add a group First", category='error')
+            return redirect(url_for('campers'))
 
-    db.session.add(camper)
-    db.session.commit()
+        camper = Camper()
+        camper.first_name = child_form.first_name.data
+        camper.last_name = child_form.last_name.data
+        camper.birth_date = datetime.strptime(child_form.birth_date._value(), "%d %B, %Y")
+        camper.grade = child_form.grade.data
+        camper.gender = child_form.gender.data
+        camper.medical_notes = child_form.medical_notes.data
 
-    # group_id = db.Column(db.Integer(), db.ForeignKey('campgroup.id'))
-    # parent_id = db.Column(db.Integer(), db.ForeignKey('parent.id'))
+        camper.parent_id = int(child_form.parent.data)
+        parent = camper.parent
 
-    return redirect(url_for('campers'))
+        if child_form.street_address.data == "":
+            # No address supplied, set address to parent address
+            camper.street_address = parent.street_address
+            camper.city = parent.city
+            camper.state = parent.state
+            camper.zip_code = parent.zip_code
+
+        else:
+            camper.street_address = child_form.street_address.data
+            camper.city = child_form.city.data
+            camper.state = child_form.state.data
+            camper.zip_code = child_form.zipcode.data
+
+        camper.is_active = False
+        camper.group_id = int(child_form.group.data)
+
+        # camper.parent = parent
+
+        db.session.add(camper)
+        db.session.commit()
+
+        # group_id = db.Column(db.Integer(), db.ForeignKey('campgroup.id'))
+        # parent_id = db.Column(db.Integer(), db.ForeignKey('parent.id'))
+
+        # tell template to default to parent tab
+        flash("campers", category='tab_choice')
+        return redirect(url_for('campers'))
+
+    elif request.method == 'DELETE':
+        try:
+            camper_id = request.json['camper_id']
+            camper = Camper.query.filter_by(id=camper_id).first()
+            db.session.delete(camper)
+            db.session.commit()
+        except Exception:
+            return jsonify({'success': False}), 400, {'ContentType': 'application/json'}
+
+        return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
+
+    elif request.method == "PATCH":
+        # Patch handles case when camper enrollment status is changed
+        camper_id = request.json['camper_id']
+        camper_status = request.json['status']
+
+        camper = Camper.query.filter_by(id=camper_id).first()
+        camper.is_active = camper_status
+
+        db.session.commit()
+        return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 
-@app.route('/manage/campgroup', methods=['POST'])
+@app.route('/manage/campgroup', methods=['POST', 'DELETE'])
 def submit_camper_group_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
-    form = request.form
-    name = form["groupName"]
-    color = form["color"]
 
-    group = CampGroup(name=name, color=color)
-    db.session.add(group)
-    db.session.commit()
+    if request.method == 'POST':
+        form = request.form
+        name = form["groupName"]
+        color = form["color"]
 
-    return redirect(url_for('campers'))
+        group = CampGroup(name=name, color=color)
+        db.session.add(group)
+        db.session.commit()
+
+        # tell template to default to campgroup tab
+        flash("groups", category='tab_choice')
+        return redirect(url_for('campers'))
+
+    elif request.method == 'DELETE':
+
+        try:
+            group_id = request.json['group_id']
+            camp_group = CampGroup.query.filter_by(id=group_id).first()
+            db.session.delete(camp_group)
+            db.session.commit()
+        except Exception:
+            return jsonify({'success': False}), 400, {'ContentType': 'application/json'}
+
+        return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 @app.route('/faq', methods=['GET'])
 def faq():
@@ -301,14 +408,14 @@ def signup_admin():
     elif request.method == 'GET':
         return render_template('signupAdmin.html', form=form)
 
-@app.route('/documentation', methods=['GET'])
+
+@app.route('/dev_docs', methods=['GET'])
 def documentation():
     """Sphinx documentation"""
     return render_template('docindex.html')
 
 
 @app.route("/logout")
-"""logout"""
 def logout():
     """Logout Admin or Parent"""
     session.pop('email', None)

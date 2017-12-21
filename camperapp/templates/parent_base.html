@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css') }}">-->
 
     {% block headcontent %}
     {% endblock headcontent %}
@@ -21,7 +22,7 @@
             <a href="#" class="brand-logo">Camper+</a>
             <ul class="right hide-on-med-and-down">
                 <li id="enrollments_bar"><a href="{{ url_for('parent_enrollments') }}"><i class="material-icons left">people</i>Enrollments</a></li>
-                <li id="forms_bar"><a href="{{ url_for('parent_forms') }}"><i class="material-icons left">folder</i>Forms</a></li>
+                <!--<li id="forms_bar"><a href="{{ url_for('parent_forms') }}"><i class="material-icons left">folder</i>Forms</a></li>-->
                 <li id="schedule_bar"><a href="{{ url_for('parent_schedule') }}"><i class="material-icons left">schedule</i>Schedule</a></li>
                 <li id="account_bar"><a href="{{ url_for('parent_account') }}"><i class="material-icons left">account_circle</i>Account</a></li>
             </ul>
@@ -47,8 +48,10 @@
   {% block bodycontent %}
   {% endblock bodycontent %}
 
-  <script src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>
-  <script src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>
+  <!--<script src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>-->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js" ></script>
+  <!--<script src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>-->
   {% block scripts %}
   {% endblock scripts %}
 </body>

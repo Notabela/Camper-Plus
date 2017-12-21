@@ -1,143 +1,95 @@
 """Integration Tests for Camper+ App"""
 
-import unittest
-from unittest import TestCase
-import camperapp
-from camperapp.models import db, CampEvent, CampGroup
-import json
+import os
 from datetime import datetime
+import unittest
+from camperapp import app, db
+from camperapp.models import CampEvent, CampGroup, Camper, Admin
+from config import basedir
+import json
+from bs4 import BeautifulSoup
 
-"""<<<<<<< HEAD
-class LoginTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.user = User.objects.create_user(username='testuser',
-                                             password='testpass',
-                                             last_name="test")
-
-    def test_auth_view_redirect(self):
-        response = self.client.post('/auth/',
-                                    {'username': 'sam123', 'password': 'abc123'})
-        self.assertEqual(response.status_code, 302)
-
-    def test_auth_view_invalid_user(self):
-        Test if invalid User
-        response = self.client.post('/auth/', {'username': 'sam123', 'password': 'abc123'},
-                                    follow=True)
-        message = list(response.context['messages'])
-        self.assertEqual("The account you entered is invalid, please try again!",
-                         str(message[0]))
-
-    def test_auth_view_valid_user(self):
-        est if it is a valid user
-        response = self.client.post('/auth/', {'username':'testuser', 'password':'testpass'},
-                                    follow=True)
-        self.assertRedirects(response, '/')
-        message = list(response.context['messages'])
-        self.assertEqual("Hi test, you have successfully logged in.", str(message[0]))
-
-class RegisterTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-        User.objects.create_user(username='testuser', password='pass', email="test@123.com")
-
-    def test_register_redirect(self):
-        Test if it redirects Login
-        response = self.client.post("/registration-submission/",
-                                    {'username' : 'test',
-                                     'password': 'test',
-                                     'email' : 'test123@123.com'})
-        self.assertEqual(response.status_code, 302)
-
-    def test_duplicate_user(self):
-        est if username is alreayd taken
-        response = self.client.post("/registration-submission/", {'username': 'testuser'})
-        self.assertEqual(response.context['message'],
-                         "Try again, the username testuser is already taken.")
-
-    def test_duplicate_email(self):
-        test if a email already exists
-        response = self.client.post("/registration-submission/", {'email': 'test@123.com'})
-        self.assertEqual(response.context['message'],
-                         "Try again, there is already an account with that email test@123.com.")
-
-    def test_register_auto_login(self):
-        Test for Auto Login
-        self.client.post("/registration-submission/",
-                         {'username' : 'test',
-                          'password': 'test',
-                          'email' : 'test123@123.com'},
-                         follow=True)
-        self.assertIn('_auth_user_id', self.client.session)
-
-     def test_user_added_to_db(self):
-        self.client.post("/registration-submission/", {'username' : 'test', 'password' : 'test'})
-        try:
-            User.objects.get(username="test")
-        except ObjectDoesNotExist:
-            self.fail('Retrieving brand new registered user from database failed.' \
-                      'ObjectDoesNotExist exception raised.')
-
-class LogoutTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.user = User.objects.create_user(username='testuser', password='pass')
-        self.client.login(username='testuser', password='pass')
-
-    def test_logout(self): 
-        Test to see if you can log out
-        response = self.client.get('/logout/', follow=True)
-        self.assertRedirects(response, '/')
-        message = list(response.context['messages'])
-        self.assertEqual(str(message[0]), 'You have successfully logged out.')
-        self.assertNotIn('_auth_user_id', self.client.session)"""
-=======
->>>>>>> refs/remotes/Notabela/master"""
 
 class TestUrls(unittest.TestCase):
     def setUp(self):
-        self.app = camperapp.app.test_client()
-        self.app.application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
-        db.app = self.app.application
+        app.config['TESTING'] = True
+        app.config['WTF_CSRF_ENABLED'] = False
+        app.config['DEBUG'] = False
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
+        self.app = app.test_client()
+        self.app_context = app.app_context()
+        self.app_context.push()
+        db.drop_all()
         db.create_all()
         db.session.commit()
 
+        self.assertEqual(app.debug, False)
+
     def tearDown(self):
+        self.app_context.pop()
         db.session.remove()
         db.drop_all()
+        try:
+            os.remove(os.path.join(basedir, 'app.db'))
+        except OSError:
+            pass
 
     def test_home(self):
         """Test that home can be accessed"""
         response = self.app.get("/")
-        self.assertTrue(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
+
+    def test_faq(self):
+        """Test that home can be accessed"""
+        response = self.app.get("/faq")
+        self.assertEqual(response.status_code, 200)
 
     def test_calendar(self):
         """Test that the Calendar Page can be accessed"""
         response = self.app.get("/schedule")
-        self.assertTrue(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_campers(self):
         """Test that the Calendar Page can be accessed"""
         response = self.app.get("/campers")
-        self.assertTrue(response.status_code, 200)
-        
+        self.assertEqual(response.status_code, 200)
+
     def registration(self):
         """Test that the Calendar Page can be accessed"""
         response = self.app.get("/registration")
-        self.assertTrue(response.status_code, 200)""""""
+        self.assertEqual(response.status_code, 200)
+
+    def test_parent_schedule(self):
+        """Test that the parent Schedule can be accessed"""
+        response = self.app.get("/parent/schedule")
+        self.assertEqual(response.status_code, 200)
+
+    def test_parent_enrollment(self):
+        """Test that the parent Schedule can be accessed"""
+        response = self.app.get("/parent/enrollments")
+        self.assertEqual(response.status_code, 200)
+
+    def test_parent_register_student(self):
+        """Test that the parent Schedule can be accessed"""
+        response = self.app.get("/parent/register")
+        self.assertEqual(response.status_code, 200)
 
     def test_post_event_on_schedule_page(self):
-        """Test that roups passed to the schedule page are all displayed"""
+        """Test that groups passed to the schedule page are all displayed"""
+        camp_group = CampGroup('falcons', 'yellow')
+        db.session.add(camp_group)
+        db.session.commit()
+
         json_data = {
             'title': 'Test Event',
             'start': '2017-8-8T12:00:00',
             'end': '2017-8-8T12:00:00',
-            'group': '3'
+            'group_id': '1'
         }
 
         response = self.app.post("/saveEvent", data=json.dumps(json_data),
                                  content_type='application/json')
-        self.assertTrue(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_put_event_on_calendar_endpoint(self):
         """Tests whether put event endpoint is working fine"""
@@ -162,7 +114,7 @@ class TestUrls(unittest.TestCase):
 
         response = self.app.put("/saveEvent", data=json.dumps(json_data),
                                 content_type='application/json')
-        self.assertTrue(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_get_calendar_events_endpoint(self):
         event = CampEvent('Basketball', datetime.now(), datetime.now())
@@ -173,7 +125,7 @@ class TestUrls(unittest.TestCase):
         db.session.commit()
 
         response = self.app.get('/getCampEvents?start=2013-12-01&end=2014-01-12')
-        self.assertTrue(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_delete_event_on_calendar_endpoint(self):
         """Tests whether event posted on calendar is saved into db"""
@@ -196,7 +148,7 @@ class TestUrls(unittest.TestCase):
         }
 
         response = self.app.delete("/saveEvent", data=json.dumps(json_data), content_type='application/json')
-        self.assertTrue(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_post_event_on_calendar_db(self):
         """Tests whether event posted on calendar is saved into db"""
@@ -274,3 +226,15 @@ class TestUrls(unittest.TestCase):
 
         response = self.app.get('/getCampEvents?start=2014-12-01&end=2020-01-12')
         self.assertTrue(response.data is not None)
+
+    def test_campers_add_camper_page_shows_groups(self):
+        group_name = 'falcons'
+        group = CampGroup(group_name, 'green')
+        db.session.add(group)
+        db.session.commit()
+        response = self.app.get('/campers')
+        soup = BeautifulSoup(response.data, 'html.parser')
+        groups_field = soup.find("select", {"id": "group"})
+        option_tag = groups_field.find('option')
+        self.assertTrue(option_tag)
+        self.assertEqual(option_tag.text, group_name)

@@ -3,13 +3,23 @@ from datetime import datetime
 from marshmallow import Schema, fields
 from camperapp import db
 from werkzeug.security import generate_password_hash, check_password_hash
+import sqlalchemy.types as types
+
+
+class LowerCaseString(types.TypeDecorator):
+    """Converts strings to lower case on the way in"""
+
+    impl = types.String
+
+    def process_bind_param(self, value, dialect):
+        return value.lower()
 
 
 class CampEvent(db.Model):
     """Camp Event class representing an event on the calendar"""
     __tablename__ = 'campevent'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String())
+    title = db.Column(LowerCaseString)
     start = db.Column(db.DateTime())
     end = db.Column(db.DateTime())
     group_id = db.Column(db.Integer(), db.ForeignKey('campgroup.id'))
@@ -91,15 +101,15 @@ class Parent(db.Model):
     """Parent class representing a Parent of Camper(s)"""
     __tablename__ = 'parent'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    first_name = db.Column(db.String())
-    last_name = db.Column(db.String())
+    first_name = db.Column(LowerCaseString)
+    last_name = db.Column(LowerCaseString)
     birth_date = db.Column(db.Date())
-    gender = db.Column(db.String())
-    email = db.Column(db.String())
+    gender = db.Column(LowerCaseString)
+    email = db.Column(LowerCaseString)
     phone = db.Column(db.String())
-    street_address = db.Column(db.String())
-    city = db.Column(db.String())
-    state = db.Column(db.String())
+    street_address = db.Column(LowerCaseString)
+    city = db.Column(LowerCaseString)
+    state = db.Column(LowerCaseString)
     zip_code = db.Column(db.Integer())
     campers = db.relationship('Camper', backref='parent', lazy='dynamic')
 
@@ -111,16 +121,16 @@ class Camper(db.Model):
     """Camper class representing a Camper"""
     __tablename__ = 'camper'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    first_name = db.Column(db.String())
-    last_name = db.Column(db.String())
+    first_name = db.Column(LowerCaseString)
+    last_name = db.Column(LowerCaseString)
     birth_date = db.Column(db.Date())
     grade = db.Column(db.Integer())
-    gender = db.Column(db.String())
-    medical_notes = db.Column(db.String())
+    gender = db.Column(LowerCaseString)
+    medical_notes = db.Column(LowerCaseString)
     phone = db.Column(db.String())
-    street_address = db.Column(db.String())
-    city = db.Column(db.String())
-    state = db.Column(db.String())
+    street_address = db.Column(LowerCaseString)
+    city = db.Column(LowerCaseString)
+    state = db.Column(LowerCaseString)
     zip_code = db.Column(db.Integer())
     is_active = db.Column(db.Boolean())
     group_id = db.Column(db.Integer(), db.ForeignKey('campgroup.id'))
@@ -152,7 +162,7 @@ class CampGroup(db.Model):
     """Group Class representing a Group"""
     __tablename__ = 'campgroup'
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    name = db.Column(db.String())
+    name = db.Column(LowerCaseString)
     color = db.Column(db.String())
     campers = db.relationship('Camper', backref='campgroup', lazy='dynamic')
     events = db.relationship('CampEvent', backref='campgroup', lazy='dynamic')
@@ -174,8 +184,8 @@ class Admin(db.Model):
     """Camp Administrator Model"""
     __tablename__ = 'admin'
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    name = db.Column(db.String())
-    email = db.Column(db.String(), unique=True)
+    name = db.Column(LowerCaseString)
+    email = db.Column(LowerCaseString, unique=True)
     pwdhash = db.Column(db.String())
 
     def __init__(self, name, email, password):
@@ -186,7 +196,7 @@ class Admin(db.Model):
         :param password: password - to be hashed
         """
         self.name = name
-        self.email = email.lower()
+        self.email = email
         self.set_password(password)
 
     def set_password(self, password):

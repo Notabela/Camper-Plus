@@ -1,7 +1,8 @@
 {% extends "new_base.html" %}
 
 {% block headcontent %}
-  <link rel='stylesheet' href="{{ url_for('static', filename='css/spectrum.css') }}" />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
+  <!--<link rel='stylesheet' href="{{ url_for('static', filename='css/spectrum.css') }}" />-->
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/manage.css') }}">
 {% endblock headcontent %}
 
@@ -40,19 +41,23 @@
         <tbody>
 
           {% for camper in campers %}
-          <tr>
-            <td>{{ camper.last_name }}, {{ camper.first_name }}</td>
+          <tr id="camper_entry{{ camper.id }}">
+            <td>{{ camper.last_name.capitalize() }}, {{ camper.first_name.capitalize() }}</td>
             <td>{{ camper.age() }}</td>
             <td>{{ camper.grade }}</td>
-            <td>{{ camper.campgroup.name }}</td>
-            <td>{{ camper.parent.last_name }}, {{ camper.parent.first_name }}</td>
+            {% if camper.campgroup.name %}
+                <td>{{ camper.campgroup.name.capitalize() }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            <td>{{ camper.parent.last_name.capitalize() }}, {{ camper.parent.first_name.capitalize() }}</td>
             <td>
               <div class="switch">
                 <label>
                   {% if camper.is_active %}
-                  <input type="checkbox" checked="checked" disabled="disabled">
+                  <input class="camper_checkbox" data-camper-id="{{ camper.id }}" type="checkbox" checked="checked">
                   {% else %}
-                  <input type="checkbox">
+                  <input class="camper_checkbox" data-camper-id="{{ camper.id }}" type="checkbox">
                   {% endif %}
                   <span class="lever"></span>
                 </label>
@@ -60,7 +65,7 @@
             </td>
             <td>
                 <a class="waves-effect waves-light btn-floating"><i class="material-icons">edit</i></a>
-                <a class="waves-effect waves-light btn-floating"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-light btn-floating" onclick="deleteCamper({{ camper.id }})"><i class="material-icons">delete</i></a>
             </td>
           </tr>
           {% endfor %}
@@ -83,20 +88,20 @@
 
         <tbody>
           {% for parent in parents %}
-          <tr>
-            <td>{{ parent.last_name }}, {{ parent.first_name }}</td>
+          <tr id="parent_entry{{ parent.id }}">
+            <td>{{ parent.last_name.capitalize() }}, {{ parent.first_name.capitalize() }}</td>
             <td>{{ parent.email }}</td>
             <td>{{ parent.phone }}</td>
             <td>
               <ul>
                  {% for camper in parent.campers %}
-                    <li>{{ camper.first_name }} {{ camper.last_name }}</li>
+                    <li>{{ camper.first_name.capitalize() }} {{ camper.last_name.capitalize() }}</li>
                  {% endfor %}
               </ul>
             </td>
             <td>
                 <a class="waves-effect waves-light btn-floating"><i class="material-icons">edit</i></a>
-                <a class="waves-effect waves-light btn-floating"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-light btn-floating" onclick="deleteParent({{ parent.id }})"><i class="material-icons">delete</i></a>
             </td>
           </tr>
           {% endfor %}
@@ -117,22 +122,22 @@
 
         <tbody>
          {% for group in groups %}
-          <tr>
-            <td>{{ group.name }}</td>
+          <tr id="group_entry{{ group.id }}">
+            <td>{{ group.name.capitalize() }}</td>
             <td class="color-patch"><div style="background-color: {{ group.color }}; width: 30px; height: 30px" ></div></td>
             <td>
               <details class="browser-default">
                 <summary class="browser-default">Click to Expand/Collapse</summary>
                 <ul>
                   {% for camper in group.campers %}
-                  <li>{{ camper.first_name }} {{ camper.last_name }}</li>
+                  <li>{{ camper.first_name.capitalize() }} {{ camper.last_name.capitalize() }}</li>
                   {% endfor %}
                 </ul>
               </details>
             </td>
             <td>
                 <a class="waves-effect waves-light btn-floating"><i class="material-icons">edit</i></a>
-                <a class="waves-effect waves-light btn-floating"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-light btn-floating" onclick="deleteGroup({{ group.id }})"><i class="material-icons">delete</i></a>
             </td>
           </tr>
           {% endfor %}
@@ -150,18 +155,18 @@
 
       <div class="row">
         <div class="input-field col s6">
-            {{ parent_form.first_name }}
+            {{ parent_form.first_name(required="true") }}
             {{ parent_form.first_name.label }}
         </div>
         <div class="input-field col s6">
-            {{ parent_form.last_name }}
+            {{ parent_form.last_name(required="true") }}
             {{ parent_form.last_name.label }}
         </div>
       </div>
 
       <div class="row">
         <div class="input-field col s6">
-            {{ parent_form.birth_date(class="datepicker") }}
+            {{ parent_form.birth_date(class="datepicker", required="true") }}
             {{ parent_form.birth_date.label }}
         </div>
         <div class="input-field col s6">
@@ -172,11 +177,11 @@
 
       <div class="row">
         <div class="input-field col s6">
-            {{ parent_form.email(type="email") }}
+            {{ parent_form.email(type="email", required="true") }}
             {{ parent_form.email.label }}
         </div>
         <div class="input-field col s6">
-            {{ parent_form.phone(type="tel") }}
+            {{ parent_form.phone(type="tel", required="true") }}
             {{ parent_form.phone.label }}
         </div>
       </div>
@@ -184,27 +189,26 @@
       <div class="row">
         <h5>Address</h5>
         <div class="input-field col s12">
-            {{ parent_form.street_address }}
+            {{ parent_form.street_address(required="true") }}
             {{ parent_form.street_address.label }}
         </div>
         <div class="input-field col s4">
-            {{ parent_form.city }}
+            {{ parent_form.city(required="true") }}
             {{ parent_form.city.label }}
         </div>
         <div class="input-field col s4">
-            {{ parent_form.state }}
+            {{ parent_form.state(required="true") }}
             {{ parent_form.state.label }}
         </div>
         <div class="input-field col s4">
-            {{ parent_form.zipcode }}
+            {{ parent_form.zipcode(required="true") }}
             {{ parent_form.zipcode.label }}
         </div>
       </div>
 
     </div>
     <div class="modal-footer">
-      {{ parent_form.submit(class="waves-effect waves-light btn") }}
-      <!--<button class="btn waves-effect waves-light modal-action" type="submit" id="saveEvent">Save</button>-->
+      <button class="btn waves-effect waves-light modal-action" type="submit" id="submitParent">Save</button>
       <button class="btn waves-effect waves-light modal-action modal-close red" type="reset" value="Cancel">Cancel</button>
     </div>
   </div>
@@ -219,22 +223,22 @@
 
       <div class="row">
         <div class="input-field col s6">
-            {{ child_form.first_name }}
+            {{ child_form.first_name(required="true") }}
             {{ child_form.first_name.label }}
         </div>
         <div class="input-field col s6">
-            {{ child_form.last_name }}
+            {{ child_form.last_name(required="true") }}
             {{ child_form.last_name.label }}
         </div>
       </div>
 
       <div class="row">
         <div class="input-field col s4">
-            {{ parent_form.birth_date(class="datepicker") }}
+            {{ parent_form.birth_date(class="datepicker", required="true") }}
             {{ parent_form.birth_date.label }}
         </div>
         <div class="input-field col s4">
-            {{ child_form.grade }}
+            {{ child_form.grade(required="true") }}
             {{ child_form.grade.label }}
         </div>
         <div class="input-field col s4">
@@ -249,9 +253,15 @@
           {{ child_form.medical_notes.label }}
         </div>
       </div>
-
+      <div class="row">
+        <h5>Parent</h5>
+        <div class="input-field col s6">
+            {{ child_form.parent(required="true") }}
+        </div>
+      </div>
       <div class="row">
         <h5>Address</h5>
+        <p class="grey-text lighten-2">Leave blank if same as Parent Address</p>
         <div class="input-field col s12">
             {{ child_form.street_address }}
             {{ child_form.street_address.label }}
@@ -271,19 +281,20 @@
       </div>
 
       <div class="row">
+        <!--
         <h5>Parent Information</h5>
         <div class="input-field col s6">
-            {{ child_form.parent_first_name }}
+            {{ child_form.parent_first_name(required="true") }}
             {{ child_form.parent_first_name.label }}
         </div>
         <div class="input-field col s6">
-            {{ child_form.parent_last_name }}
+            {{ child_form.parent_last_name(required="true") }}
             {{ child_form.parent_last_name.label }}
         </div>
       </div>
-      <div class="row">
-        <h5>Group</h5>
+      -->
         <div class="input-field col s6">
+        <h5>Group</h5>
           {{ child_form.group }}
         </div>
       </div>
@@ -291,8 +302,7 @@
     </div>
 
     <div class="modal-footer">
-      {{ child_form.submit(class="waves-effect waves-light modal-action btn") }}
-      <!--<button class="btn waves-effect waves-light modal-action" type="submit" id="saveEvent">Save</button>-->
+      <button class="btn waves-effect waves-light modal-action" type="submit" id="saveCamper">Save</button>
       <button class="btn waves-effect waves-light modal-action modal-close red" type="reset" value="Cancel">Cancel</button>
     </div>
   </div>
@@ -307,11 +317,11 @@
     <!--<a href="#!" style="display: inline; float: right;" class="modal-action modal-close btn">Create</a>-->
     <div class="row" style="margin-top: 1em">
       <div class="input-field col s4">
-        <input placeholder="Group1" name="groupName" id="groupName" type="text" required>
+        <input name="groupName" id="groupName" type="text" required oninvalid="this.setCustomValidity('Please enter a group name')">
         <label for="groupName">Group Name</label>
       </div>
       <div style="text-align: center" class="input-field col s3">
-        <input type='text' name="color" id="custom" required/>
+        <input type='text' name="color" id="colorPicker"/>
       </div>
       <div class="input-field col s5">
         <input placeholder="Search" id="search" type="text">
@@ -336,11 +346,30 @@
 {% endblock bodycontent %}
 
 {% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+<!--<script src="{{ url_for('static', filename='js/spectrum.js') }}" ></script>-->
+<script src="{{ url_for('static', filename='js/admin_manage.js') }}" ></script>
+
 <script>
 $(document).ready(function () {
     //$('.tap-target').tapTarget('open');
+  // Display the tab where the application came from
+  {% with tab_choices = get_flashed_messages(category_filter=["tab_choice"]) %}
+  {% if tab_choices %}
+    {% for tab_choice in tab_choices %}
+        $('#{{ tab_choice }}').click();
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  {% with errors = get_flashed_messages(category_filter=["error"]) %}
+  {% if errors %}
+    {% for msg in errors %}
+        Materialize.toast('{{ msg }}', 4000);
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
 });
 </script>
-<script src="{{ url_for('static', filename='js/spectrum.js') }}" ></script>
-<script src="{{ url_for('static', filename='js/admin_manage.js') }}" ></script>
 {% endblock scripts %}

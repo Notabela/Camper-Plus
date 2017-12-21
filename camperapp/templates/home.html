@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/materialize.min.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!--<link href="{{ url_for('static', filename='css/materialize.min.css') }}" rel="stylesheet" type="text/css">-->
     <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet" type="text/css">
     <title>Camper +</title>
 </head>
@@ -106,13 +107,20 @@
     <footer class="page-footer">
       <div class="container">
         <div class="row">
-          <div class="col l6 s12">
+          <div class="col l5 s12">
             <h5 class="white-text">About Camper+</h5>
             <p class="grey-text text-lighten-4">
               Camper+ is a complete and easy-to-use software for manager campers in various settings
             </p>
           </div>
-          <div class="col l4 offset-l2 s12">
+          <div class="col l3 offset-l1 s12">
+            <h5 class="white-text">Help</h5>
+              <ul>
+                <li><a class="grey-text text-lighten-4" href="{{ url_for('faq') }}">FAQ</a></li>
+                <li><a class="grey-text text-lighten-4" href="https://github.com/Notabela/Camper-Plus">Github</a></li>
+              </ul>
+          </div>
+          <div class="col l3 s12">
             <h5 class="white-text">Contact us</h5>
               <p class="grey-text text-lighten-3">
                   Camper+ <br>
@@ -130,8 +138,10 @@
       </div>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>
-    <script src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>
+  <!--<script src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>-->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js" ></script>
+  <!--<script src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>-->
     <script>
       $(document).ready(function(){
         $('.parallax').parallax();
