@@ -5,8 +5,8 @@ from camperapp import app
 from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent, User, Role
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
-import camperapp.login
-from flask import render_template, session, redirect, url_for, jsonify, request, flash
+from camperapp.login import requires_roles
+from flask import render_template, session, redirect, url_for, jsonify, request, flash, g
 from flask_login import login_user, current_user, login_required, logout_user
 from wtforms import SelectField
 from wtforms.validators import DataRequired
@@ -35,6 +35,7 @@ def schedule():
 
 @app.route('/parent/schedule', methods=['GET'])
 @login_required
+@requires_roles(Role.parent)
 def parent_schedule():
     """View displays the schedule of Parent's enrolled children"""
     # Mock Children - to be replaced by real Campers
@@ -50,6 +51,7 @@ def parent_schedule():
 
 @app.route('/parent/enrollments', methods=['GET'])
 @login_required
+@requires_roles(Role.parent)
 def parent_enrollments():
     """View displays the enrolled children of a parent"""
     # Mock Children - to be replaced by real Campers
@@ -70,6 +72,7 @@ def parent_enrollments():
 
 @app.route('/parent/register', methods=['GET', 'POST'])
 @login_required
+@requires_roles(Role.parent)
 def parent_register():
     """View presents a registration form for enrolling a new child"""
     form = ChildEnrollmentForm()
@@ -81,6 +84,7 @@ def parent_register():
 
 @app.route('/parent/account', methods=['GET'])
 @login_required
+@requires_roles(Role.parent)
 def parent_account():
     """View displays the parent's account settings"""
     return "Hello World"
@@ -88,6 +92,7 @@ def parent_account():
 
 @app.route('/parent/forms', methods=['GET'])
 @login_required
+@requires_roles(Role.parent)
 def parent_forms():
     """View displays the pending forms of the parent"""
     return "Hello World"
@@ -125,6 +130,7 @@ def campers():
 
 @app.route('/manage/parent', methods=['POST', 'DELETE'])
 @login_required
+@requires_roles(Role.parent)
 def submit_parent_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)

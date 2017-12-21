@@ -1,5 +1,6 @@
 from camperapp import login_manager
 from flask_login import current_user
+from flask import Response, abort
 from functools import wraps
 from camperapp.models import User
 
@@ -10,8 +11,8 @@ def requires_roles(*roles):
     def wrapper(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
-            if current_user().role not in roles:
-                return None
+            if current_user.role not in roles:
+                return abort(401)
             return f(*args, **kwargs)
         return wrapped
     return wrapper
