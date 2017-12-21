@@ -27,6 +27,7 @@ def faq():
 
 @app.route('/schedule', methods=['GET', 'POST'])
 @login_required
+@requires_roles(Role.admin)
 def schedule():
     """View displays the schedule-making page"""
     groups = CampGroup.query.all()
@@ -100,6 +101,7 @@ def parent_forms():
 
 @app.route('/campers', methods=['GET'])
 @login_required
+@requires_roles(Role.admin)
 def campers():
     """View displays the camper organization page"""
 
@@ -181,6 +183,7 @@ def submit_parent_management():
 
 @app.route('/manage/camper', methods=['POST', 'DELETE', 'PATCH'])
 @login_required
+@requires_roles(Role.admin)
 def submit_camper_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
@@ -269,6 +272,7 @@ def submit_camper_management():
 
 @app.route('/manage/campgroup', methods=['POST', 'DELETE'])
 @login_required
+@requires_roles(Role.admin)
 def submit_camper_group_management():
     """EndPoint for Adding, Editing and Deleting a Camper"""
     # a = request.get_json(force=True)
@@ -301,6 +305,7 @@ def submit_camper_group_management():
 
 @app.route('/saveEvent', methods=['POST', 'PUT', 'DELETE'])
 @login_required
+@requires_roles(Role.admin)
 def submit_handler():
     """EndPoint for creating, updating and deleting Calendar Events"""
     # a = request.get_json(force=True)
@@ -349,6 +354,7 @@ def submit_handler():
 
 @app.route('/getCampEvents', methods=['GET'])
 @login_required
+@requires_roles(Role.admin)
 def get_camp_events():
     """Endpoint for retrieving saved CampEvents"""
     start = request.args.get('start')  # get events on/after start
