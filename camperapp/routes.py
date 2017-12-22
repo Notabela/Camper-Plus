@@ -19,12 +19,6 @@ def index():
     return render_template("home.html", form=form)
 
 
-@app.route('/faq', methods=['GET'])
-def faq():
-    """View displays the FAQ page"""
-    return render_template("faq.html")
-
-
 @app.route('/schedule', methods=['GET', 'POST'])
 @login_required
 @requires_roles(Role.admin)
@@ -308,15 +302,18 @@ def submit_camper_group_management():
 
         return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
+
 @app.route('/faq', methods=['GET'])
 def faq():
     """FAQ Page"""
     return render_template("faq.html")
-    
+
+
 @app.route('/dev_docs', methods=['GET'])
 def dev_docs():
     """Documentation Page"""
     return render_template("docindex.html")
+
 
 @app.route('/saveEvent', methods=['POST', 'PUT', 'DELETE'])
 @login_required

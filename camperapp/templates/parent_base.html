@@ -24,14 +24,23 @@
                 <li id="enrollments_bar"><a href="{{ url_for('parent_enrollments') }}"><i class="material-icons left">people</i>Enrollments</a></li>
                 <!--<li id="forms_bar"><a href="{{ url_for('parent_forms') }}"><i class="material-icons left">folder</i>Forms</a></li>-->
                 <li id="schedule_bar"><a href="{{ url_for('parent_schedule') }}"><i class="material-icons left">schedule</i>Schedule</a></li>
-                <li id="account_bar"><a href="{{ url_for('parent_account') }}"><i class="material-icons left">account_circle</i>Account</a></li>
+                <ul id="logout_drop" class="dropdown-content">
+                    <li id="logout_drop"><a href="{{ url_for('logout') }}">Log out</a></li>
+                </ul>
+                <a class='right dropdown-button logout-button' id="logout_tab" href='#' data-activates='logout_drop'><i class="material-icons left" id="acc_icon">account_circle</i>
+                    {% if  account_name %}
+                    {{ account_name }}
+                    {% else %}
+                    Account
+                    {% endif %}
+                </a>
             </ul>
             <!-- id is duplicated on purpose -->
               <ul id='dropdown1' class='dropdown-content'>
                 <li id="enrollments_drop"><a href="{{ url_for('parent_enrollments') }}"><i class="material-icons">people</i>Enrollments</a></li>
                 <li id="forms_drop"><a href="{{ url_for('parent_forms') }}"><i class="material-icons">folder</i>Forms</a></li>
                 <li id="schedule_drop"><a href="{{ url_for('parent_schedule') }}"><i class="material-icons">schedule</i>Schedule</a></li>
-                <li id="account_drop"><a href="{{ url_for('parent_account') }}"><i class="material-icons">account_circle</i>Account</a></li>
+                <li id="account_drop"><a href="{{ url_for('logout') }}"><i class="material-icons">account_circle</i>Logout</a></li>
               </ul>
             <a class='right dropdown-button hide-on-large-only' href='#' data-activates='dropdown1'><i class="large material-icons">expand_more</i></a>
 

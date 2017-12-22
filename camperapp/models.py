@@ -139,7 +139,7 @@ class Parent(db.Model):
     user = db.relationship('User', uselist=False, backref='user')
 
     def name(self):
-        return "{}, {}".format(self.last_name, self.first_name)
+        return "{}, {}".format(self.last_name.capitalize(), self.first_name.capitalize())
 
     def __repr__(self):
         return '<Parent {}>'.format(self.name())
