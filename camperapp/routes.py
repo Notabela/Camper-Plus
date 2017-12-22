@@ -471,7 +471,6 @@ def login():
                 elif registered_user.role is Role.admin:
                     return redirect(url_for('campers'))
             else:
-                flash('Username or Password is invalid', 'error')
                 return render_template('login.html', form=form, error='Username or Password is invalid')
 
 
