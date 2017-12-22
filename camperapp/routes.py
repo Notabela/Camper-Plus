@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from camperapp import app
-from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent, User, Role, get_user_name, camp_season, registration_cost
+from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent, User, Role, get_user_name, camp_season, registration_cost, camp_address
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
 from camperapp.login import requires_roles
@@ -15,6 +15,13 @@ from wtforms.validators import DataRequired
 @app.route('/', methods=['GET'])
 def index():
     """View displays the homepage"""
+
+    if current_user.is_authenticated:
+        if current_user.role is Role.parent:
+            return redirect(url_for('parent_enrollments'))
+        elif current_user.role is Role.admin:
+            return redirect(url_for('campers'))
+
     form = LoginForm()
     return render_template("home.html", form=form)
 
@@ -81,12 +88,56 @@ def parent_enrollments():
 def parent_register():
     """View presents a registration form for enrolling a new child"""
     account_name = get_user_name(current_user)
-
-    form = ChildEnrollmentForm()
     parent = Parent.query.filter_by(id=current_user.parent_id).first()
-    parent_name = parent.alt_name()
-    return render_template("parent_register.html", form=form, account_name=account_name,
-                           camp_season=camp_season, cost=registration_cost, parent_name=parent_name)
+    form = ChildEnrollmentForm()
+
+    if request.method == "POST":
+        camper = Camper()
+        camper.first_name = form.child_first_name.data
+        camper.last_name = form.child_last_name.data
+        camper.birth_date = datetime.strptime(form.child_birth_date._value(), "%d %B, %Y")
+        camper.grade = form.child_grade.data
+        camper.gender = form.child_gender.data
+        camper.medical_notes = form.medical_notes.data
+
+        camper.parent = parent
+
+        if form.street_address.data == "":
+            # No address supplied, set address to parent address
+            camper.street_address = parent.street_address
+            camper.city = parent.city
+            camper.state = parent.state
+            camper.zip_code = parent.zip_code
+
+        else:
+            camper.street_address = form.street_address.data
+            camper.city = form.city.data
+            camper.state = form.state.data
+            camper.zip_code = form.zipcode.data
+
+        camper.other_parent_name = form.other_parent_name.data
+        if form.other_parent_birth_date._value() != '':
+            camper.other_parent_birth_date = datetime.strptime(form.other_parent_birth_date._value(), "%d %B, %Y")
+        camper.other_parent_email = form.other_parent_email.data
+        camper.other_parent_phone = form.other_parent_cell.data
+
+        camper.is_active = False
+        camper.group_id = CampGroup.query.filter_by(name='none').first().id
+
+        db.session.add(camper)
+        db.session.commit()
+
+        return render_template('parent_register_complete.html', cost=registration_cost, camp_address=camp_address)
+
+    elif request.method == "GET":
+        parent_name = parent.alt_name()
+        return render_template("parent_register.html", form=form, account_name=account_name,
+                               camp_season=camp_season, cost=registration_cost, parent_name=parent_name)
+
+
+@app.route('/test')
+def test_route():
+    return render_template('parent_register_complete.html')
 
 
 @app.route('/parent/account', methods=['GET'])
@@ -301,6 +352,11 @@ def submit_camper_group_management():
 
         try:
             group_id = request.json['group_id']
+
+            if group_id == 1:
+                return jsonify({'success': False, 'msg': 'Error: Cannot Delete Default Group'}), \
+                       400, {'ContentType': 'application/json'}
+
             camp_group = CampGroup.query.filter_by(id=group_id).first()
             db.session.delete(camp_group)
             db.session.commit()
@@ -400,6 +456,7 @@ def login():
 
     if request.method == 'POST':
         if not form.validate():
+            print("Form did not validate")
             return render_template('login.html', form=form)
         else:
             email = form.email.data
@@ -431,6 +488,12 @@ def login():
             #     return redirect(url_for('login'))
 
     elif request.method == 'GET':
+        if current_user.is_authenticated:
+            if current_user.role is Role.parent:
+                return redirect(url_for('parent_enrollments'))
+            elif current_user.role is Role.admin:
+                return redirect(url_for('campers'))
+
         return render_template('login.html', form=form)
 
 
@@ -477,9 +540,8 @@ def before_request():
     g.user = current_user
 
 
-@app.before_first_request
-def append_to_forms():
-    """Utility Function to append more data to the Forms Objects"""
+@app.before_request
+def update_forms():
     _groups = CampGroup.query.order_by(CampGroup.name).all()
     _group_choices = [(group.id, group.name.capitalize()) for group in _groups]
     CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
@@ -492,3 +554,12 @@ def append_to_forms():
     CreateChildForm.parent = SelectField(label='Parent', choices=_parent_choices,
                                          validators=[DataRequired("Please select a Parent")])
 
+
+@app.before_first_request
+def additional_data():
+    """Utility Function to append more data to the Forms Objects, Create Default Resources"""
+    # Create a default group called None with id = 1 for Campers without assigned groups
+    if not CampGroup.query.filter_by(name='none').first():
+        default_group = CampGroup('None', 'blue')
+        db.session.add(default_group)
+        db.session.commit()

@@ -41,15 +41,15 @@
 
                   <div class="row">
                     <div class="input-field col s4">
-                      {{ form.child_birth_date(class="datepicker") }}
+                      {{ form.child_birth_date(class="datepicker", required='true') }}
                       {{ form.child_birth_date.label }}
                     </div>
                     <div class="input-field col s4">
-                      {{ form.child_grade }}
+                      {{ form.child_grade(required='true') }}
                       {{ form.child_grade.label }}
                     </div>
                     <div class="input-field col s4">
-                      {{ form.child_gender }}
+                      {{ form.child_gender(required='true') }}
                       {{ form.child_gender.label }}
                     </div>
                   </div>
@@ -84,44 +84,25 @@
                   </div>
 
                   <div class="row">
-                    <h5>Parent Information</h5>
-                    <p class="grey-text lighten-2">Fill out second parent/guardian only</p>
+                    <h5>Other Parent/Guardian's Information</h5>
                     <div class="input-field col s12">
-                      {{ form.mother_name }}
-                      {{ form.mother_name.label }}
+                      {{ form.other_parent_name }}
+                      {{ form.other_parent_name.label }}
                     </div>
                     <div class="input-field col s4">
-                      {{ form.mother_birth_date(class="datepicker") }}
-                      {{ form.mother_birth_date.label }}
+                      {{ form.other_parent_birth_date(class="datepicker") }}
+                      {{ form.other_parent_birth_date.label }}
                     </div>
                     <div class="input-field col s4">
-                      {{ form.mother_email(type="email") }}
-                      {{ form.mother_email.label }}
+                      {{ form.other_parent_email(type="email") }}
+                      {{ form.other_parent_email.label }}
                     </div>
                     <div class="input-field col s4">
-                      {{ form.mother_cell(type="tel") }}
-                      {{ form.mother_cell.label }}
+                      {{ form.other_parent_cell(type="tel") }}
+                      {{ form.other_parent_cell.label }}
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="input-field col s12">
-                      {{ form.father_name }}
-                      {{ form.father_name.label }}
-                    </div>
-                    <div class="input-field col s4">
-                      {{ form.father_birth_date(class="datepicker") }}
-                      {{ form.father_birth_date.label }}
-                    </div>
-                    <div class="input-field col s4">
-                      {{ form.father_email(type="email") }}
-                      {{ form.father_email.label }}
-                    </div>
-                    <div class="input-field col s4">
-                      {{ form.father_cell(type="tel") }}
-                      {{ form.father_cell.label }}
-                    </div>
-                  </div>
                     <div class="row">
                         <div class="col sm 12">
                           <span style="color: red">*</span>  As the legal guardian/responsible adult registering this child,
@@ -134,11 +115,12 @@
                           liable for any expenses incurred.
                         </div>
                         <div class="col sm 2">
-                           {{ form.consent }}
+                           {{ form.consent(required='true') }}
                         </div>
                     </div>
                      <div class="card-action">
-                      {{ form.submit(class="waves-effect waves-light btn") }}
+                       <button class="btn waves-effect waves-light" type="submit" >Next</button>
+                       <!--{{ form.submit(class="waves-effect waves-light btn") }}-->
                     </div>
                 </form>
                 <p id="hidden_par">.</p>
@@ -160,8 +142,7 @@
             <div class="card-content black-text clearfix">
               <span id="total_label">Total</span><span id="total_price">${{ cost }}</span>
             </div>
-          </div>
-
+        </div>
     </div>
   </div>
 

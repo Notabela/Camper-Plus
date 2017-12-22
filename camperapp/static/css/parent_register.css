@@ -98,3 +98,16 @@ nav ul.dropdown-content li a{
 #acc_icon {
     font-size: 1.7em;
 }
+
+.finish_cost {
+    font-size: 2em;
+}
+
+.submit_cost {
+    font-size: 1.5em;
+}
+
+address {
+    font-size: 1.3em;
+    font-weight: 300;
+}

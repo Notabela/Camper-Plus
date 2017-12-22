@@ -9,6 +9,7 @@ from sqlalchemy import Enum
 
 # Site dependant Variables
 camp_season = 'SUMMER {}'.format(date.today().strftime("%Y"))
+camp_address = 'Camper +<br>160 Convent Avenue<br>New York, NY 10016<br>USA'
 registration_cost = 50
 
 
@@ -168,6 +169,10 @@ class Camper(db.Model):
     state = db.Column(LowerCaseString)
     zip_code = db.Column(db.Integer())
     is_active = db.Column(db.Boolean())
+    other_parent_name = db.Column(db.String())
+    other_parent_birth_date = db.Column(db.Date())
+    other_parent_email = db.Column(db.String())
+    other_parent_phone = db.Column(db.String())
     group_id = db.Column(db.Integer(), db.ForeignKey('campgroup.id'))
     parent_id = db.Column(db.Integer(), db.ForeignKey('parent.id'))
 

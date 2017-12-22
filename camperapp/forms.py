@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField,\
     SubmitField, DateField, IntegerField, SelectField, TextAreaField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, Length, optional
 
 
 class LoginForm(FlaskForm):
@@ -53,13 +53,11 @@ class CreateChildForm(FlaskForm):
     gender = SelectField(label='Gender',
                          choices=[('M', 'Male'), ('F', 'Female')],
                          validators=[DataRequired("Please select a gender.")])
-    medical_notes = TextAreaField('Medical Notes',
-                                  validators=[DataRequired("Please enter Medical note for the camper.")])
-    street_address = StringField('Street Address',
-                                 validators=[DataRequired("Please enter street address.")])
-    city = StringField('City', validators=[DataRequired("Please enter City.")])
-    state = StringField('State', validators=[DataRequired("Please enter State.")])
-    zipcode = IntegerField('Zip Code', validators=[DataRequired("Please enter zipcode.")])
+    medical_notes = TextAreaField('Medical Notes')
+    street_address = StringField('Street Address')
+    city = StringField('City')
+    state = StringField('State')
+    zipcode = IntegerField('Zip Code')
     parent_first_name = StringField("Parent's first name",
                                     validators=[DataRequired("Please enter parent's first name.")])
     parent_last_name = StringField("Parent's last name",
@@ -69,40 +67,25 @@ class CreateChildForm(FlaskForm):
 
 class ChildEnrollmentForm(FlaskForm):
     """Form for Parent to Enroll a new Child"""
-    child_first_name = StringField('First name',
+    child_first_name = StringField(label='First name',
                                    validators=[DataRequired("Please enter child's first name.")])
-    child_last_name = StringField('Last name',
+    child_last_name = StringField(label='Last name',
                                   validators=[DataRequired("Please enter  child's last name.")])
-    child_birth_date = DateField('Birthday',
-                                 validators=[DataRequired("Please enter chils's birthday.")])
-    child_grade = IntegerField('Grade',
+    child_birth_date = DateField(label='Birthday',
+                                 validators=[DataRequired("Please enter child's birthday.")])
+    child_grade = IntegerField(label='Grade',
                                validators=[DataRequired("Please enter child's grade.")])
     child_gender = SelectField(label='Gender',
                                choices=[('M', 'Male'), ('F', 'Female')],
                                validators=[DataRequired("Please select a gender.")])
-    medical_notes = TextAreaField('Medical Notes',
-                                  validators=[DataRequired("Please enter Medical note for the camper.")])
-    street_address = StringField('Street Address',
-                                 validators=[DataRequired("Please enter street address.")])
-    city = StringField('City', validators=[DataRequired("Please enter City.")])
-    state = StringField('State', validators=[DataRequired("Please enter State.")])
-    zipcode = IntegerField('Zip Code', validators=[DataRequired("Please enter zipcode.")])
-    mother_name = StringField("Mom's Name (or other Primary legal guardian)",
-                              validators=[DataRequired("Please enter child's mother name.")])
-    mother_birth_date = DateField("Mom's Birthday",
-                                  validators=[DataRequired("Please enter mother's birthday.")])
-    mother_email = StringField("Mom's Email", validators=[DataRequired("Please enter mother's email address."),
-                                                          Email("Please enter your email address.")])
-    mother_cell = StringField("Mom's Cell Phone",
-                              validators=[DataRequired("Please enter Mother's phone number.")])
-    father_name = StringField("Dad's Name (or other Primary legal guardian)",
-                              validators=[DataRequired("Please enter Dad's name.")])
-    father_birth_date = DateField("Dad's Birthday",
-                                  validators=[DataRequired("Please enter dad's birthday.")])
-    father_email = StringField("Dad's Email",
-                               validators=[DataRequired("Please enter dad's's email address."),
-                                           Email("Please enter your email address.")])
-    father_cell = StringField("Dad's Cell Phone",
-                              validators=[DataRequired("Please enter dad's phone number.")])
-    consent = SelectField('', choices=[('y', "Yes, I consent")])
-    submit = SubmitField('NEXT')
+    medical_notes = TextAreaField(label='Medical Notes', validators=[optional()])
+    street_address = StringField(label='Street Address', validators=[optional()])
+    city = StringField(label='City', validators=[optional()])
+    state = StringField(label='State', validators=[optional()])
+    zipcode = IntegerField(label='Zip Code', validators=[optional()])
+    other_parent_name = StringField(label="Parent/Guardian's Name", validators=[optional()])
+    other_parent_birth_date = DateField(label="Parent/Guardian's Birth Date", validators=[optional()])
+    other_parent_email = StringField(label="Parent/Guardian's Email", validators=[optional()])
+    other_parent_cell = StringField(label="Parent/Guardian's Cell", validators=[optional()])
+    consent = SelectField(label='', choices=[('y', "Yes, I consent")], validators=[DataRequired()])
+    submit = SubmitField(label='NEXT')
