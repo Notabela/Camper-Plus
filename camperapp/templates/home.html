@@ -19,12 +19,12 @@
           {{ form.hidden_tag() }}
           <li>
               <div id="username-field" class="input-field">
-                {{ form.email(class="browser-default input-box-shadow", placeholder="Username") }}
+                {{ form.email(class="browser-default input-box-shadow", placeholder="Email", required='true', type='email') }}
               </div>
           </li>
           <li>
             <div class="input-field">
-                  {{ form.password(class="browser-default input-box-shadow", placeholder="Password") }}
+                  {{ form.password(class="browser-default input-box-shadow", placeholder="Password", required='true') }}
             </div>
           </li>
           <li>

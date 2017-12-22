@@ -1,13 +1,16 @@
 {% extends "new_base.html" %}
 
 {% block headcontent %}
-
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login_signup.css')}}" >
-
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/manage.css') }}">
 {% endblock headcontent %}
+
 {% block title %}
-    <title>login</title>
+    <title>Login</title>
 {% endblock title %}
+
+{% block nav_bar_content %}
+{% endblock %}
 
 {% block sidenav %}
 {% endblock sidenav %}
@@ -22,17 +25,24 @@
 
         <div class="form-group">
           {{ form.email.label }}
-          {{ form.email }}
+          {{ form.email(required='true', type='email') }}
         </div>
 
         <div class="form-group">
           {{ form.password.label }}
-          {{ form.password }}
+          {{ form.password(required='true') }}
         </div>
 
-        {{ form.submit(class="btn-primary") }}
-
+        {{ form.submit(class="btn waves-effect waves-light") }}
       </form>
+
+        <p class="error-message">
+            {% with errors = get_flashed_messages(category_filter=["error"]) %}
+            {% if errors %}
+            {% for msg in errors %}{{ msg }}{% endfor %}
+            {% endif %}
+            {% endwith %}
+        </p>
     </div>
   </main>
 {% endblock bodycontent %}
