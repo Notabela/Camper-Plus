@@ -353,13 +353,14 @@ def submit_camper_group_management():
         try:
             group_id = request.json['group_id']
 
-            if group_id == 1:
+            if group_id == 1 and CampGroup.query.filter_by(name='none', id=1).first():
                 return jsonify({'success': False, 'msg': 'Error: Cannot Delete Default Group'}), \
                        400, {'ContentType': 'application/json'}
 
             camp_group = CampGroup.query.filter_by(id=group_id).first()
             db.session.delete(camp_group)
             db.session.commit()
+
         except Exception:
             return jsonify({'success': False}), 400, {'ContentType': 'application/json'}
 
