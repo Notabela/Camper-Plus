@@ -554,12 +554,8 @@ def update_forms():
     CreateChildForm.parent = SelectField(label='Parent', choices=_parent_choices,
                                          validators=[DataRequired("Please select a Parent")])
 
-
-@app.before_first_request
-def additional_data():
-    """Utility Function to append more data to the Forms Objects, Create Default Resources"""
-    # Create a default group called None with id = 1 for Campers without assigned groups
     if not CampGroup.query.filter_by(name='none').first():
         default_group = CampGroup('None', 'blue')
         db.session.add(default_group)
         db.session.commit()
+
