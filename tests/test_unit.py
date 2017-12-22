@@ -7,7 +7,8 @@ from datetime import datetime
 import unittest
 import camperapp.routes
 from camperapp import app, db
-from camperapp.models import CampEvent, CampGroup, Camper, Admin
+from camperapp.models import CampEvent, CampGroup, Camper, Admin, User, Role, Parent
+from flask_login import login_user
 from config import basedir
 
 
@@ -16,18 +17,46 @@ class TestApp(unittest.TestCase):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
+        app.config['LOGIN_DISABLED'] = False
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
         self.app = app.test_client()
         self.app_context = app.app_context()
         self.app_context.push()
+        self._ctx = app.test_request_context()
+        self._ctx.push()
+
         db.drop_all()
         db.create_all()
         db.session.commit()
 
         self.assertEqual(app.debug, False)
 
+        # Create admin
+        self.admin = User('test_a@mail.com', 'testing', Role.admin)
+        db.session.add(self.admin)
+
+        # Create Parent
+        self.parent = Parent()
+        self.parent.first_name = 'first_test'
+        self.parent.last_name = 'last_test'
+        self.parent.gender = 'f'
+        self.parent.email = 'test@mail.com'
+        self.parent.street_address = 'test'
+        self.parent.city = 'T'
+        self.parent.state = 'B'
+
+        db.session.add(self.parent)
+        db.session.commit()
+
+        # Create parent login
+        self.parent_user = User('test_p@mail.com', 'testing', Role.parent)
+        self.parent_user.parent_id = self.parent.id
+        db.session.add(self.parent_user)
+        db.session.commit()
+
     def tearDown(self):
         self.app_context.pop()
+        self._ctx.pop()
         db.session.remove()
         db.drop_all()
         try:
@@ -37,6 +66,7 @@ class TestApp(unittest.TestCase):
 
     def test_schedule_calls_render_template(self):
         """Test that the Schedule endpoint calls render_template"""
+        login_user(self.admin)
         with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
                 mock_funcs:
             camperapp.routes.schedule()
@@ -45,6 +75,7 @@ class TestApp(unittest.TestCase):
 
     def test_schedule_gets_schedule_template(self):
         """Test that the Schedule endpoint calls the schedule Page"""
+        login_user(self.admin)
         with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
                 mock_funcs:
             camperapp.routes.schedule()
@@ -73,6 +104,7 @@ class TestApp(unittest.TestCase):
 
     def test_campers_gets_calls_render_template(self):
         """Test that the Schedule endpoint calls the schedule Page"""
+        login_user(self.admin)
         with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
                 mock_funcs:
             camperapp.routes.campers()
@@ -80,6 +112,7 @@ class TestApp(unittest.TestCase):
             self.assertTrue(render_template.called)
 
     def test_campers_gets_campers_template(self):
+        login_user(self.admin)
         """Test that the Schedule endpoint calls the schedule Page"""
         with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
                 mock_funcs:
@@ -187,17 +220,27 @@ class TestApp(unittest.TestCase):
         queried_camper = Camper.query.filter_by(first_name=first_name).one()
         self.assertTrue(queried_camper is not None)
 
-    def test_admin_signup(self):
-        name = 'jay'
+    def test_admin_creation(self):
         email = 'jay@yahoo.com'
-        pwdhash = 'zzzzxxxx'
+        password = 'zzzzxxxx'
 
-        admin = Admin(name, email, pwdhash)
+        admin = User(email, password, Role.admin)
         db.session.add(admin)
         db.session.commit()
 
-        queried_admin = Admin.query.filter_by(name=name).one()
+        queried_admin = User.query.filter_by(email=email).one()
         self.assertTrue(queried_admin is not None)
+
+    def test_parent_user_creation(self):
+        email = 'jay@yahoo.com'
+        password = 'zzzzxxxx'
+
+        parent = User(email, password, Role.parent)
+        db.session.add(parent)
+        db.session.commit()
+
+        queried_parent = User.query.filter_by(email=email).one()
+        self.assertTrue(queried_parent is not None)
 
     def test_campevent_save(self):
         title = "basketball"
