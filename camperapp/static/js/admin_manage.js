@@ -73,6 +73,7 @@ $(document).ready(function () {
 
                 .fail(function (response) {
                     Materialize.toast('An Error Occurred', 4000)
+                    Materialize.toast(response['msg'], 4000)
                 })
         } else {
             if ($(this).is(':checked')) { $(this).prop('checked', false) }

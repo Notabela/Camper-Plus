@@ -472,8 +472,7 @@ def login():
                     return redirect(url_for('campers'))
             else:
                 flash('Username or Password is invalid', 'error')
-                return redirect(url_for('login'))
-
+                return render_template('login.html', form=form, error='Username or Password is invalid')
 
 
             # useradmin = Admin.query.filter_by(email=email).first()
