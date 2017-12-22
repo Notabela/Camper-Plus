@@ -39,9 +39,9 @@
             </ul>
             <!-- id is duplicated on purpose -->
               <ul id='dropdown1' class='dropdown-content'>
-                <li id="enrollments_drop"><a href="#"><i class="material-icons left">people</i>Manage</a></li>
-                <li id="schedule_drop"><a href="#"><i class="material-icons left">schedule</i>Schedule</a></li>
-                <li id="account_drop"><a href="#"><i class="material-icons left">account_circle</i>Account</a></li>
+                <li id="enrollments_drop"><a href="{{ url_for('campers') }}"><i class="material-icons left">people</i>Manage</a></li>
+                <li id="schedule_drop"><a href="{{ url_for('schedule') }}"><i class="material-icons left">schedule</i>Schedule</a></li>
+                <li id="account_drop"><a href="{{ url_for('logout') }}"><i class="material-icons left">account_circle</i>Logout</a></li>
               </ul>
             <a class='right dropdown-button hide-on-large-only' href='#' data-activates='dropdown1'><i class="large material-icons">expand_more</i></a>
 

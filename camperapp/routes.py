@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from camperapp import app
-from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent, User, Role
+from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent, User, Role, get_user_name
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
 from camperapp.login import requires_roles
@@ -11,20 +11,18 @@ from flask_login import login_user, current_user, login_required, logout_user
 from wtforms import SelectField
 from wtforms.validators import DataRequired
 
-account_name = None
-
 
 @app.route('/', methods=['GET'])
 def index():
     """View displays the homepage"""
     form = LoginForm()
-    return render_template("home.html", form=form, account_name=account_name)
+    return render_template("home.html", form=form)
 
 
 @app.route('/faq', methods=['GET'])
 def faq():
     """View displays the FAQ page"""
-    return render_template("faq.html", account_name=account_name)
+    return render_template("faq.html")
 
 
 @app.route('/schedule', methods=['GET', 'POST'])
@@ -33,6 +31,7 @@ def faq():
 def schedule():
     """View displays the schedule-making page"""
     groups = CampGroup.query.all()
+    account_name = get_user_name(current_user)
     return render_template("admin_schedule.html", account_name=account_name, groups=groups)
 
 
@@ -41,6 +40,7 @@ def schedule():
 @requires_roles(Role.parent)
 def parent_schedule():
     """View displays the schedule of Parent's enrolled children"""
+    account_name = get_user_name(current_user)
     # Mock Children - to be replaced by real Campers
     class Child:
         def __init__(self, uid, name, color):
@@ -57,6 +57,8 @@ def parent_schedule():
 @requires_roles(Role.parent)
 def parent_enrollments():
     """View displays the enrolled children of a parent"""
+    account_name = get_user_name(current_user)
+
     # Mock Children - to be replaced by real Campers
     class Child:
         def __init__(self, uid, name, age, grade, group, color, status):
@@ -78,6 +80,8 @@ def parent_enrollments():
 @requires_roles(Role.parent)
 def parent_register():
     """View presents a registration form for enrolling a new child"""
+    account_name = get_user_name(current_user)
+
     form = ChildEnrollmentForm()
     camp_season = "Summer 2018"
     parent_name = "Jane Armadillo"
@@ -106,7 +110,7 @@ def parent_forms():
 @requires_roles(Role.admin)
 def campers():
     """View displays the camper organization page"""
-
+    account_name = get_user_name(current_user)
     # Dynamically Add the Groups to the the Child Form
     _groups = CampGroup.query.order_by(CampGroup.name).all()
     _group_choices = [(group.id, group.name.capitalize()) for group in _groups]
@@ -383,7 +387,7 @@ def login():
 
     if request.method == 'POST':
         if not form.validate():
-            return render_template('login.html', account_name=account_name, form=form)
+            return render_template('login.html', form=form)
         else:
             email = form.email.data
             password = form.password.data
@@ -414,7 +418,7 @@ def login():
             #     return redirect(url_for('login'))
 
     elif request.method == 'GET':
-        return render_template('login.html', account_name=account_name, form=form)
+        return render_template('login.html', form=form)
 
 
 @app.route('/signupAdmin', methods=['GET', 'POST'])
@@ -458,3 +462,4 @@ def logout():
 @app.before_request
 def before_request():
     g.user = current_user
+

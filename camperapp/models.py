@@ -14,6 +14,22 @@ class Role(enum.Enum):
     parent = 'parent'
 
 
+def get_user_name(user):
+    """Return Name of currently logged in User"""
+    if user.role is Role.admin:
+        try:
+            return user.email[0:user.email.index('@')]
+        except ValueError:
+            return user.email
+
+    elif user.role is Role.parent:
+        try:
+            parent = Parent.query.filter_by(id=user.parent_id).first()
+            return parent.name()
+        except AttributeError:
+            return 'Parent'
+
+
 class LowerCaseString(types.TypeDecorator):
     """Converts strings to lower case on the way in"""
 
