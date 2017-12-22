@@ -35,14 +35,19 @@ def schedule():
 def parent_schedule():
     """View displays the schedule of Parent's enrolled children"""
     account_name = get_user_name(current_user)
-    # Mock Children - to be replaced by real Campers
-    class Child:
-        def __init__(self, uid, name, color):
-            self.id = uid
-            self.color = color
-            self.name = name
 
-    children = [Child(1, 'John Redcorn', 'green'), Child(2, 'Bobby Hill', 'brown')]
+    parent = Parent.query.filter_by(id=current_user.parent_id).first()
+    children = parent.campers.all()
+    print(children)
+
+    # # Mock Children - to be replaced by real Campers
+    # class Child:
+    #     def __init__(self, uid, name, color):
+    #         self.id = uid
+    #         self.color = color
+    #         self.name = name
+    #
+    # children = [Child(1, 'John Redcorn', 'green'), Child(2, 'Bobby Hill', 'brown')]
     return render_template("parent_schedule.html", account_name=account_name, children=children)
 
 
@@ -106,17 +111,17 @@ def campers():
     """View displays the camper organization page"""
     account_name = get_user_name(current_user)
     # Dynamically Add the Groups to the the Child Form
-    _groups = CampGroup.query.order_by(CampGroup.name).all()
-    _group_choices = [(group.id, group.name.capitalize()) for group in _groups]
-    CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
-                                        validators=[DataRequired("Please select a group.")])
-
-    _parents = Parent.query.order_by(Parent.last_name).all()
-    _parent_choices = [(parent.id, "{}, {}".format(parent.last_name.capitalize(),
-                                                   parent.first_name.capitalize())) for parent in _parents]
-
-    CreateChildForm.parent = SelectField(label='Parent', choices=_parent_choices,
-                                         validators=[DataRequired("Please select a Parent")])
+    # _groups = CampGroup.query.order_by(CampGroup.name).all()
+    # _group_choices = [(group.id, group.name.capitalize()) for group in _groups]
+    # CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
+    #                                     validators=[DataRequired("Please select a group.")])
+    #
+    # _parents = Parent.query.order_by(Parent.last_name).all()
+    # _parent_choices = [(parent.id, "{}, {}".format(parent.last_name.capitalize(),
+    #                                                parent.first_name.capitalize())) for parent in _parents]
+    #
+    # CreateChildForm.parent = SelectField(label='Parent', choices=_parent_choices,
+    #                                      validators=[DataRequired("Please select a Parent")])
 
     parent_form = CreateParentForm()
     child_form = CreateChildForm()
@@ -217,7 +222,8 @@ def submit_camper_management():
         camper.medical_notes = child_form.medical_notes.data
 
         camper.parent_id = int(child_form.parent.data)
-        parent = camper.parent
+        parent = Parent.query.filter_by(id=camper.parent_id).first()
+        # parent = camper.parent
 
         if child_form.street_address.data == "":
             # No address supplied, set address to parent address
@@ -468,4 +474,20 @@ def logout():
 @app.before_request
 def before_request():
     g.user = current_user
+
+
+@app.before_first_request
+def append_to_forms():
+    """Utility Function to append more data to the Forms Objects"""
+    _groups = CampGroup.query.order_by(CampGroup.name).all()
+    _group_choices = [(group.id, group.name.capitalize()) for group in _groups]
+    CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
+                                        validators=[DataRequired("Please select a group.")])
+
+    _parents = Parent.query.order_by(Parent.last_name).all()
+    _parent_choices = [(parent.id, "{}, {}".format(parent.last_name.capitalize(),
+                                                   parent.first_name.capitalize())) for parent in _parents]
+
+    CreateChildForm.parent = SelectField(label='Parent', choices=_parent_choices,
+                                         validators=[DataRequired("Please select a Parent")])
 

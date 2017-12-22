@@ -182,8 +182,17 @@ class Camper(db.Model):
         else:
             return today.year - born.year
 
+    def get_color(self):
+        if not self.group_id:
+            return 'gray'  # Default color if user has no group
+        else:
+            return self.campgroup.color
+
+    def name(self):
+        return "{}, {}".format(self.last_name.capitalize(), self.first_name.capitalize())
+
     def __repr__(self):
-        return '<Camper {}, {}>'.format(self.last_name, self.first_name)
+        return '<Camper {}>'.format(self.name())
 
 
 class CampGroup(db.Model):
