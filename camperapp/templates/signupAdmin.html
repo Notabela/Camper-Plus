@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "new_base.html" %}
 
 {% block headcontent %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login_signup.css')}}" />
@@ -6,6 +6,14 @@
 {% endblock headcontent %}
 
 {% block bodycontent %}
+
+{% block title %}
+    <title>SignupAdmin</title>
+{% endblock title %}
+
+{% block sidenav %}
+{% endblock sidenav %}
+
   <main class="container signup-section">
     <div class="section-content">
       <h2>Create an account</h2>

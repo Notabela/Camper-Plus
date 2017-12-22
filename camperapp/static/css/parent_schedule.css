@@ -34,6 +34,14 @@
     background-color: #D7E1EB;
 }
 
+#logout_tab {
+    font-size: 1em;
+}
+
+#acc_icon {
+    font-size: 1.7em;
+}
+
 nav {
     height: 60px;
     line-height: 60px;

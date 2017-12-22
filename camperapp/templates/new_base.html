@@ -1,10 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+-->
+<!doctype html>
 <html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css') }}">-->
 
     {% block headcontent %}
     {% endblock headcontent %}
@@ -19,18 +22,30 @@
       <nav class="top-nav">
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">Camper+</a>
+            {% block nav_bar_content %}
             <ul class="right hide-on-med-and-down">
                 <li id="enrollments_bar"><a href="{{ url_for('campers') }}"><i class="material-icons left">people</i>Manage</a></li>
                 <li id="schedule_bar"><a href="{{ url_for('schedule') }}"><i class="material-icons left">schedule</i>Schedule</a></li>
-                <li id="account_bar"><a href="#"><i class="material-icons left">account_circle</i>Account</a></li>
+                                    <!--Drop down for Account button to enable Logout -->
+                <ul id="logout_drop" class="dropdown-content">
+                    <li id="logout_drop"><a href="{{ url_for('logout') }}">Log out</a></li>
+                </ul>
+                <a class='right dropdown-button logout-button' id="logout_tab" href='#' data-activates='logout_drop'><i class="material-icons left" id="acc_icon">account_circle</i>
+                    {% if  account_name %}
+                    {{ account_name }}
+                    {% else %}
+                    Account
+                    {% endif %}
+                </a>
             </ul>
             <!-- id is duplicated on purpose -->
               <ul id='dropdown1' class='dropdown-content'>
-                <li id="enrollments_drop"><a href="#"><i class="material-icons left">people</i>Manage</a></li>
-                <li id="schedule_drop"><a href="#"><i class="material-icons left">schedule</i>Schedule</a></li>
-                <li id="account_drop"><a href="#"><i class="material-icons left">account_circle</i>Account</a></li>
+                <li id="enrollments_drop"><a href="{{ url_for('campers') }}"><i class="material-icons left">people</i>Manage</a></li>
+                <li id="schedule_drop"><a href="{{ url_for('schedule') }}"><i class="material-icons left">schedule</i>Schedule</a></li>
+                <li id="account_drop"><a href="{{ url_for('logout') }}"><i class="material-icons left">account_circle</i>Logout</a></li>
               </ul>
             <a class='right dropdown-button hide-on-large-only' href='#' data-activates='dropdown1'><i class="large material-icons">expand_more</i></a>
+            {% endblock nav_bar_content %}
 
             {% block sidenav_sandwich %}
             <a href="#" data-activates="slide-out" class="button-collapse show-on-medium"><i class="large material-icons">menu</i></a>
@@ -45,8 +60,10 @@
   {% block bodycontent %}
   {% endblock bodycontent %}
 
-  <script src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>
-  <script src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>
+  <!--<script src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>-->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js" ></script>
+  <!--<script src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>-->
   {% block scripts %}
   {% endblock scripts %}
 </body>

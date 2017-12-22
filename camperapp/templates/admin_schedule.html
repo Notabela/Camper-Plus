@@ -3,8 +3,12 @@
 {% block headcontent %}
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin_schedule.css')}}" />
     <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css" />
+    <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.print.css" media="print"/>
+    <!--
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fullcalendar3.6.2/fullcalendar.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fullcalendar3.6.2/fullcalendar.print.min.css') }}" media='print' />
+    -->
     <link rel="stylesheet" type="text/css" href='https://code.jquery.com/ui/1.12.1/themes/flick/jquery-ui.css' />
 {% endblock headcontent %}
 
@@ -22,7 +26,7 @@
     <li>
       <div style="text-align: center" id="groups" class="groups">
         {% for group in groups %}
-          <button class="group" id="group{{ group.id }}" style="background-color:{{ group.color }};">{{ group.name }}</button><br>
+          <button class="group" id="group{{ group.id }}" style="background-color:{{ group.color }};">{{ group.name.capitalize() }}</button><br>
         {% endfor %}
       </div>
     </li>
@@ -55,7 +59,7 @@
           <select id="sched-groups" required>
             <option value="" disabled selected>Select Group</option>
             {% for group in groups %}
-                <option value="{{ group.id }}">{{ group.name }}</option>
+                <option value="{{ group.id }}">{{ group.name.capitalize() }}</option>
             {% endfor %}
           </select>
         </div>
@@ -75,7 +79,9 @@
 {% endblock bodycontent %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/fullcalendar3.6.2/moment.min.js') }}" ></script>
-    <script src="{{ url_for('static', filename='js/fullcalendar3.6.2/fullcalendar.min.js') }}" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js" ></script>
+    <!--<script src="{{ url_for('static', filename='js/fullcalendar3.6.2/moment.min.js') }}" ></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js" ></script>
+    <!--<script src="{{ url_for('static', filename='js/fullcalendar3.6.2/fullcalendar.min.js') }}" ></script>-->
     <script src="{{ url_for('static', filename='js/admin_schedule.js') }}" ></script>
 {% endblock scripts %}
