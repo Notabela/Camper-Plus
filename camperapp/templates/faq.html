@@ -1,6 +1,15 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "new_base.html" %}
+{% block headcontent %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/manage.css') }}">
+{% endblock headcontent %}
 
+{% block nav_bar_content %}
+{% endblock nav_bar_content %}
+
+{% block sidenav_sandwich %}
+{% endblock %}
+
+{% block bodycontent %}
 <div class="content">
   <div class="container">
     <br>
@@ -93,6 +102,10 @@
         <p>
           You can click on the schedule button to be redirected to the schedule page. Clicking on your child's name would then show everything your child is schedule for.
         </p>
-
-
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -22,6 +22,7 @@
       <nav class="top-nav">
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">Camper+</a>
+            {% block nav_bar_content %}
             <ul class="right hide-on-med-and-down">
                 <li id="enrollments_bar"><a href="{{ url_for('campers') }}"><i class="material-icons left">people</i>Manage</a></li>
                 <li id="schedule_bar"><a href="{{ url_for('schedule') }}"><i class="material-icons left">schedule</i>Schedule</a></li>
@@ -44,6 +45,7 @@
                 <li id="account_drop"><a href="{{ url_for('logout') }}"><i class="material-icons left">account_circle</i>Logout</a></li>
               </ul>
             <a class='right dropdown-button hide-on-large-only' href='#' data-activates='dropdown1'><i class="large material-icons">expand_more</i></a>
+            {% endblock nav_bar_content %}
 
             {% block sidenav_sandwich %}
             <a href="#" data-activates="slide-out" class="button-collapse show-on-medium"><i class="large material-icons">menu</i></a>
