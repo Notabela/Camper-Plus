@@ -1,11 +1,15 @@
 """Models in Camper APP"""
 import enum
-from datetime import datetime
+from datetime import datetime, date
 from marshmallow import Schema, fields
 from camperapp import db
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlalchemy.types as types
 from sqlalchemy import Enum
+
+# Site dependant Variables
+camp_season = 'SUMMER {}'.format(date.today().strftime("%Y"))
+registration_cost = 50
 
 
 class Role(enum.Enum):
@@ -141,6 +145,9 @@ class Parent(db.Model):
     def name(self):
         return "{}, {}".format(self.last_name.capitalize(), self.first_name.capitalize())
 
+    def alt_name(self):
+        return "{} {}".format(self.first_name.capitalize(), self.last_name.capitalize())
+
     def __repr__(self):
         return '<Parent {}>'.format(self.name())
 
@@ -190,6 +197,9 @@ class Camper(db.Model):
 
     def name(self):
         return "{}, {}".format(self.last_name.capitalize(), self.first_name.capitalize())
+
+    def alt_name(self):
+        return "{} {}".format(self.first_name.capitalize(), self.last_name.capitalize())
 
     def __repr__(self):
         return '<Camper {}>'.format(self.name())

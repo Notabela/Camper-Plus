@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from camperapp import app
-from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent, User, Role, get_user_name
+from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent, User, Role, get_user_name, camp_season, registration_cost
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
 from camperapp.login import requires_roles
@@ -38,7 +38,6 @@ def parent_schedule():
 
     parent = Parent.query.filter_by(id=current_user.parent_id).first()
     children = parent.campers.all()
-    print(children)
 
     # # Mock Children - to be replaced by real Campers
     # class Child:
@@ -58,19 +57,21 @@ def parent_enrollments():
     """View displays the enrolled children of a parent"""
     account_name = get_user_name(current_user)
 
-    # Mock Children - to be replaced by real Campers
-    class Child:
-        def __init__(self, uid, name, age, grade, group, color, status):
-            self.id = uid
-            self.age = age
-            self.grade = grade
-            self.group = group
-            self.group_color = color
-            self.status = status
-            self.name = name
-
-    children = [Child(1, 'John Redcorn', 12, 6, 'Falcons', 'green', 'Enrolled'),
-                Child(1, 'Bobby Hill', 13, 7, 'Dodgers', 'brown', 'Enrolled')]
+    parent = Parent.query.filter_by(id=current_user.parent_id).first()
+    children = parent.campers.all()
+    # # Mock Children - to be replaced by real Campers
+    # class Child:
+    #     def __init__(self, uid, name, age, grade, group, color, status):
+    #         self.id = uid
+    #         self.age = age
+    #         self.grade = grade
+    #         self.group = group
+    #         self.group_color = color
+    #         self.status = status
+    #         self.name = name
+    #
+    # children = [Child(1, 'John Redcorn', 12, 6, 'Falcons', 'green', 'Enrolled'),
+    #             Child(1, 'Bobby Hill', 13, 7, 'Dodgers', 'brown', 'Enrolled')]
     return render_template("parent_enrollments.html", account_name=account_name, children=children)
 
 
@@ -82,10 +83,10 @@ def parent_register():
     account_name = get_user_name(current_user)
 
     form = ChildEnrollmentForm()
-    camp_season = "Summer 2018"
-    parent_name = "Jane Armadillo"
+    parent = Parent.query.filter_by(id=current_user.parent_id).first()
+    parent_name = parent.alt_name()
     return render_template("parent_register.html", form=form, account_name=account_name,
-                           camp_season=camp_season, parent_name=parent_name)
+                           camp_season=camp_season, cost=registration_cost, parent_name=parent_name)
 
 
 @app.route('/parent/account', methods=['GET'])
