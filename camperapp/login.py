@@ -49,10 +49,10 @@ def load_user(user_id):
         Retrieves the user with the specified user_id from
         the Users table in the database
 
-       Args:
+        Args:
            user_id (int) : id of user to be queried
 
-       Returns:
+        Returns:
             sql_alchemy user object with specified user_id
     """
     return User.query.get(int(user_id))

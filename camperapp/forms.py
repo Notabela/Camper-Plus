@@ -1,3 +1,12 @@
+"""
+.. module:: camperapp.forms
+   :platform: Unix, Windows
+   :synopsis: Flask Forms for Camper+ Application
+
+.. moduleauthor:: Daniel Obeng, Chris Kwok, Eric Kolbusz, Zhirayr Abrahamyam
+
+"""
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField,\
     SubmitField, DateField, IntegerField, SelectField, TextAreaField
@@ -5,7 +14,10 @@ from wtforms.validators import DataRequired, Email, Length, optional
 
 
 class LoginForm(FlaskForm):
-    """Login Form for Admins and Parents"""
+    """Login Form for Admins and Parents
+
+        Login Flask Form for Admins and Parents
+    """
     email = StringField('Email', validators=[DataRequired("Please enter your email address."),
                                              Email("Please enter your email address.")])
     password = PasswordField('Password', validators=[DataRequired("Please enter a password.")])
@@ -13,7 +25,10 @@ class LoginForm(FlaskForm):
 
 
 class SignupFormAdmin(FlaskForm):
-    """Signup Form for Admin - Not Used Yet"""
+    """Sign Up Form for Admins
+
+        Sign Up Flask Form for Admins
+    """
     first_name = StringField('First name',
                              validators=[DataRequired("Please enter your first name.")])
     last_name = StringField('Last name',
@@ -28,7 +43,10 @@ class SignupFormAdmin(FlaskForm):
 
 
 class CreateParentForm(FlaskForm):
-    """Form for Admin to Create a New Parent"""
+    """Parent Creation Form
+
+        Form for use by Admins create a Parent in the db
+    """
     first_name = StringField('First name',
                              validators=[DataRequired("Please enter your first name.")])
     last_name = StringField('Last name', validators=[DataRequired("Please enter your last name.")])
@@ -48,8 +66,10 @@ class CreateParentForm(FlaskForm):
 
 
 class CreateChildForm(FlaskForm):
-    """Form for Admin to Create New Child"""
+    """Camper Creation Form
 
+        Form for use by Admins create a Camper/Child in the db
+    """
     first_name = StringField('First name', validators=[DataRequired("Please enter  first name.")])
     last_name = StringField('Last name', validators=[DataRequired("Please enter  last name.")])
     birth_date = DateField('Birthday', validators=[DataRequired("Please enter  birthday.")])
@@ -70,7 +90,10 @@ class CreateChildForm(FlaskForm):
 
 
 class ChildEnrollmentForm(FlaskForm):
-    """Form for Parent to Enroll a new Child"""
+    """Child Enrollment Form
+
+        Form for use by Parents to enroll a child at camp
+    """
     child_first_name = StringField(label='First name',
                                    validators=[DataRequired("Please enter child's first name.")])
     child_last_name = StringField(label='Last name',

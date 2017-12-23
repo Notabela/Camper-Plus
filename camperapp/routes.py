@@ -1,8 +1,14 @@
-"""Routes for Camper+ app."""
+"""
+.. module:: camperapp.routes
+   :platform: Unix, Windows
+   :synopsis: Dispatch Endpoints for Camper+ web application
 
+.. moduleauthor:: Daniel Obeng, Chris Kwok, Eric Kolbusz, Zhirayr Abrahamyam
+
+"""
 from datetime import datetime
 from camperapp import app
-from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, \
+from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Camper, \
     Parent, User, Role, get_user_name, camp_season, registration_cost, camp_address
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
@@ -15,8 +21,18 @@ from wtforms.validators import DataRequired
 
 @app.route('/', methods=['GET'])
 def index():
-    """View displays the homepage"""
+    """Index View
 
+        Endpoint for Camper+ homepage page with login form.
+        Users are automatically redirected to default pages
+        if they are logged in/authenticated
+
+        Returns:
+            parents are redirected to parent_enrollments endpoint.
+            admins are redirected to campers endpoint.
+            unauthenticated users are served the rendered home.html
+            template with login form.
+    """
     if current_user.is_authenticated:
         if current_user.role is Role.parent:
             return redirect(url_for('parent_enrollments'))
@@ -27,11 +43,29 @@ def index():
     return render_template("home.html", form=form)
 
 
+@app.route('/faq', methods=['GET'])
+def faq():
+    """Camper+ FAQ Page
+        Static Camper+ FAQ Page
+    """
+    return render_template("faq.html")
+
+
 @app.route('/schedule', methods=['GET', 'POST'])
 @login_required
 @requires_roles(Role.admin)
 def schedule():
-    """View displays the schedule-making page"""
+    """Admin Schedule View
+
+        Endpoint for camp schedule. Contains the Full Calendar
+        js calendar for rendering camp events
+
+        Returns:
+            rendered admin_schedule.html template
+
+        .. note::
+            Only authenticated admins can access this endpoint
+    """
     groups = CampGroup.query.all()
     account_name = get_user_name(current_user)
     return render_template("admin_schedule.html", account_name=account_name, groups=groups)
@@ -41,20 +75,20 @@ def schedule():
 @login_required
 @requires_roles(Role.parent)
 def parent_schedule():
-    """View displays the schedule of Parent's enrolled children"""
-    account_name = get_user_name(current_user)
+    """Parent Schedule View
 
+        Endpoint for parent camp schedule. Contains the Full Calendar
+        js calendar for rendering camp events
+
+        Returns:
+            rendered parent_schedule.html template
+
+        .. note::
+            Only authenticated parents can access this endpoint
+    """
+    account_name = get_user_name(current_user)
     parent = Parent.query.filter_by(id=current_user.parent_id).first()
     children = parent.campers.all()
-
-    # # Mock Children - to be replaced by real Campers
-    # class Child:
-    #     def __init__(self, uid, name, color):
-    #         self.id = uid
-    #         self.color = color
-    #         self.name = name
-    #
-    # children = [Child(1, 'John Redcorn', 'green'), Child(2, 'Bobby Hill', 'brown')]
     return render_template("parent_schedule.html", account_name=account_name, children=children)
 
 
@@ -62,24 +96,20 @@ def parent_schedule():
 @login_required
 @requires_roles(Role.parent)
 def parent_enrollments():
-    """View displays the enrolled children of a parent"""
+    """Parent Enrollments View
+
+        Endpoint to show parent's enrolled campers
+
+        Returns:
+            rendered parent_enrollments.html page
+
+        .. note::
+            Only authenticated parents can access this endpoint
+    """
     account_name = get_user_name(current_user)
 
     parent = Parent.query.filter_by(id=current_user.parent_id).first()
     children = parent.campers.all()
-    # # Mock Children - to be replaced by real Campers
-    # class Child:
-    #     def __init__(self, uid, name, age, grade, group, color, status):
-    #         self.id = uid
-    #         self.age = age
-    #         self.grade = grade
-    #         self.group = group
-    #         self.group_color = color
-    #         self.status = status
-    #         self.name = name
-    #
-    # children = [Child(1, 'John Redcorn', 12, 6, 'Falcons', 'green', 'Enrolled'),
-    #             Child(1, 'Bobby Hill', 13, 7, 'Dodgers', 'brown', 'Enrolled')]
     return render_template("parent_enrollments.html", account_name=account_name, children=children)
 
 
@@ -87,7 +117,20 @@ def parent_enrollments():
 @login_required
 @requires_roles(Role.parent)
 def parent_register():
-    """View presents a registration form for enrolling a new child"""
+    """Parent Child Registration View
+
+        Endpoint with forms for parents to register new camper.
+        Valid Campers submitted are added to the Campers database table
+
+        Returns:
+            if a GET or invalid POST request is received, returns rendered
+            parent_register.html template.
+            if a valid POST request is received, returns rendered
+            parent_register_complete.html template
+
+        .. note::
+            Only authenticated parents can access this endpoint
+    """
     account_name = get_user_name(current_user)
     parent = Parent.query.filter_by(id=current_user.parent_id).first()
     form = ChildEnrollmentForm()
@@ -139,27 +182,20 @@ def parent_register():
                                cost=registration_cost, parent_name=parent_name)
 
 
-@app.route('/parent/account', methods=['GET'])
-@login_required
-@requires_roles(Role.parent)
-def parent_account():
-    """View displays the parent's account settings"""
-    return "Hello World"
-
-
-@app.route('/parent/forms', methods=['GET'])
-@login_required
-@requires_roles(Role.parent)
-def parent_forms():
-    """View displays the pending forms of the parent"""
-    return "Hello World"
-
-
 @app.route('/campers', methods=['GET'])
 @login_required
 @requires_roles(Role.admin)
 def campers():
-    """View displays the camper organization page"""
+    """Administrator people/groups View
+
+        Endpoint to view campers, camp groups and parents
+
+        Returns:
+            rendered admin_manage.html template
+
+        .. note::
+            Only authenticated admins can access this endpoint
+    """
     account_name = get_user_name(current_user)
 
     parent_form = CreateParentForm()
@@ -179,7 +215,20 @@ def campers():
 @login_required
 @requires_roles(Role.admin)
 def submit_parent_management():
-    """EndPoint for Adding, Editing and Deleting a Camper"""
+    """Parent Management Endpoint
+
+        Endpoint for administrator to edit, add and delete
+        parents
+
+        Returns:
+            on valid POST request, returns a redirect to url_for('campers')
+            on valid DELETE, return json with success flag
+            on invalid POST/DELETE request, return json with failure flag
+
+        .. note::
+            Only authenticated admins can access this endpoint
+    """
+
     # a = request.get_json(force=True)
 
     if request.method == 'POST':
@@ -228,7 +277,19 @@ def submit_parent_management():
 @login_required
 @requires_roles(Role.admin)
 def submit_camper_management():
-    """EndPoint for Adding, Editing and Deleting a Camper"""
+    """Camper Management Endpoint
+
+        Endpoint for administrator to edit, add and delete
+        campers
+
+        Returns:
+            on valid POST request, returns a redirect to url_for('campers')
+            on valid DELETE/PATCH, return json with success flag
+            on invalid POST/DELETE request, return json with failure flag
+
+        .. note::
+            Only authenticated admins can access this endpoint
+    """
     # a = request.get_json(force=True)
 
     if request.method == 'POST':
@@ -314,8 +375,20 @@ def submit_camper_management():
 @app.route('/manage/campgroup', methods=['POST', 'DELETE'])
 @login_required
 @requires_roles(Role.admin)
-def submit_camper_group_management():
-    """EndPoint for Adding, Editing and Deleting a Camper"""
+def submit_camp_group_management():
+    """Camp Group Management Endpoint
+
+        Endpoint for administrator to edit, add and delete
+        camp groups
+
+        Returns:
+            on valid POST request, returns a redirect to url_for('campers')
+            on valid DELETE, return json with success flag
+            on invalid POST/DELETE request, return json with failure flag
+
+        .. note::
+            Only authenticated admins can access this endpoint
+    """
     # a = request.get_json(force=True)
 
     if request.method == 'POST':
@@ -350,23 +423,23 @@ def submit_camper_group_management():
         return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 
-@app.route('/faq', methods=['GET'])
-def faq():
-    """FAQ Page"""
-    return render_template("faq.html")
-
-
-@app.route('/dev_docs', methods=['GET'])
-def dev_docs():
-    """Documentation Page"""
-    return render_template("docindex.html")
-
-
 @app.route('/saveEvent', methods=['POST', 'PUT', 'DELETE'])
 @login_required
 @requires_roles(Role.admin)
 def submit_handler():
-    """EndPoint for creating, updating and deleting Calendar Events"""
+    """Camp Event Management Endpoint
+
+        Endpoint for administrator to create, edit and delete
+        camp events on the Full Calendar Schedule
+
+        Returns:
+            on valid POST request, returns a json with success flag and color to render
+            event it. This color corresponds to the event's camp group's color
+            on valid PUT/DELETE request, returns a json with success flag
+
+        .. note::
+            Only authenticated admins can access this endpoint
+    """
     # a = request.get_json(force=True)
 
     if request.method == 'POST':
@@ -415,10 +488,20 @@ def submit_handler():
 @login_required
 @requires_roles(Role.admin)
 def get_camp_events():
-    """Endpoint for retrieving saved CampEvents"""
+    """Get Camp Events Endpoint
+
+        Endpoint to retrieve all camp events saved in db. Full Calendar
+        calls this endpoint with a start and end argument representing
+        the range of dates for which to get events for
+
+        Returns:
+            a list of all camp events in db as json
+
+        .. note::
+            Only authenticated admins can access this endpoint
+    """
     start = request.args.get('start')  # get events on/after start
     end = request.args.get('end')  # get events before/on end
-    print(start, end)
 
     event_schema = CampEventSchema(many=True)
     events = CampEvent.query.all()  # get all data for now
@@ -433,9 +516,16 @@ def get_camp_events():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    """Camp Admin and Parent login endpoint
-    if 'email' in session:
-        return redirect(url_for('campers'))"""
+    """Login Endpoint
+
+        Endpoint to login to Camper+ Application
+
+        Returns:
+            on GET request/invalid POST (failed authentication), returns rendered login.html page
+            on successful POST, i.e successful authentication, returns redirect to url_for('campers')
+            or url_for('parent_enrollments') if user is admin or parent respectively
+    """
+
     form = LoginForm()
 
     if request.method == 'POST':
@@ -466,53 +556,41 @@ def login():
         return render_template('login.html', form=form)
 
 
-@app.route('/signupAdmin', methods=['GET', 'POST'])
-def signup_admin():
-    """Sign up administrator"""
-    form = SignupFormAdmin()
-
-    if request.method == 'POST':
-        if not form.validate():
-            return render_template('signupAdmin.html', form=form)
-        else:
-            email = form.email.data
-            user = Admin.query.filter_by(email=email).first()
-            if user is not None:
-                return redirect(url_for('login'))
-            else:
-                newuser = Admin(form.name.data, form.email.data, form.password.data)
-                db.session.add(newuser)
-                db.session.commit()
-
-                session['email'] = newuser.email
-                return redirect(url_for('index'))
-
-    elif request.method == 'GET':
-        return render_template('signupAdmin.html', form=form)
-
-
-@app.route('/dev_docs', methods=['GET'])
-def documentation():
-    """Sphinx documentation"""
-    return render_template('docindex.html')
-
-
 @app.route("/logout")
 def logout():
-    """Logout Admin or Parent"""
+    """Log out Endpoint
+
+        Logs out current user
+
+        Returns:
+            a redirect to url_for('index'), i.e Homepage
+    """
     logout_user()
     return redirect(url_for('index'))
 
 
 @app.before_request
 def before_request():
-    """Assign Flask Global User object"""
+    """Set Flask Global User
+
+        sets flask global user to current user
+
+        .. note::
+            this function is run before every request
+    """
     g.user = current_user
 
 
 @app.before_request
 def update_forms():
-    """Attach extra Fields to Forms before every Request"""
+    """Update Flask Forms
+
+        Updates CreateChildForm's select Field with current groups and parents
+
+        .. note::
+            this function is run before every request to make sure recently created
+            parents and groups are in the CreateChildForm
+    """
     _groups = CampGroup.query.order_by(CampGroup.name).all()
     _group_choices = [(group.id, group.name.capitalize()) for group in _groups]
     CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
@@ -525,6 +603,17 @@ def update_forms():
     CreateChildForm.parent = SelectField(label='Parent', choices=_parent_choices,
                                          validators=[DataRequired("Please select a Parent")])
 
+
+@app.before_request
+def create_default_group():
+    """Create Default Group
+
+        Creates a default group called 'none' for campers 'without a group'
+
+        .. note::
+            this function is run before every request to make sure a group
+            exists for camper's without groups
+    """
     if not CampGroup.query.filter_by(name='none').first():
         default_group = CampGroup('None', 'blue')
         db.session.add(default_group)

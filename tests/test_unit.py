@@ -7,7 +7,7 @@ from datetime import datetime
 import unittest
 import camperapp.routes
 from camperapp import app, db
-from camperapp.models import CampEvent, CampGroup, Camper, Admin, User, Role, Parent
+from camperapp.models import CampEvent, CampGroup, Camper, User, Role, Parent
 from flask_login import login_user
 from werkzeug.exceptions import Unauthorized
 import pytest

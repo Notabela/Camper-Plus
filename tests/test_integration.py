@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch, Mock
 import camperapp
 from camperapp import app, db
-from camperapp.models import CampEvent, CampGroup, Camper, Admin, User, Role, Parent
+from camperapp.models import CampEvent, CampGroup, Camper, User, Role, Parent
 from config import basedir
 from flask_login import login_user, current_user, logout_user, LoginManager
 import json

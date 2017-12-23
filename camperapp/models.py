@@ -23,8 +23,7 @@ registration_cost = 50
 class Role(enum.Enum):
     """Role of Users
 
-    Roles that can be assumed by a user
-
+        Roles that can be assumed by a user
     """
     admin = 'admin'
     parent = 'parent'
@@ -36,10 +35,10 @@ def get_user_name(user):
         Retrieves the print ready names of logged in users
         for rendering on web pages
 
-       Args:
+        Args:
            user (User) : user object from User model
 
-       Returns:
+        Returns:
             the first part of the email of users without a name (admins)
             or the print ready name (last name, first name) of users
             with a name (parents)
@@ -78,8 +77,7 @@ class LowerCaseString(types.TypeDecorator):
 class CampEvent(db.Model):
     """Model for Camp Events
 
-    SQL Alchemy model for Camp Events for the Camper+ Schedule
-
+        SQL Alchemy model for Camp Events for the Camper+ Schedule
     """
     __tablename__ = 'campevent'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -96,7 +94,7 @@ class CampEvent(db.Model):
                 start (datetime) : start time of event
                 end (datetime) : end time of event
 
-            .. note:
+            .. note::
                 each camp event has a color corresponding to its assigned group.
                 this parameter is initially None
         """
@@ -108,8 +106,7 @@ class CampEvent(db.Model):
     def add_color_attr(self):
         """Add a color to the camp event
 
-            Adds the color of the events Camp Group to
-            the event
+            Adds the color of the events Camp Group to the event
         """
         if self.group_id is None:
             return
@@ -122,10 +119,10 @@ class CampEvent(db.Model):
             Converts a calendar event retrieved from the Full Calendar
             calender framework (calEvent) to a CampEvent to store in db
 
-           Args:
+            Args:
                calevent (dict) : calendar event from full calendar
 
-           Returns:
+            Returns:
                 A CampEvent instance ready to be committed to db
         """
         title = calevent['title']
@@ -142,19 +139,33 @@ class CampEvent(db.Model):
 
     @classmethod
     def convert_iso_datetime_to_py_datetime(cls, iso_datetime):
-        """
-        Converts the ISO datetime to a Python datetime
-        :param iso_datetime: ISO datetime - Format - 2014-10-12T12:45
-        :return: datetime object
+        """Convert ISO standard datetime to python datetime object
+
+            Converts an ISO standard datetime (e.g 2014-10-12T12:45)
+            to a python datetime object. The Full Calendar Framework
+            uses the ISO standard datetime
+
+            Args:
+               iso_datetime (str) : ISO datetime string
+
+            Returns:
+                A python datetime object
         """
         return datetime.strptime(iso_datetime, '%Y-%m-%dT%H:%M:%S')
 
     @classmethod
     def convert_py_datetime_to_iso_datetime(cls, py_datetime):
-        """
-        Converts a Python datetime to an ISO datetime
-        :param py_datetime: Python datetime object
-        :return: ISO datetime string - Format: 2014-10-12T12:34
+        """Convert python datetime object to an ISO standard datetime string
+
+            Converts a python datetime object to an ISO standard
+            datetime string (e.g 2014-10-12T12:45).
+            The Full Calendar Framework uses the ISO standard datetime
+
+            Args:
+               py_datetime (datetime) : python datetime object
+
+            Returns:
+                An ISO standard datetime string
         """
         return py_datetime.strftime('%Y-%m-%dT%H:%M:%S')
 
@@ -163,7 +174,23 @@ class CampEvent(db.Model):
 
 
 class CampEventSchema(Schema):
-    """Schema for camp event"""
+    """Schema for Camp Events
+
+        A Marshmallow Schema template to enable CampEvent
+        objects to converted to JSON Objects. See sample code
+
+        .. code-block:: python
+            event_schema = CampEventSchema(many=True)
+            events = CampEvent.query.all()  # get all data for now
+            for event in events:
+                event.add_color_attr()
+            result = event_schema.dump(events).data
+            json = flask.jsonify(result)
+
+        .. warning::
+            Be sure to append a color to Camp Events using the ``add_color_attr``
+            method before trying to jsonify it.
+    """
     id = fields.Int()
     title = fields.Str()
     start = fields.DateTime()
@@ -174,7 +201,10 @@ class CampEventSchema(Schema):
 
 
 class Parent(db.Model):
-    """Parent class representing a Parent of Camper(s)"""
+    """Parent Model
+
+        SQL Alchemy Model of a Parent
+    """
     __tablename__ = 'parent'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(LowerCaseString)
@@ -191,16 +221,26 @@ class Parent(db.Model):
     user = db.relationship('User', uselist=False, backref='user')
 
     def name(self):
-        """
-        Print friendly capitalized name of Parent
-        :return: Last name, First name
+        """Get a display friendly name of Parent
+
+            Concatenates Parent's last name and first name
+            to a display friendly version. Format of name
+            is Last name, First name
+
+            Returns:
+                'Last name, First name' of Parent
         """
         return "{}, {}".format(self.last_name.capitalize(), self.first_name.capitalize())
 
     def alt_name(self):
-        """
-        Alternate print friendly capitalized name of Parent
-        :return: First name Last name
+        """Get an alternative display friendly name of Parent
+
+            Concatenates Parent's first name and last name
+            to a display friendly version. Format of name
+            is Last name, First name
+
+            Returns:
+                'First name Last name' of Parent
         """
         return "{} {}".format(self.first_name.capitalize(), self.last_name.capitalize())
 
@@ -209,7 +249,10 @@ class Parent(db.Model):
 
 
 class Camper(db.Model):
-    """Camper class representing a Camper"""
+    """Camper Model
+
+        SQL Alchemy Model of a Camper
+    """
     __tablename__ = 'camper'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(LowerCaseString)
@@ -232,9 +275,13 @@ class Camper(db.Model):
     parent_id = db.Column(db.Integer(), db.ForeignKey('parent.id'))
 
     def age(self):
-        """
-        Calculate the age of a camper from Birth date
-        :return: age of camper as integer
+        """Get the age of Camper
+
+            Calculates the age of a Camper based on time since
+            camper's birth date
+
+            Returns:
+                age of Camper
         """
         born = self.birth_date
         today = date.today()
@@ -249,9 +296,18 @@ class Camper(db.Model):
             return today.year - born.year
 
     def get_color(self):
-        """
-        Get the Color of campers CampGroup
-        :return: camper.campgroup.color or gray if no campgroup
+        """Get the color of camper's Camp Group
+
+            Retrieves Camper's assigned Camp Group's color.
+
+            Returns:
+                color of camper's Camp Group (camper.campgroup.color)
+                or gray if camper has no group
+
+            .. note::
+                The default color of Camper's without a group is gray but
+                this is should never happen. Campers without groups should
+                be put in the default None group created in camperapp.routes.py
         """
         if not self.group_id:
             return 'gray'  # Default color if user has no group
@@ -259,16 +315,26 @@ class Camper(db.Model):
             return self.campgroup.color
 
     def name(self):
-        """
-        Print friendly capitalized name of Parent
-        :return: Last name, First Name
+        """Get a display friendly name of Camper
+
+            Concatenates Campers's last name and first name
+            to a display friendly version. Format of name
+            is Last name, First name
+
+            Returns:
+                'Last name, First name' of Camper
         """
         return "{}, {}".format(self.last_name.capitalize(), self.first_name.capitalize())
 
     def alt_name(self):
-        """
-        Alternate print friendly capitalized name of Parent
-        :return: First name Last name
+        """Get an alternative display friendly name of Camper
+
+            Concatenates Camper's first name and last name
+            to a display friendly version. Format of name
+            is Last name, First name
+
+            Returns:
+                'First name Last name' of Camper
         """
         return "{} {}".format(self.first_name.capitalize(), self.last_name.capitalize())
 
@@ -277,7 +343,10 @@ class Camper(db.Model):
 
 
 class CampGroup(db.Model):
-    """Group Class representing a Group"""
+    """Camp Group Model
+
+        SQL Alchemy Model of a Camp Group
+    """
     __tablename__ = 'campgroup'
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(LowerCaseString)
@@ -286,10 +355,11 @@ class CampGroup(db.Model):
     events = db.relationship('CampEvent', backref='campgroup', lazy='dynamic')
 
     def __init__(self, name, color):
-        """
-        CampGroup Initializer
-        :param name: name of group
-        :param color: color of group as hex or color string
+        """Camp Group Initializer
+
+            Args:
+                name (str) : camp group's name
+                color (str) : camp group's color in hex format or html color string
         """
         self.name = name
         self.color = color
@@ -299,7 +369,11 @@ class CampGroup(db.Model):
 
 
 class User(db.Model):
-    """User table for Login"""
+    """User Model
+
+        SQL Alchemy Model of a User (for login only)
+        Current User types are admins and parents
+    """
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # username = db.Column(db.String, unique=True)
@@ -309,11 +383,16 @@ class User(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey('parent.id'))  # will be blank if admin
 
     def __init__(self, email, password, role):
-        """
-        User Initializer
-        :param email: email address
-        :param password: hashed password
-        :param role: admin or parent
+        """User Initializer
+
+            Args:
+                email (str) : user's email
+                password (str) : user's password
+                role (Role) : user's role
+
+            .. note::
+                User's password are encrypted on creation using the function
+                werkzeug.security.generate_password_hash
         """
         # self.username = username
         self.email = email
@@ -321,66 +400,47 @@ class User(db.Model):
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
-        """
-        Check Password against hashed password
-        :param password: password
-        :return: true if password matches
+        """Check if password is user's password
+
+            Encrypts password and checks if user's saved password is equal
+            to specified password using werkzeug.security.check_password_hash
+
+            Args:
+               password (str) : password to be checked
+
+            Returns:
+                True if password is user's password else False
         """
         return check_password_hash(self.password, password)
 
     def get_id(self):
-        """
-        Getter for User's id
-        :return: user.id
+        """Get User's id
+
+            Getter for User's id. Used by flask_login
+
+            Returns:
+                user's id in the db
         """
         return self.id
 
     def is_authenticated(self):
-        """
-        Check is current user is authenticated in Flask Login
-        :return: true
+        """Check if User is authenticated
+
+            Check is current user is authenticated.
+            Required by Flask Login
+
+            Returns:
+                True
         """
         return True
 
     def is_active(self):
-        """
-        Check if current user is active in Flask Login
-        :return: true
+        """Check if User is active
+
+            Check is current user is active.
+            Required by Flask Login
+
+            Returns:
+                True
         """
         return True
-
-
-class Admin(db.Model):
-    """Camp Administrator Model"""
-    __tablename__ = 'admin'
-    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    name = db.Column(LowerCaseString)
-    email = db.Column(LowerCaseString, unique=True)
-    pwdhash = db.Column(db.String())
-
-    def __init__(self, name, email, password):
-        """
-        Camp Admin initializer
-        :param name: name
-        :param email: email address
-        :param password: password - to be hashed
-        """
-        self.name = name
-        self.email = email
-        self.set_password(password)
-
-    def set_password(self, password):
-        """
-        Has password and set it
-        :param password: string password
-        :return: None
-        """
-        self.pwdhash = generate_password_hash(password)
-
-    def check_password(self, password):
-        """
-        Check password against hashed password
-        :param password: string password
-        :return: True if hash of string password is hashed password
-        """
-        return check_password_hash(self.pwdhash, password)
