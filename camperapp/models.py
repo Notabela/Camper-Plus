@@ -1,4 +1,11 @@
-"""Models in Camper APP"""
+"""
+.. module:: camperapp.models
+   :platform: Unix, Windows
+   :synopsis: Sql_Alchemy Models for Camper+ web application
+
+.. moduleauthor:: Daniel Obeng, Chris Kwok, Eric Kolbusz, Zhirayr Abrahamyam
+
+"""
 import enum
 from datetime import datetime, date
 from marshmallow import Schema, fields
@@ -14,13 +21,29 @@ registration_cost = 50
 
 
 class Role(enum.Enum):
-    """Role of Logged in User"""
+    """Role of Users
+
+    Roles that can be assumed by a user
+
+    """
     admin = 'admin'
     parent = 'parent'
 
 
 def get_user_name(user):
-    """Return Name of currently logged in User"""
+    """Retrieve the display name of users
+
+        Retrieves the print ready names of logged in users
+        for rendering on web pages
+
+       Args:
+           user (User) : user object from User model
+
+       Returns:
+            the first part of the email of users without a name (admins)
+            or the print ready name (last name, first name) of users
+            with a name (parents)
+    """
     if user.role is Role.admin:
         try:
             return user.email[0:user.email.index('@')]
@@ -36,8 +59,16 @@ def get_user_name(user):
 
 
 class LowerCaseString(types.TypeDecorator):
-    """Converts strings to lower case on the way in"""
+    """Lowercase conversion template SQL Alchemy Models
 
+        Used to initialize the String Columns of Sql Alchemy Models
+        for auto conversion of assigned string literals and variables
+        to lowercase
+
+        .. note::
+            If no value is passed to the field, auto conversion doesn't
+            happen
+    """
     impl = types.String
 
     def process_bind_param(self, value, dialect):
@@ -45,7 +76,11 @@ class LowerCaseString(types.TypeDecorator):
 
 
 class CampEvent(db.Model):
-    """Camp Event class representing an event on the calendar"""
+    """Model for Camp Events
+
+    SQL Alchemy model for Camp Events for the Camper+ Schedule
+
+    """
     __tablename__ = 'campevent'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(LowerCaseString)
@@ -54,11 +89,16 @@ class CampEvent(db.Model):
     group_id = db.Column(db.Integer(), db.ForeignKey('campgroup.id'))
 
     def __init__(self, title, start, end):
-        """
-        Camp Event initializer
-        :param title: title of event (string)
-        :param start: Start date and time of event (datetime)
-        :param end: End date and time of event (datetime)
+        """Camp Event Initializer
+
+            Args:
+                title (str) : title of event
+                start (datetime) : start time of event
+                end (datetime) : end time of event
+
+            .. note:
+                each camp event has a color corresponding to its assigned group.
+                this parameter is initially None
         """
         self.title = title
         self.start = start
@@ -66,9 +106,10 @@ class CampEvent(db.Model):
         self.color = None
 
     def add_color_attr(self):
-        """
-        Adds a color to the camp event
-        :return: None
+        """Add a color to the camp event
+
+            Adds the color of the events Camp Group to
+            the event
         """
         if self.group_id is None:
             return
@@ -76,10 +117,16 @@ class CampEvent(db.Model):
 
     @classmethod
     def convert_calevent_to_campevent(cls, calevent):
-        """
-        Converts a Full Calendar calendar event to a CampEvent
-        :param calevent: Full Calendar calender event to be converted (dictionary)
-        :return: CampEvent object
+        """Convert Full Calendar calevent dictionary to a Camp Event object
+
+            Converts a calendar event retrieved from the Full Calendar
+            calender framework (calEvent) to a CampEvent to store in db
+
+           Args:
+               calevent (dict) : calendar event from full calendar
+
+           Returns:
+                A CampEvent instance ready to be committed to db
         """
         title = calevent['title']
         start_time =\
