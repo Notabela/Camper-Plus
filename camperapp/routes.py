@@ -2,7 +2,8 @@
 
 from datetime import datetime
 from camperapp import app
-from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, Parent, User, Role, get_user_name, camp_season, registration_cost, camp_address
+from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Admin, Camper, \
+    Parent, User, Role, get_user_name, camp_season, registration_cost, camp_address
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
 from camperapp.login import requires_roles
@@ -117,7 +118,8 @@ def parent_register():
 
         camper.other_parent_name = form.other_parent_name.data
         if form.other_parent_birth_date._value() != '':
-            camper.other_parent_birth_date = datetime.strptime(form.other_parent_birth_date._value(), "%d %B, %Y")
+            camper.other_parent_birth_date = \
+                datetime.strptime(form.other_parent_birth_date._value(), "%d %B, %Y")
         camper.other_parent_email = form.other_parent_email.data
         camper.other_parent_phone = form.other_parent_cell.data
 
@@ -127,12 +129,14 @@ def parent_register():
         db.session.add(camper)
         db.session.commit()
 
-        return render_template('parent_register_complete.html', cost=registration_cost, camp_address=camp_address)
+        return render_template('parent_register_complete.html',
+                               cost=registration_cost, camp_address=camp_address)
 
     elif request.method == "GET":
         parent_name = parent.alt_name()
-        return render_template("parent_register.html", form=form, account_name=account_name,
-                               camp_season=camp_season, cost=registration_cost, parent_name=parent_name)
+        return render_template("parent_register.html", form=form,
+                               account_name=account_name, camp_season=camp_season,
+                               cost=registration_cost, parent_name=parent_name)
 
 
 @app.route('/parent/account', methods=['GET'])
@@ -157,18 +161,6 @@ def parent_forms():
 def campers():
     """View displays the camper organization page"""
     account_name = get_user_name(current_user)
-    # Dynamically Add the Groups to the the Child Form
-    # _groups = CampGroup.query.order_by(CampGroup.name).all()
-    # _group_choices = [(group.id, group.name.capitalize()) for group in _groups]
-    # CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
-    #                                     validators=[DataRequired("Please select a group.")])
-    #
-    # _parents = Parent.query.order_by(Parent.last_name).all()
-    # _parent_choices = [(parent.id, "{}, {}".format(parent.last_name.capitalize(),
-    #                                                parent.first_name.capitalize())) for parent in _parents]
-    #
-    # CreateChildForm.parent = SelectField(label='Parent', choices=_parent_choices,
-    #                                      validators=[DataRequired("Please select a Parent")])
 
     parent_form = CreateParentForm()
     child_form = CreateChildForm()
@@ -178,8 +170,9 @@ def campers():
     all_parents = Parent.query.order_by(Parent.last_name).all()
     all_groups = CampGroup.query.order_by(CampGroup.name).all()
 
-    return render_template('admin_manage.html', account_name=account_name, groups=all_groups, parents=all_parents,
-                           campers=all_campers, parent_form=parent_form, child_form=child_form)
+    return render_template('admin_manage.html', account_name=account_name,
+                           groups=all_groups, parents=all_parents, campers=all_campers,
+                           parent_form=parent_form, child_form=child_form)
 
 
 @app.route('/manage/parent', methods=['POST', 'DELETE'])
@@ -191,12 +184,8 @@ def submit_parent_management():
 
     if request.method == 'POST':
         parent_form = CreateParentForm(request.form)
-        # child_form = CreateChildForm()
-        # _groups = CampGroup.query.order_by(CampGroup.name).all()
-        # _group_choices = [(group.id, group.name) for group in _groups]
-        # child_form.group = SelectField(label='Group', choices=_group_choices)
 
-        # Add Validation Later
+        # Validation is done on Client Side
         parent = Parent()
         parent.first_name = parent_form.first_name.data
         parent.last_name = parent_form.last_name.data
@@ -221,14 +210,16 @@ def submit_parent_management():
             parent_id = request.json['parent_id']
             parent = Parent.query.filter_by(id=parent_id).first()
 
-            if len(parent.campers.all()) > 0:
-                return jsonify({'success': False, 'msg': 'Cannot Delete Parent with Enrollments'}), \
+            if parent.campers.all():
+                return jsonify({'success': False,
+                                'msg': 'Cannot Delete Parent with Enrollments'}), \
                        400, {'ContentType': 'application/json'}
 
             db.session.delete(parent)
             db.session.commit()
         except Exception:
-            return jsonify({'success': False, 'msg': 'Exception occurred'}), 500, {'ContentType': 'application/json'}
+            return jsonify({'success': False, 'msg': 'Exception occurred'}), \
+                   500, {'ContentType': 'application/json'}
 
         return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
@@ -243,9 +234,6 @@ def submit_camper_management():
     if request.method == 'POST':
         child_form = CreateChildForm(request.form)
 
-        # Search for Parent and Populate field
-        # parent = Parent.query.filter_by(first_name=child_form.parent_first_name.data.lower(),
-        #                                 last_name=child_form.parent_last_name.data.lower()).first()
         parents = Parent.query.all()
         if not parents:
             # Return and show an error
@@ -452,7 +440,6 @@ def login():
 
     if request.method == 'POST':
         if not form.validate():
-            print("Form did not validate")
             return render_template('login.html', form=form)
         else:
             email = form.email.data
@@ -466,20 +453,8 @@ def login():
                 elif registered_user.role is Role.admin:
                     return redirect(url_for('campers'))
             else:
-                return render_template('login.html', form=form, error='Username or Password is invalid')
-
-
-            # useradmin = Admin.query.filter_by(email=email).first()
-            # if useradmin is not None and useradmin.check_password(password):
-            #     session['email'] = form.email.data
-            #     return redirect(url_for('campers'))
-            #
-            # userparent = Parent.query.filter_by(email=email).first()
-            # if userparent is not None and userparent.check_password(password):
-            #     session['email'] = form.email.data
-            #     return redirect(url_for('parent_enrollments'))
-            # else:
-            #     return redirect(url_for('login'))
+                return render_template('login.html', form=form,
+                                       error='Username or Password is invalid')
 
     elif request.method == 'GET':
         if current_user.is_authenticated:
@@ -531,19 +506,21 @@ def logout():
 
 @app.before_request
 def before_request():
+    """Assign Flask Global User object"""
     g.user = current_user
 
 
 @app.before_request
 def update_forms():
+    """Attach extra Fields to Forms before every Request"""
     _groups = CampGroup.query.order_by(CampGroup.name).all()
     _group_choices = [(group.id, group.name.capitalize()) for group in _groups]
     CreateChildForm.group = SelectField(label='Group', choices=_group_choices,
                                         validators=[DataRequired("Please select a group.")])
 
     _parents = Parent.query.order_by(Parent.last_name).all()
-    _parent_choices = [(parent.id, "{}, {}".format(parent.last_name.capitalize(),
-                                                   parent.first_name.capitalize())) for parent in _parents]
+    _parent_choices = [(parent.id, "{}, {}".format(
+        parent.last_name.capitalize(), parent.first_name.capitalize())) for parent in _parents]
 
     CreateChildForm.parent = SelectField(label='Parent', choices=_parent_choices,
                                          validators=[DataRequired("Please select a Parent")])
@@ -552,4 +529,3 @@ def update_forms():
         default_group = CampGroup('None', 'blue')
         db.session.add(default_group)
         db.session.commit()
-

@@ -14,19 +14,23 @@ class LoginForm(FlaskForm):
 
 class SignupFormAdmin(FlaskForm):
     """Signup Form for Admin - Not Used Yet"""
-    first_name = StringField('First name', validators=[DataRequired("Please enter your first name.")])
-    last_name = StringField('First name', validators=[DataRequired("Please enter your last name.")])
+    first_name = StringField('First name',
+                             validators=[DataRequired("Please enter your first name.")])
+    last_name = StringField('Last name',
+                            validators=[DataRequired("Please enter your last name.")])
     email = StringField('Email', validators=[DataRequired("Please enter your email address."),
                                              Email("Please enter your email address.")])
-    password = PasswordField('Password',
-                             validators=[DataRequired("Please enter a password."),
-                                         Length(min=6, message="Passwords must be 6 characters or more.")])
+    password = PasswordField(
+        'Password',
+        validators=[DataRequired("Please enter a password."),
+                    Length(min=6, message="Passwords must be 6 characters or more.")])
     submit = SubmitField('Sign up')
 
 
 class CreateParentForm(FlaskForm):
     """Form for Admin to Create a New Parent"""
-    first_name = StringField('First name', validators=[DataRequired("Please enter your first name.")])
+    first_name = StringField('First name',
+                             validators=[DataRequired("Please enter your first name.")])
     last_name = StringField('Last name', validators=[DataRequired("Please enter your last name.")])
     birth_date = DateField("Birthday", validators=[DataRequired("Please enter your Birthday.")])
     gender = SelectField(label='Gender',
@@ -84,7 +88,8 @@ class ChildEnrollmentForm(FlaskForm):
     state = StringField(label='State', validators=[optional()])
     zipcode = IntegerField(label='Zip Code', validators=[optional()])
     other_parent_name = StringField(label="Parent/Guardian's Name", validators=[optional()])
-    other_parent_birth_date = DateField(label="Parent/Guardian's Birth Date", validators=[optional()])
+    other_parent_birth_date = DateField(label="Parent/Guardian's Birth Date",
+                                        validators=[optional()])
     other_parent_email = StringField(label="Parent/Guardian's Email", validators=[optional()])
     other_parent_cell = StringField(label="Parent/Guardian's Cell", validators=[optional()])
     consent = SelectField(label='', choices=[('y', "Yes, I consent")], validators=[DataRequired()])

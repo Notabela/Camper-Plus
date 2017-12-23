@@ -144,9 +144,17 @@ class Parent(db.Model):
     user = db.relationship('User', uselist=False, backref='user')
 
     def name(self):
+        """
+        Print friendly capitalized name of Parent
+        :return: Last name, First name
+        """
         return "{}, {}".format(self.last_name.capitalize(), self.first_name.capitalize())
 
     def alt_name(self):
+        """
+        Alternate print friendly capitalized name of Parent
+        :return: First name Last name
+        """
         return "{} {}".format(self.first_name.capitalize(), self.last_name.capitalize())
 
     def __repr__(self):
@@ -181,7 +189,6 @@ class Camper(db.Model):
         Calculate the age of a camper from Birth date
         :return: age of camper as integer
         """
-        from datetime import date
         born = self.birth_date
         today = date.today()
         try:
@@ -195,15 +202,27 @@ class Camper(db.Model):
             return today.year - born.year
 
     def get_color(self):
+        """
+        Get the Color of campers CampGroup
+        :return: camper.campgroup.color or gray if no campgroup
+        """
         if not self.group_id:
             return 'gray'  # Default color if user has no group
         else:
             return self.campgroup.color
 
     def name(self):
+        """
+        Print friendly capitalized name of Parent
+        :return: Last name, First Name
+        """
         return "{}, {}".format(self.last_name.capitalize(), self.first_name.capitalize())
 
     def alt_name(self):
+        """
+        Alternate print friendly capitalized name of Parent
+        :return: First name Last name
+        """
         return "{} {}".format(self.first_name.capitalize(), self.last_name.capitalize())
 
     def __repr__(self):
@@ -263,12 +282,24 @@ class User(db.Model):
         return check_password_hash(self.password, password)
 
     def get_id(self):
+        """
+        Getter for User's id
+        :return: user.id
+        """
         return self.id
 
     def is_authenticated(self):
+        """
+        Check is current user is authenticated in Flask Login
+        :return: true
+        """
         return True
 
     def is_active(self):
+        """
+        Check if current user is active in Flask Login
+        :return: true
+        """
         return True
 
 

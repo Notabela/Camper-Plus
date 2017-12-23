@@ -1,13 +1,19 @@
-from camperapp import login_manager
-from flask_login import current_user
-from flask import Response, abort
 from functools import wraps
+from flask_login import current_user
+from flask import abort
 from camperapp.models import User
+from camperapp import login_manager
 
 login_manager.login_view = 'login'
 
 
 def requires_roles(*roles):
+    """
+    Wrapper to Allow Routes Function to only be
+    run if current flask login user has Role
+    :param roles: Role.admin or Role.parent or both
+    :return: function is role is met, abort if unauthorized access
+    """
     def wrapper(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
