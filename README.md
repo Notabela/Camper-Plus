@@ -43,7 +43,7 @@ A wesbite to ease the work of camp administrators and the lives of parents
   
 ### Developer
 ##### Developer Documentation
-    https://camperapp.herokuapp.com/dev_docs
+    https://notabela.github.io/Camper-Plus/
 
 ##### Generating Requirements and PipFiles
     Generate requirements file: pip freeze > requirements.txt
