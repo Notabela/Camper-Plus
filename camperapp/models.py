@@ -41,7 +41,7 @@ class LowerCaseString(types.TypeDecorator):
     impl = types.String
 
     def process_bind_param(self, value, dialect):
-        return value.lower()
+        return value.lower() if value is str else value
 
 
 class CampEvent(db.Model):

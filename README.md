@@ -5,8 +5,8 @@ A wesbite to ease the work of camp administrators and the lives of parents
 ## Application Demo
 ##### Live Application
     https://camperapp.herokuapp.com
-    admin_sample_login   - email: admin@camperapp.com  password: Notabela
-    parent_sameple_login - email: parent@camperapp.com password: Notabela
+    admin_sample_login   - email: admin@camperapp.com  password: notabela
+    parent_sameple_login - email: parent@camperapp.com password: notabela
     
 ##### FAQ
     https://camperapp.herokuapp.com/faq

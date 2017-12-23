@@ -135,11 +135,6 @@ def parent_register():
                                camp_season=camp_season, cost=registration_cost, parent_name=parent_name)
 
 
-@app.route('/test')
-def test_route():
-    return render_template('parent_register_complete.html')
-
-
 @app.route('/parent/account', methods=['GET'])
 @login_required
 @requires_roles(Role.parent)
