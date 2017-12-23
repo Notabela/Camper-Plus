@@ -530,7 +530,7 @@ def login():
 
     if request.method == 'POST':
         if not form.validate():
-            return render_template('login.html', form=form)
+            return render_template('login.html', form=form, error='Username or Password is invalid')
         else:
             email = form.email.data
             password = form.password.data
