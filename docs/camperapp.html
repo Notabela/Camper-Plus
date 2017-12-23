@@ -1,0 +1,972 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>camperapp package &#8212; Camperapp 1.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="camperapp-package">
+<h1>camperapp package<a class="headerlink" href="#camperapp-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-camperapp.forms">
+<span id="camperapp-forms-module"></span><h2>camperapp.forms module<a class="headerlink" href="#module-camperapp.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="camperapp.forms.ChildEnrollmentForm">
+<em class="property">class </em><code class="descclassname">camperapp.forms.</code><code class="descname">ChildEnrollmentForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form for Parent to Enroll a new Child</p>
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.child_birth_date">
+<code class="descname">child_birth_date</code><em class="property"> = &lt;UnboundField(DateField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'Birthday'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.child_birth_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.child_first_name">
+<code class="descname">child_first_name</code><em class="property"> = &lt;UnboundField(StringField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'First name'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.child_first_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.child_gender">
+<code class="descname">child_gender</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'Gender', 'choices': [('M', 'Male'), ('F', 'Female')]})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.child_gender" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.child_grade">
+<code class="descname">child_grade</code><em class="property"> = &lt;UnboundField(IntegerField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'Grade'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.child_grade" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.child_last_name">
+<code class="descname">child_last_name</code><em class="property"> = &lt;UnboundField(StringField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'Last name'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.child_last_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.city">
+<code class="descname">city</code><em class="property"> = &lt;UnboundField(StringField, (), {'validators': [&lt;wtforms.validators.Optional object&gt;], 'label': 'City'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.city" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.consent">
+<code class="descname">consent</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': '', 'choices': [('y', 'Yes, I consent')]})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.consent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.medical_notes">
+<code class="descname">medical_notes</code><em class="property"> = &lt;UnboundField(TextAreaField, (), {'validators': [&lt;wtforms.validators.Optional object&gt;], 'label': 'Medical Notes'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.medical_notes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.other_parent_birth_date">
+<code class="descname">other_parent_birth_date</code><em class="property"> = &lt;UnboundField(DateField, (), {'validators': [&lt;wtforms.validators.Optional object&gt;], 'label': &quot;Parent/Guardian's Birth Date&quot;})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.other_parent_birth_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.other_parent_cell">
+<code class="descname">other_parent_cell</code><em class="property"> = &lt;UnboundField(StringField, (), {'validators': [&lt;wtforms.validators.Optional object&gt;], 'label': &quot;Parent/Guardian's Cell&quot;})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.other_parent_cell" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.other_parent_email">
+<code class="descname">other_parent_email</code><em class="property"> = &lt;UnboundField(StringField, (), {'validators': [&lt;wtforms.validators.Optional object&gt;], 'label': &quot;Parent/Guardian's Email&quot;})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.other_parent_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.other_parent_name">
+<code class="descname">other_parent_name</code><em class="property"> = &lt;UnboundField(StringField, (), {'validators': [&lt;wtforms.validators.Optional object&gt;], 'label': &quot;Parent/Guardian's Name&quot;})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.other_parent_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.state">
+<code class="descname">state</code><em class="property"> = &lt;UnboundField(StringField, (), {'validators': [&lt;wtforms.validators.Optional object&gt;], 'label': 'State'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.street_address">
+<code class="descname">street_address</code><em class="property"> = &lt;UnboundField(StringField, (), {'validators': [&lt;wtforms.validators.Optional object&gt;], 'label': 'Street Address'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.street_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.submit">
+<code class="descname">submit</code><em class="property"> = &lt;UnboundField(SubmitField, (), {'label': 'NEXT'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.ChildEnrollmentForm.zipcode">
+<code class="descname">zipcode</code><em class="property"> = &lt;UnboundField(IntegerField, (), {'validators': [&lt;wtforms.validators.Optional object&gt;], 'label': 'Zip Code'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.zipcode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.forms.CreateChildForm">
+<em class="property">class </em><code class="descclassname">camperapp.forms.</code><code class="descname">CreateChildForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.forms.CreateChildForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form for Admin to Create New Child</p>
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.birth_date">
+<code class="descname">birth_date</code><em class="property"> = &lt;UnboundField(DateField, ('Birthday',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.birth_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.city">
+<code class="descname">city</code><em class="property"> = &lt;UnboundField(StringField, ('City',), {})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.city" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.first_name">
+<code class="descname">first_name</code><em class="property"> = &lt;UnboundField(StringField, ('First name',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.first_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.gender">
+<code class="descname">gender</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'Gender', 'choices': [('M', 'Male'), ('F', 'Female')]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.gender" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.grade">
+<code class="descname">grade</code><em class="property"> = &lt;UnboundField(IntegerField, ('Grade',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.grade" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.last_name">
+<code class="descname">last_name</code><em class="property"> = &lt;UnboundField(StringField, ('Last name',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.last_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.medical_notes">
+<code class="descname">medical_notes</code><em class="property"> = &lt;UnboundField(TextAreaField, ('Medical Notes',), {})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.medical_notes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.parent_first_name">
+<code class="descname">parent_first_name</code><em class="property"> = &lt;UnboundField(StringField, (&quot;Parent's first name&quot;,), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.parent_first_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.parent_last_name">
+<code class="descname">parent_last_name</code><em class="property"> = &lt;UnboundField(StringField, (&quot;Parent's last name&quot;,), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.parent_last_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.state">
+<code class="descname">state</code><em class="property"> = &lt;UnboundField(StringField, ('State',), {})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.street_address">
+<code class="descname">street_address</code><em class="property"> = &lt;UnboundField(StringField, ('Street Address',), {})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.street_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.submit">
+<code class="descname">submit</code><em class="property"> = &lt;UnboundField(SubmitField, ('SAVE',), {})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateChildForm.zipcode">
+<code class="descname">zipcode</code><em class="property"> = &lt;UnboundField(IntegerField, ('Zip Code',), {})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.zipcode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.forms.CreateParentForm">
+<em class="property">class </em><code class="descclassname">camperapp.forms.</code><code class="descname">CreateParentForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.forms.CreateParentForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form for Admin to Create a New Parent</p>
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.birth_date">
+<code class="descname">birth_date</code><em class="property"> = &lt;UnboundField(DateField, ('Birthday',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.birth_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.city">
+<code class="descname">city</code><em class="property"> = &lt;UnboundField(StringField, ('City',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.city" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.email">
+<code class="descname">email</code><em class="property"> = &lt;UnboundField(StringField, ('Email Address',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Email object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.first_name">
+<code class="descname">first_name</code><em class="property"> = &lt;UnboundField(StringField, ('First name',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.first_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.gender">
+<code class="descname">gender</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'Gender', 'choices': [('M', 'Male'), ('F', 'Female')]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.gender" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.last_name">
+<code class="descname">last_name</code><em class="property"> = &lt;UnboundField(StringField, ('Last name',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.last_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.phone">
+<code class="descname">phone</code><em class="property"> = &lt;UnboundField(StringField, ('Phone Number',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.phone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.state">
+<code class="descname">state</code><em class="property"> = &lt;UnboundField(StringField, ('State',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.street_address">
+<code class="descname">street_address</code><em class="property"> = &lt;UnboundField(StringField, ('Street Address',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.street_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.submit">
+<code class="descname">submit</code><em class="property"> = &lt;UnboundField(SubmitField, ('SAVE',), {})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.CreateParentForm.zipcode">
+<code class="descname">zipcode</code><em class="property"> = &lt;UnboundField(IntegerField, ('Zip Code',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.zipcode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.forms.LoginForm">
+<em class="property">class </em><code class="descclassname">camperapp.forms.</code><code class="descname">LoginForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.forms.LoginForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Login Form for Admins and Parents</p>
+<dl class="attribute">
+<dt id="camperapp.forms.LoginForm.email">
+<code class="descname">email</code><em class="property"> = &lt;UnboundField(StringField, ('Email',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Email object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.LoginForm.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.LoginForm.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, ('Password',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.LoginForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.LoginForm.submit">
+<code class="descname">submit</code><em class="property"> = &lt;UnboundField(SubmitField, ('Sign in',), {})&gt;</em><a class="headerlink" href="#camperapp.forms.LoginForm.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.forms.SignupFormAdmin">
+<em class="property">class </em><code class="descclassname">camperapp.forms.</code><code class="descname">SignupFormAdmin</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.forms.SignupFormAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Signup Form for Admin - Not Used Yet</p>
+<dl class="attribute">
+<dt id="camperapp.forms.SignupFormAdmin.email">
+<code class="descname">email</code><em class="property"> = &lt;UnboundField(StringField, ('Email',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Email object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.SignupFormAdmin.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.SignupFormAdmin.first_name">
+<code class="descname">first_name</code><em class="property"> = &lt;UnboundField(StringField, ('First name',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.SignupFormAdmin.first_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.SignupFormAdmin.last_name">
+<code class="descname">last_name</code><em class="property"> = &lt;UnboundField(StringField, ('First name',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.SignupFormAdmin.last_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.SignupFormAdmin.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, ('Password',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Length object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.SignupFormAdmin.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.forms.SignupFormAdmin.submit">
+<code class="descname">submit</code><em class="property"> = &lt;UnboundField(SubmitField, ('Sign up',), {})&gt;</em><a class="headerlink" href="#camperapp.forms.SignupFormAdmin.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-camperapp.login">
+<span id="camperapp-login-module"></span><h2>camperapp.login module<a class="headerlink" href="#module-camperapp.login" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="camperapp.login.load_user">
+<code class="descclassname">camperapp.login.</code><code class="descname">load_user</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.login.load_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="camperapp.login.requires_roles">
+<code class="descclassname">camperapp.login.</code><code class="descname">requires_roles</code><span class="sig-paren">(</span><em>*roles</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.login.requires_roles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-camperapp.models">
+<span id="camperapp-models-module"></span><h2>camperapp.models module<a class="headerlink" href="#module-camperapp.models" title="Permalink to this headline">¶</a></h2>
+<p>Models in Camper APP</p>
+<dl class="class">
+<dt id="camperapp.models.Admin">
+<em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">Admin</code><span class="sig-paren">(</span><em>name</em>, <em>email</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<p>Camp Administrator Model</p>
+<dl class="method">
+<dt id="camperapp.models.Admin.check_password">
+<code class="descname">check_password</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Admin.check_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check password against hashed password
+:param password: string password
+:return: True if hash of string password is hashed password</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Admin.email">
+<code class="descname">email</code><a class="headerlink" href="#camperapp.models.Admin.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Admin.id">
+<code class="descname">id</code><a class="headerlink" href="#camperapp.models.Admin.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Admin.name">
+<code class="descname">name</code><a class="headerlink" href="#camperapp.models.Admin.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Admin.pwdhash">
+<code class="descname">pwdhash</code><a class="headerlink" href="#camperapp.models.Admin.pwdhash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="camperapp.models.Admin.set_password">
+<code class="descname">set_password</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Admin.set_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Has password and set it
+:param password: string password
+:return: None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.models.CampEvent">
+<em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">CampEvent</code><span class="sig-paren">(</span><em>title</em>, <em>start</em>, <em>end</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<p>Camp Event class representing an event on the calendar</p>
+<dl class="method">
+<dt id="camperapp.models.CampEvent.add_color_attr">
+<code class="descname">add_color_attr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEvent.add_color_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a color to the camp event
+:return: None</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="camperapp.models.CampEvent.convert_calevent_to_campevent">
+<em class="property">classmethod </em><code class="descname">convert_calevent_to_campevent</code><span class="sig-paren">(</span><em>calevent</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEvent.convert_calevent_to_campevent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a Full Calendar calendar event to a CampEvent
+:param calevent: Full Calendar calender event to be converted (dictionary)
+:return: CampEvent object</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="camperapp.models.CampEvent.convert_iso_datetime_to_py_datetime">
+<em class="property">classmethod </em><code class="descname">convert_iso_datetime_to_py_datetime</code><span class="sig-paren">(</span><em>iso_datetime</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEvent.convert_iso_datetime_to_py_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the ISO datetime to a Python datetime
+:param iso_datetime: ISO datetime - Format - 2014-10-12T12:45
+:return: datetime object</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="camperapp.models.CampEvent.convert_py_datetime_to_iso_datetime">
+<em class="property">classmethod </em><code class="descname">convert_py_datetime_to_iso_datetime</code><span class="sig-paren">(</span><em>py_datetime</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEvent.convert_py_datetime_to_iso_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a Python datetime to an ISO datetime
+:param py_datetime: Python datetime object
+:return: ISO datetime string - Format: 2014-10-12T12:34</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.CampEvent.end">
+<code class="descname">end</code><a class="headerlink" href="#camperapp.models.CampEvent.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.CampEvent.group_id">
+<code class="descname">group_id</code><a class="headerlink" href="#camperapp.models.CampEvent.group_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.CampEvent.id">
+<code class="descname">id</code><a class="headerlink" href="#camperapp.models.CampEvent.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.CampEvent.start">
+<code class="descname">start</code><a class="headerlink" href="#camperapp.models.CampEvent.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.CampEvent.title">
+<code class="descname">title</code><a class="headerlink" href="#camperapp.models.CampEvent.title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.models.CampEventSchema">
+<em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">CampEventSchema</code><span class="sig-paren">(</span><em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=None</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEventSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">marshmallow.schema.Schema</span></code></p>
+<p>Schema for camp event</p>
+<dl class="attribute">
+<dt id="camperapp.models.CampEventSchema.opts">
+<code class="descname">opts</code><em class="property"> = &lt;marshmallow.schema.SchemaOpts object&gt;</em><a class="headerlink" href="#camperapp.models.CampEventSchema.opts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.models.CampGroup">
+<em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">CampGroup</code><span class="sig-paren">(</span><em>name</em>, <em>color</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<p>Group Class representing a Group</p>
+<dl class="attribute">
+<dt id="camperapp.models.CampGroup.campers">
+<code class="descname">campers</code><a class="headerlink" href="#camperapp.models.CampGroup.campers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.CampGroup.color">
+<code class="descname">color</code><a class="headerlink" href="#camperapp.models.CampGroup.color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.CampGroup.events">
+<code class="descname">events</code><a class="headerlink" href="#camperapp.models.CampGroup.events" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.CampGroup.id">
+<code class="descname">id</code><a class="headerlink" href="#camperapp.models.CampGroup.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.CampGroup.name">
+<code class="descname">name</code><a class="headerlink" href="#camperapp.models.CampGroup.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.models.Camper">
+<em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">Camper</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Camper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<p>Camper class representing a Camper</p>
+<dl class="method">
+<dt id="camperapp.models.Camper.age">
+<code class="descname">age</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Camper.age" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the age of a camper from Birth date
+:return: age of camper as integer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="camperapp.models.Camper.alt_name">
+<code class="descname">alt_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Camper.alt_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.birth_date">
+<code class="descname">birth_date</code><a class="headerlink" href="#camperapp.models.Camper.birth_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.city">
+<code class="descname">city</code><a class="headerlink" href="#camperapp.models.Camper.city" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.first_name">
+<code class="descname">first_name</code><a class="headerlink" href="#camperapp.models.Camper.first_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.gender">
+<code class="descname">gender</code><a class="headerlink" href="#camperapp.models.Camper.gender" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="camperapp.models.Camper.get_color">
+<code class="descname">get_color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Camper.get_color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.grade">
+<code class="descname">grade</code><a class="headerlink" href="#camperapp.models.Camper.grade" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.group_id">
+<code class="descname">group_id</code><a class="headerlink" href="#camperapp.models.Camper.group_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.id">
+<code class="descname">id</code><a class="headerlink" href="#camperapp.models.Camper.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.is_active">
+<code class="descname">is_active</code><a class="headerlink" href="#camperapp.models.Camper.is_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.last_name">
+<code class="descname">last_name</code><a class="headerlink" href="#camperapp.models.Camper.last_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.medical_notes">
+<code class="descname">medical_notes</code><a class="headerlink" href="#camperapp.models.Camper.medical_notes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="camperapp.models.Camper.name">
+<code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Camper.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.other_parent_birth_date">
+<code class="descname">other_parent_birth_date</code><a class="headerlink" href="#camperapp.models.Camper.other_parent_birth_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.other_parent_email">
+<code class="descname">other_parent_email</code><a class="headerlink" href="#camperapp.models.Camper.other_parent_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.other_parent_name">
+<code class="descname">other_parent_name</code><a class="headerlink" href="#camperapp.models.Camper.other_parent_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.other_parent_phone">
+<code class="descname">other_parent_phone</code><a class="headerlink" href="#camperapp.models.Camper.other_parent_phone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.parent_id">
+<code class="descname">parent_id</code><a class="headerlink" href="#camperapp.models.Camper.parent_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.phone">
+<code class="descname">phone</code><a class="headerlink" href="#camperapp.models.Camper.phone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.state">
+<code class="descname">state</code><a class="headerlink" href="#camperapp.models.Camper.state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.street_address">
+<code class="descname">street_address</code><a class="headerlink" href="#camperapp.models.Camper.street_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Camper.zip_code">
+<code class="descname">zip_code</code><a class="headerlink" href="#camperapp.models.Camper.zip_code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.models.LowerCaseString">
+<em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">LowerCaseString</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.LowerCaseString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.sql.type_api.TypeDecorator</span></code></p>
+<p>Converts strings to lower case on the way in</p>
+<dl class="attribute">
+<dt id="camperapp.models.LowerCaseString.impl">
+<code class="descname">impl</code><a class="headerlink" href="#camperapp.models.LowerCaseString.impl" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">String</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="camperapp.models.LowerCaseString.process_bind_param">
+<code class="descname">process_bind_param</code><span class="sig-paren">(</span><em>value</em>, <em>dialect</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.LowerCaseString.process_bind_param" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.models.Parent">
+<em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">Parent</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<p>Parent class representing a Parent of Camper(s)</p>
+<dl class="method">
+<dt id="camperapp.models.Parent.alt_name">
+<code class="descname">alt_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Parent.alt_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.birth_date">
+<code class="descname">birth_date</code><a class="headerlink" href="#camperapp.models.Parent.birth_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.campers">
+<code class="descname">campers</code><a class="headerlink" href="#camperapp.models.Parent.campers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.city">
+<code class="descname">city</code><a class="headerlink" href="#camperapp.models.Parent.city" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.email">
+<code class="descname">email</code><a class="headerlink" href="#camperapp.models.Parent.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.first_name">
+<code class="descname">first_name</code><a class="headerlink" href="#camperapp.models.Parent.first_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.gender">
+<code class="descname">gender</code><a class="headerlink" href="#camperapp.models.Parent.gender" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.id">
+<code class="descname">id</code><a class="headerlink" href="#camperapp.models.Parent.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.last_name">
+<code class="descname">last_name</code><a class="headerlink" href="#camperapp.models.Parent.last_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="camperapp.models.Parent.name">
+<code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Parent.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.phone">
+<code class="descname">phone</code><a class="headerlink" href="#camperapp.models.Parent.phone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.state">
+<code class="descname">state</code><a class="headerlink" href="#camperapp.models.Parent.state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.street_address">
+<code class="descname">street_address</code><a class="headerlink" href="#camperapp.models.Parent.street_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.user">
+<code class="descname">user</code><a class="headerlink" href="#camperapp.models.Parent.user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Parent.zip_code">
+<code class="descname">zip_code</code><a class="headerlink" href="#camperapp.models.Parent.zip_code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.models.Role">
+<em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">Role</code><a class="headerlink" href="#camperapp.models.Role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
+<p>Role of Logged in User</p>
+<dl class="attribute">
+<dt id="camperapp.models.Role.admin">
+<code class="descname">admin</code><em class="property"> = 'admin'</em><a class="headerlink" href="#camperapp.models.Role.admin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.Role.parent">
+<code class="descname">parent</code><em class="property"> = 'parent'</em><a class="headerlink" href="#camperapp.models.Role.parent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="camperapp.models.User">
+<em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">User</code><span class="sig-paren">(</span><em>email</em>, <em>password</em>, <em>role</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<p>User table for Login</p>
+<dl class="method">
+<dt id="camperapp.models.User.check_password">
+<code class="descname">check_password</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.User.check_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check Password against hashed password
+:param password: password
+:return: true if password matches</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.User.email">
+<code class="descname">email</code><a class="headerlink" href="#camperapp.models.User.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="camperapp.models.User.get_id">
+<code class="descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.User.get_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.User.id">
+<code class="descname">id</code><a class="headerlink" href="#camperapp.models.User.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="camperapp.models.User.is_active">
+<code class="descname">is_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.User.is_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="camperapp.models.User.is_authenticated">
+<code class="descname">is_authenticated</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.User.is_authenticated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.User.parent_id">
+<code class="descname">parent_id</code><a class="headerlink" href="#camperapp.models.User.parent_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.User.password">
+<code class="descname">password</code><a class="headerlink" href="#camperapp.models.User.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="camperapp.models.User.role">
+<code class="descname">role</code><a class="headerlink" href="#camperapp.models.User.role" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.models.get_user_name">
+<code class="descclassname">camperapp.models.</code><code class="descname">get_user_name</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.get_user_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return Name of currently logged in User</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-camperapp.routes">
+<span id="camperapp-routes-module"></span><h2>camperapp.routes module<a class="headerlink" href="#module-camperapp.routes" title="Permalink to this headline">¶</a></h2>
+<p>Routes for Camper+ app.</p>
+<dl class="function">
+<dt id="camperapp.routes.before_request">
+<code class="descclassname">camperapp.routes.</code><code class="descname">before_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.before_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.campers">
+<code class="descclassname">camperapp.routes.</code><code class="descname">campers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.campers" title="Permalink to this definition">¶</a></dt>
+<dd><p>View displays the camper organization page</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.dev_docs">
+<code class="descclassname">camperapp.routes.</code><code class="descname">dev_docs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.dev_docs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Documentation Page</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.documentation">
+<code class="descclassname">camperapp.routes.</code><code class="descname">documentation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.documentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sphinx documentation</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.faq">
+<code class="descclassname">camperapp.routes.</code><code class="descname">faq</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.faq" title="Permalink to this definition">¶</a></dt>
+<dd><p>FAQ Page</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.get_camp_events">
+<code class="descclassname">camperapp.routes.</code><code class="descname">get_camp_events</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.get_camp_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Endpoint for retrieving saved CampEvents</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.index">
+<code class="descclassname">camperapp.routes.</code><code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>View displays the homepage</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.login">
+<code class="descclassname">camperapp.routes.</code><code class="descname">login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Camp Admin and Parent login endpoint
+if ‘email’ in session:</p>
+<blockquote>
+<div>return redirect(url_for(‘campers’))</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.logout">
+<code class="descclassname">camperapp.routes.</code><code class="descname">logout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.logout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logout Admin or Parent</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.parent_account">
+<code class="descclassname">camperapp.routes.</code><code class="descname">parent_account</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.parent_account" title="Permalink to this definition">¶</a></dt>
+<dd><p>View displays the parent’s account settings</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.parent_enrollments">
+<code class="descclassname">camperapp.routes.</code><code class="descname">parent_enrollments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.parent_enrollments" title="Permalink to this definition">¶</a></dt>
+<dd><p>View displays the enrolled children of a parent</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.parent_forms">
+<code class="descclassname">camperapp.routes.</code><code class="descname">parent_forms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.parent_forms" title="Permalink to this definition">¶</a></dt>
+<dd><p>View displays the pending forms of the parent</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.parent_register">
+<code class="descclassname">camperapp.routes.</code><code class="descname">parent_register</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.parent_register" title="Permalink to this definition">¶</a></dt>
+<dd><p>View presents a registration form for enrolling a new child</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.parent_schedule">
+<code class="descclassname">camperapp.routes.</code><code class="descname">parent_schedule</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.parent_schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>View displays the schedule of Parent’s enrolled children</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.schedule">
+<code class="descclassname">camperapp.routes.</code><code class="descname">schedule</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>View displays the schedule-making page</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.signup_admin">
+<code class="descclassname">camperapp.routes.</code><code class="descname">signup_admin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.signup_admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sign up administrator</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.submit_camper_group_management">
+<code class="descclassname">camperapp.routes.</code><code class="descname">submit_camper_group_management</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.submit_camper_group_management" title="Permalink to this definition">¶</a></dt>
+<dd><p>EndPoint for Adding, Editing and Deleting a Camper</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.submit_camper_management">
+<code class="descclassname">camperapp.routes.</code><code class="descname">submit_camper_management</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.submit_camper_management" title="Permalink to this definition">¶</a></dt>
+<dd><p>EndPoint for Adding, Editing and Deleting a Camper</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.submit_handler">
+<code class="descclassname">camperapp.routes.</code><code class="descname">submit_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.submit_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>EndPoint for creating, updating and deleting Calendar Events</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.submit_parent_management">
+<code class="descclassname">camperapp.routes.</code><code class="descname">submit_parent_management</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.submit_parent_management" title="Permalink to this definition">¶</a></dt>
+<dd><p>EndPoint for Adding, Editing and Deleting a Camper</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="camperapp.routes.update_forms">
+<code class="descclassname">camperapp.routes.</code><code class="descname">update_forms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.update_forms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-camperapp">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-camperapp" title="Permalink to this headline">¶</a></h2>
+<p>Camper+ Web Application</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Daniel Obeng, Chris Kwok, Eric Kolbusz, Zhirayr Abrahamyan.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/camperapp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
