@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>camperapp package &#8212; Camperapp 1.0.1 documentation</title>
+    <title>camperapp package &#8212; Camper+ 1.0.2 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.1',
+        VERSION:     '1.0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -45,11 +45,12 @@
 </div>
 <div class="section" id="module-camperapp.forms">
 <span id="camperapp-forms-module"></span><h2>camperapp.forms module<a class="headerlink" href="#module-camperapp.forms" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<span class="target" id="module-camperapp.forms"></span><dl class="class">
 <dt id="camperapp.forms.ChildEnrollmentForm">
 <em class="property">class </em><code class="descclassname">camperapp.forms.</code><code class="descname">ChildEnrollmentForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
-<p>Form for Parent to Enroll a new Child</p>
+<p>Child Enrollment Form</p>
+<p>Form for use by Parents to enroll a child at camp</p>
 <dl class="attribute">
 <dt id="camperapp.forms.ChildEnrollmentForm.child_birth_date">
 <code class="descname">child_birth_date</code><em class="property"> = &lt;UnboundField(DateField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'Birthday'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.child_birth_date" title="Permalink to this definition">¶</a></dt>
@@ -62,7 +63,7 @@
 
 <dl class="attribute">
 <dt id="camperapp.forms.ChildEnrollmentForm.child_gender">
-<code class="descname">child_gender</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'Gender', 'choices': [('M', 'Male'), ('F', 'Female')]})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.child_gender" title="Permalink to this definition">¶</a></dt>
+<code class="descname">child_gender</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'choices': [('M', 'Male'), ('F', 'Female')], 'label': 'Gender'})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.child_gender" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -82,7 +83,7 @@
 
 <dl class="attribute">
 <dt id="camperapp.forms.ChildEnrollmentForm.consent">
-<code class="descname">consent</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': '', 'choices': [('y', 'Yes, I consent')]})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.consent" title="Permalink to this definition">¶</a></dt>
+<code class="descname">consent</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'choices': [('y', 'Yes, I consent')], 'label': ''})&gt;</em><a class="headerlink" href="#camperapp.forms.ChildEnrollmentForm.consent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -136,7 +137,8 @@
 <dt id="camperapp.forms.CreateChildForm">
 <em class="property">class </em><code class="descclassname">camperapp.forms.</code><code class="descname">CreateChildForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.forms.CreateChildForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
-<p>Form for Admin to Create New Child</p>
+<p>Camper Creation Form</p>
+<p>Form for use by Admins create a Camper/Child in the db</p>
 <dl class="attribute">
 <dt id="camperapp.forms.CreateChildForm.birth_date">
 <code class="descname">birth_date</code><em class="property"> = &lt;UnboundField(DateField, ('Birthday',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.birth_date" title="Permalink to this definition">¶</a></dt>
@@ -154,7 +156,7 @@
 
 <dl class="attribute">
 <dt id="camperapp.forms.CreateChildForm.gender">
-<code class="descname">gender</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'Gender', 'choices': [('M', 'Male'), ('F', 'Female')]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.gender" title="Permalink to this definition">¶</a></dt>
+<code class="descname">gender</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'choices': [('M', 'Male'), ('F', 'Female')], 'label': 'Gender'})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateChildForm.gender" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -208,7 +210,8 @@
 <dt id="camperapp.forms.CreateParentForm">
 <em class="property">class </em><code class="descclassname">camperapp.forms.</code><code class="descname">CreateParentForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.forms.CreateParentForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
-<p>Form for Admin to Create a New Parent</p>
+<p>Parent Creation Form</p>
+<p>Form for use by Admins create a Parent in the db</p>
 <dl class="attribute">
 <dt id="camperapp.forms.CreateParentForm.birth_date">
 <code class="descname">birth_date</code><em class="property"> = &lt;UnboundField(DateField, ('Birthday',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.birth_date" title="Permalink to this definition">¶</a></dt>
@@ -231,7 +234,7 @@
 
 <dl class="attribute">
 <dt id="camperapp.forms.CreateParentForm.gender">
-<code class="descname">gender</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'label': 'Gender', 'choices': [('M', 'Male'), ('F', 'Female')]})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.gender" title="Permalink to this definition">¶</a></dt>
+<code class="descname">gender</code><em class="property"> = &lt;UnboundField(SelectField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'choices': [('M', 'Male'), ('F', 'Female')], 'label': 'Gender'})&gt;</em><a class="headerlink" href="#camperapp.forms.CreateParentForm.gender" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -271,6 +274,7 @@
 <em class="property">class </em><code class="descclassname">camperapp.forms.</code><code class="descname">LoginForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.forms.LoginForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
 <p>Login Form for Admins and Parents</p>
+<p>Login Flask Form for Admins and Parents</p>
 <dl class="attribute">
 <dt id="camperapp.forms.LoginForm.email">
 <code class="descname">email</code><em class="property"> = &lt;UnboundField(StringField, ('Email',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Email object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.LoginForm.email" title="Permalink to this definition">¶</a></dt>
@@ -292,7 +296,8 @@
 <dt id="camperapp.forms.SignupFormAdmin">
 <em class="property">class </em><code class="descclassname">camperapp.forms.</code><code class="descname">SignupFormAdmin</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.forms.SignupFormAdmin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
-<p>Signup Form for Admin - Not Used Yet</p>
+<p>Sign Up Form for Admins</p>
+<p>Sign Up Flask Form for Admins</p>
 <dl class="attribute">
 <dt id="camperapp.forms.SignupFormAdmin.email">
 <code class="descname">email</code><em class="property"> = &lt;UnboundField(StringField, ('Email',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Email object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.SignupFormAdmin.email" title="Permalink to this definition">¶</a></dt>
@@ -305,7 +310,7 @@
 
 <dl class="attribute">
 <dt id="camperapp.forms.SignupFormAdmin.last_name">
-<code class="descname">last_name</code><em class="property"> = &lt;UnboundField(StringField, ('First name',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.SignupFormAdmin.last_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">last_name</code><em class="property"> = &lt;UnboundField(StringField, ('Last name',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#camperapp.forms.SignupFormAdmin.last_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -323,97 +328,96 @@
 </div>
 <div class="section" id="module-camperapp.login">
 <span id="camperapp-login-module"></span><h2>camperapp.login module<a class="headerlink" href="#module-camperapp.login" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<span class="target" id="module-camperapp.login"></span><dl class="function">
 <dt id="camperapp.login.load_user">
 <code class="descclassname">camperapp.login.</code><code class="descname">load_user</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.login.load_user" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieve user with id user_id from database</p>
+<p>Retrieves the user with the specified user_id from
+the Users table in the database</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>user_id (int) : id of user to be queried</dd>
+<dt>Returns:</dt>
+<dd>sql_alchemy user object with specified user_id</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="camperapp.login.requires_roles">
 <code class="descclassname">camperapp.login.</code><code class="descname">requires_roles</code><span class="sig-paren">(</span><em>*roles</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.login.requires_roles" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Wrapper Function to restrict access to endpoints</p>
+<p>Functions with this as a wrapper will only execute
+if the flask_login current_user has a role from <code class="docutils literal"><span class="pre">Role</span> <span class="pre">class</span></code>
+specified in this function’s input</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>roles (any) : roles</dd>
+<dt>Returns:</dt>
+<dd>A wrapped version of the original function that will only
+run if current_user.role is in roles</dd>
+<dt>Raises:</dt>
+<dd>werkzeug.exceptions.Unauthorized: An error occurred if current_user.role is not in roles</dd>
+</dl>
+</dd></dl>
 
 </div>
 <div class="section" id="module-camperapp.models">
 <span id="camperapp-models-module"></span><h2>camperapp.models module<a class="headerlink" href="#module-camperapp.models" title="Permalink to this headline">¶</a></h2>
-<p>Models in Camper APP</p>
-<dl class="class">
-<dt id="camperapp.models.Admin">
-<em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">Admin</code><span class="sig-paren">(</span><em>name</em>, <em>email</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Admin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
-<p>Camp Administrator Model</p>
-<dl class="method">
-<dt id="camperapp.models.Admin.check_password">
-<code class="descname">check_password</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Admin.check_password" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check password against hashed password
-:param password: string password
-:return: True if hash of string password is hashed password</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="camperapp.models.Admin.email">
-<code class="descname">email</code><a class="headerlink" href="#camperapp.models.Admin.email" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="camperapp.models.Admin.id">
-<code class="descname">id</code><a class="headerlink" href="#camperapp.models.Admin.id" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="camperapp.models.Admin.name">
-<code class="descname">name</code><a class="headerlink" href="#camperapp.models.Admin.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="camperapp.models.Admin.pwdhash">
-<code class="descname">pwdhash</code><a class="headerlink" href="#camperapp.models.Admin.pwdhash" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="camperapp.models.Admin.set_password">
-<code class="descname">set_password</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Admin.set_password" title="Permalink to this definition">¶</a></dt>
-<dd><p>Has password and set it
-:param password: string password
-:return: None</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
+<span class="target" id="module-camperapp.models"></span><dl class="class">
 <dt id="camperapp.models.CampEvent">
 <em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">CampEvent</code><span class="sig-paren">(</span><em>title</em>, <em>start</em>, <em>end</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
-<p>Camp Event class representing an event on the calendar</p>
+<p>Model for Camp Events</p>
+<p>SQL Alchemy model for Camp Events for the Camper+ Schedule</p>
 <dl class="method">
 <dt id="camperapp.models.CampEvent.add_color_attr">
 <code class="descname">add_color_attr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEvent.add_color_attr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a color to the camp event
-:return: None</p>
+<dd><p>Add a color to the camp event</p>
+<p>Adds the color of the events Camp Group to the event</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="camperapp.models.CampEvent.convert_calevent_to_campevent">
 <em class="property">classmethod </em><code class="descname">convert_calevent_to_campevent</code><span class="sig-paren">(</span><em>calevent</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEvent.convert_calevent_to_campevent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts a Full Calendar calendar event to a CampEvent
-:param calevent: Full Calendar calender event to be converted (dictionary)
-:return: CampEvent object</p>
+<dd><p>Convert Full Calendar calevent dictionary to a Camp Event object</p>
+<p>Converts a calendar event retrieved from the Full Calendar
+calender framework (calEvent) to a CampEvent to store in db</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>calevent (dict) : calendar event from full calendar</dd>
+<dt>Returns:</dt>
+<dd>A CampEvent instance ready to be committed to db</dd>
+</dl>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="camperapp.models.CampEvent.convert_iso_datetime_to_py_datetime">
 <em class="property">classmethod </em><code class="descname">convert_iso_datetime_to_py_datetime</code><span class="sig-paren">(</span><em>iso_datetime</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEvent.convert_iso_datetime_to_py_datetime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts the ISO datetime to a Python datetime
-:param iso_datetime: ISO datetime - Format - 2014-10-12T12:45
-:return: datetime object</p>
+<dd><p>Convert ISO standard datetime to python datetime object</p>
+<p>Converts an ISO standard datetime (e.g 2014-10-12T12:45)
+to a python datetime object. The Full Calendar Framework
+uses the ISO standard datetime</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>iso_datetime (str) : ISO datetime string</dd>
+<dt>Returns:</dt>
+<dd>A python datetime object</dd>
+</dl>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="camperapp.models.CampEvent.convert_py_datetime_to_iso_datetime">
 <em class="property">classmethod </em><code class="descname">convert_py_datetime_to_iso_datetime</code><span class="sig-paren">(</span><em>py_datetime</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEvent.convert_py_datetime_to_iso_datetime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts a Python datetime to an ISO datetime
-:param py_datetime: Python datetime object
-:return: ISO datetime string - Format: 2014-10-12T12:34</p>
+<dd><p>Convert python datetime object to an ISO standard datetime string</p>
+<p>Converts a python datetime object to an ISO standard
+datetime string (e.g 2014-10-12T12:45).
+The Full Calendar Framework uses the ISO standard datetime</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>py_datetime (datetime) : python datetime object</dd>
+<dt>Returns:</dt>
+<dd>An ISO standard datetime string</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
@@ -447,7 +451,14 @@
 <dt id="camperapp.models.CampEventSchema">
 <em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">CampEventSchema</code><span class="sig-paren">(</span><em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=None</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampEventSchema" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">marshmallow.schema.Schema</span></code></p>
-<p>Schema for camp event</p>
+<p>Schema for Camp Events</p>
+<p>A Marshmallow Schema template to enable CampEvent
+objects to converted to JSON Objects. See sample code</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Be sure to append a color to Camp Events using the <code class="docutils literal"><span class="pre">add_color_attr</span></code>
+method before trying to jsonify it.</p>
+</div>
 <dl class="attribute">
 <dt id="camperapp.models.CampEventSchema.opts">
 <code class="descname">opts</code><em class="property"> = &lt;marshmallow.schema.SchemaOpts object&gt;</em><a class="headerlink" href="#camperapp.models.CampEventSchema.opts" title="Permalink to this definition">¶</a></dt>
@@ -459,7 +470,8 @@
 <dt id="camperapp.models.CampGroup">
 <em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">CampGroup</code><span class="sig-paren">(</span><em>name</em>, <em>color</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.CampGroup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
-<p>Group Class representing a Group</p>
+<p>Camp Group Model</p>
+<p>SQL Alchemy Model of a Camp Group</p>
 <dl class="attribute">
 <dt id="camperapp.models.CampGroup.campers">
 <code class="descname">campers</code><a class="headerlink" href="#camperapp.models.CampGroup.campers" title="Permalink to this definition">¶</a></dt>
@@ -491,18 +503,32 @@
 <dt id="camperapp.models.Camper">
 <em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">Camper</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Camper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
-<p>Camper class representing a Camper</p>
+<p>Camper Model</p>
+<p>SQL Alchemy Model of a Camper</p>
 <dl class="method">
 <dt id="camperapp.models.Camper.age">
 <code class="descname">age</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Camper.age" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the age of a camper from Birth date
-:return: age of camper as integer</p>
+<dd><p>Get the age of Camper</p>
+<p>Calculates the age of a Camper based on time since
+camper’s birth date</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>age of Camper</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="camperapp.models.Camper.alt_name">
 <code class="descname">alt_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Camper.alt_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get an alternative display friendly name of Camper</p>
+<p>Concatenates Camper’s first name and last name
+to a display friendly version. Format of name
+is Last name, First name</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>‘First name Last name’ of Camper</dd>
+</dl>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="camperapp.models.Camper.birth_date">
@@ -527,7 +553,20 @@
 <dl class="method">
 <dt id="camperapp.models.Camper.get_color">
 <code class="descname">get_color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Camper.get_color" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get the color of camper’s Camp Group</p>
+<p>Retrieves Camper’s assigned Camp Group’s color.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>color of camper’s Camp Group (camper.campgroup.color)
+or gray if camper has no group</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The default color of Camper’s without a group is gray but
+this is should never happen. Campers without groups should
+be put in the default None group created in camperapp.routes.py</p>
+</div>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="camperapp.models.Camper.grade">
@@ -562,7 +601,15 @@
 <dl class="method">
 <dt id="camperapp.models.Camper.name">
 <code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Camper.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get a display friendly name of Camper</p>
+<p>Concatenates Campers’s last name and first name
+to a display friendly version. Format of name
+is Last name, First name</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>‘Last name, First name’ of Camper</dd>
+</dl>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="camperapp.models.Camper.other_parent_birth_date">
@@ -615,7 +662,15 @@
 <dt id="camperapp.models.LowerCaseString">
 <em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">LowerCaseString</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.LowerCaseString" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.sql.type_api.TypeDecorator</span></code></p>
-<p>Converts strings to lower case on the way in</p>
+<p>Lowercase conversion template SQL Alchemy Models</p>
+<p>Used to initialize the String Columns of Sql Alchemy Models
+for auto conversion of assigned string literals and variables
+to lowercase</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If no value is passed to the field, auto conversion doesn’t
+happen</p>
+</div>
 <dl class="attribute">
 <dt id="camperapp.models.LowerCaseString.impl">
 <code class="descname">impl</code><a class="headerlink" href="#camperapp.models.LowerCaseString.impl" title="Permalink to this definition">¶</a></dt>
@@ -633,11 +688,20 @@
 <dt id="camperapp.models.Parent">
 <em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">Parent</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Parent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
-<p>Parent class representing a Parent of Camper(s)</p>
+<p>Parent Model</p>
+<p>SQL Alchemy Model of a Parent</p>
 <dl class="method">
 <dt id="camperapp.models.Parent.alt_name">
 <code class="descname">alt_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Parent.alt_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get an alternative display friendly name of Parent</p>
+<p>Concatenates Parent’s first name and last name
+to a display friendly version. Format of name
+is Last name, First name</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>‘First name Last name’ of Parent</dd>
+</dl>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="camperapp.models.Parent.birth_date">
@@ -682,7 +746,15 @@
 <dl class="method">
 <dt id="camperapp.models.Parent.name">
 <code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.Parent.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get a display friendly name of Parent</p>
+<p>Concatenates Parent’s last name and first name
+to a display friendly version. Format of name
+is Last name, First name</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>‘Last name, First name’ of Parent</dd>
+</dl>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="camperapp.models.Parent.phone">
@@ -715,7 +787,8 @@
 <dt id="camperapp.models.Role">
 <em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">Role</code><a class="headerlink" href="#camperapp.models.Role" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
-<p>Role of Logged in User</p>
+<p>Role of Users</p>
+<p>Roles that can be assumed by a user</p>
 <dl class="attribute">
 <dt id="camperapp.models.Role.admin">
 <code class="descname">admin</code><em class="property"> = 'admin'</em><a class="headerlink" href="#camperapp.models.Role.admin" title="Permalink to this definition">¶</a></dt>
@@ -732,13 +805,21 @@
 <dt id="camperapp.models.User">
 <em class="property">class </em><code class="descclassname">camperapp.models.</code><code class="descname">User</code><span class="sig-paren">(</span><em>email</em>, <em>password</em>, <em>role</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.User" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
-<p>User table for Login</p>
+<p>User Model</p>
+<p>SQL Alchemy Model of a User (for login only)
+Current User types are admins and parents</p>
 <dl class="method">
 <dt id="camperapp.models.User.check_password">
 <code class="descname">check_password</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.User.check_password" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check Password against hashed password
-:param password: password
-:return: true if password matches</p>
+<dd><p>Check if password is user’s password</p>
+<p>Encrypts password and checks if user’s saved password is equal
+to specified password using werkzeug.security.check_password_hash</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>password (str) : password to be checked</dd>
+<dt>Returns:</dt>
+<dd>True if password is user’s password else False</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
@@ -749,7 +830,13 @@
 <dl class="method">
 <dt id="camperapp.models.User.get_id">
 <code class="descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.User.get_id" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get User’s id</p>
+<p>Getter for User’s id. Used by flask_login</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>user’s id in the db</dd>
+</dl>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="camperapp.models.User.id">
@@ -759,12 +846,26 @@
 <dl class="method">
 <dt id="camperapp.models.User.is_active">
 <code class="descname">is_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.User.is_active" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Check if User is active</p>
+<p>Check is current user is active.
+Required by Flask Login</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>True</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="camperapp.models.User.is_authenticated">
 <code class="descname">is_authenticated</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.User.is_authenticated" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Check if User is authenticated</p>
+<p>Check is current user is authenticated.
+Required by Flask Login</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>True</dd>
+</dl>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="camperapp.models.User.parent_id">
@@ -786,139 +887,273 @@
 <dl class="function">
 <dt id="camperapp.models.get_user_name">
 <code class="descclassname">camperapp.models.</code><code class="descname">get_user_name</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.models.get_user_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return Name of currently logged in User</p>
+<dd><p>Retrieve the display name of users</p>
+<p>Retrieves the print ready names of logged in users
+for rendering on web pages</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>user (User) : user object from User model</dd>
+<dt>Returns:</dt>
+<dd>the first part of the email of users without a name (admins)
+or the print ready name (last name, first name) of users
+with a name (parents)</dd>
+</dl>
 </dd></dl>
 
 </div>
 <div class="section" id="module-camperapp.routes">
 <span id="camperapp-routes-module"></span><h2>camperapp.routes module<a class="headerlink" href="#module-camperapp.routes" title="Permalink to this headline">¶</a></h2>
-<p>Routes for Camper+ app.</p>
-<dl class="function">
+<span class="target" id="module-camperapp.routes"></span><dl class="function">
 <dt id="camperapp.routes.before_request">
 <code class="descclassname">camperapp.routes.</code><code class="descname">before_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.before_request" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set Flask Global User</p>
+<p>sets flask global user to current user</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">this function is run before every request</p>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.campers">
 <code class="descclassname">camperapp.routes.</code><code class="descname">campers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.campers" title="Permalink to this definition">¶</a></dt>
-<dd><p>View displays the camper organization page</p>
+<dd><p>Administrator people/groups View</p>
+<p>Endpoint to view campers, camp groups and parents</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>rendered admin_manage.html template</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only authenticated admins can access this endpoint</p>
+</div>
 </dd></dl>
 
 <dl class="function">
-<dt id="camperapp.routes.dev_docs">
-<code class="descclassname">camperapp.routes.</code><code class="descname">dev_docs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.dev_docs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation Page</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="camperapp.routes.documentation">
-<code class="descclassname">camperapp.routes.</code><code class="descname">documentation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.documentation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sphinx documentation</p>
+<dt id="camperapp.routes.create_default_group">
+<code class="descclassname">camperapp.routes.</code><code class="descname">create_default_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.create_default_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create Default Group</p>
+<p>Creates a default group called ‘none’ for campers ‘without a group’</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">this function is run before every request to make sure a group
+exists for camper’s without groups</p>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.faq">
 <code class="descclassname">camperapp.routes.</code><code class="descname">faq</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.faq" title="Permalink to this definition">¶</a></dt>
-<dd><p>FAQ Page</p>
+<dd><p>Camper+ FAQ Page
+Static Camper+ FAQ Page</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.get_camp_events">
 <code class="descclassname">camperapp.routes.</code><code class="descname">get_camp_events</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.get_camp_events" title="Permalink to this definition">¶</a></dt>
-<dd><p>Endpoint for retrieving saved CampEvents</p>
+<dd><p>Get Camp Events Endpoint</p>
+<p>Endpoint to retrieve all camp events saved in db. Full Calendar
+calls this endpoint with a start and end argument representing
+the range of dates for which to get events for</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>a list of all camp events in db as json</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only authenticated admins can access this endpoint</p>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.index">
 <code class="descclassname">camperapp.routes.</code><code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.index" title="Permalink to this definition">¶</a></dt>
-<dd><p>View displays the homepage</p>
+<dd><p>Index View</p>
+<p>Endpoint for Camper+ homepage page with login form.
+Users are automatically redirected to default pages
+if they are logged in/authenticated</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>parents are redirected to parent_enrollments endpoint.
+admins are redirected to campers endpoint.
+unauthenticated users are served the rendered home.html
+template with login form.</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.login">
 <code class="descclassname">camperapp.routes.</code><code class="descname">login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.login" title="Permalink to this definition">¶</a></dt>
-<dd><p>Camp Admin and Parent login endpoint
-if ‘email’ in session:</p>
-<blockquote>
-<div>return redirect(url_for(‘campers’))</div></blockquote>
+<dd><p>Login Endpoint</p>
+<p>Endpoint to login to Camper+ Application</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>on GET request/invalid POST (failed authentication), returns rendered login.html page
+on successful POST, i.e successful authentication, returns redirect to url_for(‘campers’)
+or url_for(‘parent_enrollments’) if user is admin or parent respectively</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.logout">
 <code class="descclassname">camperapp.routes.</code><code class="descname">logout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.logout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logout Admin or Parent</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="camperapp.routes.parent_account">
-<code class="descclassname">camperapp.routes.</code><code class="descname">parent_account</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.parent_account" title="Permalink to this definition">¶</a></dt>
-<dd><p>View displays the parent’s account settings</p>
+<dd><p>Log out Endpoint</p>
+<p>Logs out current user</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>a redirect to url_for(‘index’), i.e Homepage</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.parent_enrollments">
 <code class="descclassname">camperapp.routes.</code><code class="descname">parent_enrollments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.parent_enrollments" title="Permalink to this definition">¶</a></dt>
-<dd><p>View displays the enrolled children of a parent</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="camperapp.routes.parent_forms">
-<code class="descclassname">camperapp.routes.</code><code class="descname">parent_forms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.parent_forms" title="Permalink to this definition">¶</a></dt>
-<dd><p>View displays the pending forms of the parent</p>
+<dd><p>Parent Enrollments View</p>
+<p>Endpoint to show parent’s enrolled campers</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>rendered parent_enrollments.html page</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only authenticated parents can access this endpoint</p>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.parent_register">
 <code class="descclassname">camperapp.routes.</code><code class="descname">parent_register</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.parent_register" title="Permalink to this definition">¶</a></dt>
-<dd><p>View presents a registration form for enrolling a new child</p>
+<dd><p>Parent Child Registration View</p>
+<p>Endpoint with forms for parents to register new camper.
+Valid Campers submitted are added to the Campers database table</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>if a GET or invalid POST request is received, returns rendered
+parent_register.html template.
+if a valid POST request is received, returns rendered
+parent_register_complete.html template</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only authenticated parents can access this endpoint</p>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.parent_schedule">
 <code class="descclassname">camperapp.routes.</code><code class="descname">parent_schedule</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.parent_schedule" title="Permalink to this definition">¶</a></dt>
-<dd><p>View displays the schedule of Parent’s enrolled children</p>
+<dd><p>Parent Schedule View</p>
+<p>Endpoint for parent camp schedule. Contains the Full Calendar
+js calendar for rendering camp events</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>rendered parent_schedule.html template</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only authenticated parents can access this endpoint</p>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.schedule">
 <code class="descclassname">camperapp.routes.</code><code class="descname">schedule</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.schedule" title="Permalink to this definition">¶</a></dt>
-<dd><p>View displays the schedule-making page</p>
+<dd><p>Admin Schedule View</p>
+<p>Endpoint for camp schedule. Contains the Full Calendar
+js calendar for rendering camp events</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>rendered admin_schedule.html template</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only authenticated admins can access this endpoint</p>
+</div>
 </dd></dl>
 
 <dl class="function">
-<dt id="camperapp.routes.signup_admin">
-<code class="descclassname">camperapp.routes.</code><code class="descname">signup_admin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.signup_admin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sign up administrator</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="camperapp.routes.submit_camper_group_management">
-<code class="descclassname">camperapp.routes.</code><code class="descname">submit_camper_group_management</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.submit_camper_group_management" title="Permalink to this definition">¶</a></dt>
-<dd><p>EndPoint for Adding, Editing and Deleting a Camper</p>
+<dt id="camperapp.routes.submit_camp_group_management">
+<code class="descclassname">camperapp.routes.</code><code class="descname">submit_camp_group_management</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.submit_camp_group_management" title="Permalink to this definition">¶</a></dt>
+<dd><p>Camp Group Management Endpoint</p>
+<p>Endpoint for administrator to edit, add and delete
+camp groups</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>on valid POST request, returns a redirect to url_for(‘campers’)
+on valid DELETE, return json with success flag
+on invalid POST/DELETE request, return json with failure flag</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only authenticated admins can access this endpoint</p>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.submit_camper_management">
 <code class="descclassname">camperapp.routes.</code><code class="descname">submit_camper_management</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.submit_camper_management" title="Permalink to this definition">¶</a></dt>
-<dd><p>EndPoint for Adding, Editing and Deleting a Camper</p>
+<dd><p>Camper Management Endpoint</p>
+<p>Endpoint for administrator to edit, add and delete
+campers</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>on valid POST request, returns a redirect to url_for(‘campers’)
+on valid DELETE/PATCH, return json with success flag
+on invalid POST/DELETE request, return json with failure flag</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only authenticated admins can access this endpoint</p>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.submit_handler">
 <code class="descclassname">camperapp.routes.</code><code class="descname">submit_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.submit_handler" title="Permalink to this definition">¶</a></dt>
-<dd><p>EndPoint for creating, updating and deleting Calendar Events</p>
+<dd><p>Camp Event Management Endpoint</p>
+<p>Endpoint for administrator to create, edit and delete
+camp events on the Full Calendar Schedule</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>on valid POST request, returns a json with success flag and color to render
+event it. This color corresponds to the event’s camp group’s color
+on valid PUT/DELETE request, returns a json with success flag</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only authenticated admins can access this endpoint</p>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.submit_parent_management">
 <code class="descclassname">camperapp.routes.</code><code class="descname">submit_parent_management</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.submit_parent_management" title="Permalink to this definition">¶</a></dt>
-<dd><p>EndPoint for Adding, Editing and Deleting a Camper</p>
+<dd><p>Parent Management Endpoint</p>
+<p>Endpoint for administrator to edit, add and delete
+parents</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>on valid POST request, returns a redirect to url_for(‘campers’)
+on valid DELETE, return json with success flag
+on invalid POST/DELETE request, return json with failure flag</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only authenticated admins can access this endpoint</p>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="camperapp.routes.update_forms">
 <code class="descclassname">camperapp.routes.</code><code class="descname">update_forms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#camperapp.routes.update_forms" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Update Flask Forms</p>
+<p>Updates CreateChildForm’s select Field with current groups and parents</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">this function is run before every request to make sure recently created
+parents and groups are in the CreateChildForm</p>
+</div>
+</dd></dl>
 
 </div>
 <div class="section" id="module-camperapp">
@@ -954,7 +1189,7 @@ if ‘email’ in session:</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2017, Daniel Obeng, Chris Kwok, Eric Kolbusz, Zhirayr Abrahamyan.
+      &copy;2017, Daniel Obeng, Chris Kwok, Eric Kolbusz, Zhirayr Abrahamyam.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
