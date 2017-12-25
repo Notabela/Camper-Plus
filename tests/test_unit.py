@@ -166,6 +166,68 @@ class TestApp(unittest.TestCase):
             template_name = call_args[0][0]
             self.assertEqual(template_name, "faq.html")
 
+    def test_parent_schedule_calls_render_template(self):
+        """Test that the Schedule endpoint calls render_template"""
+        login_user(self.parent_user)
+        with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
+                mock_funcs:
+            camperapp.routes.parent_schedule()
+            render_template = mock_funcs['render_template']
+            self.assertTrue(render_template.called)
+
+    def test_parent_schedule_calls_parent_schedule_template(self):
+        """Test that the Schedule endpoint calls the schedule Page"""
+        login_user(self.parent_user)
+        with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
+                mock_funcs:
+            camperapp.routes.parent_schedule()
+            render_template = mock_funcs['render_template']
+            call_args = render_template.call_args
+            template_name = call_args[0][0]
+            self.assertEqual(template_name, "parent_schedule.html")
+
+    def test_parent_enrollments_calls_render_template(self):
+        """Test that the Schedule endpoint calls render_template"""
+        login_user(self.parent_user)
+        with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
+                mock_funcs:
+            camperapp.routes.parent_enrollments()
+            render_template = mock_funcs['render_template']
+            self.assertTrue(render_template.called)
+
+    def test_parent_enrollments_calls_parent_enrollments_template(self):
+        """Test that the Schedule endpoint calls the schedule Page"""
+        login_user(self.parent_user)
+        with patch.multiple('camperapp.routes', render_template=DEFAULT) as \
+                mock_funcs:
+            camperapp.routes.parent_enrollments()
+            render_template = mock_funcs['render_template']
+            call_args = render_template.call_args
+            template_name = call_args[0][0]
+            self.assertEqual(template_name, "parent_enrollments.html")
+
+    def test_parent_register_calls_render_template(self):
+        """Test that the Schedule endpoint calls render_template"""
+        login_user(self.parent_user)
+        with patch.multiple('camperapp.routes', render_template=DEFAULT, request=DEFAULT) as \
+                mock_funcs:
+            mock_funcs['request'].method = 'GET'
+            camperapp.routes.parent_register()
+            render_template = mock_funcs['render_template']
+            self.assertTrue(render_template.called)
+
+    def test_parent_register_calls_parent_register_template(self):
+        """Test that the Schedule endpoint calls the schedule Page"""
+        login_user(self.parent_user)
+        with patch.multiple('camperapp.routes', render_template=DEFAULT, request=DEFAULT) as \
+                mock_funcs:
+            mock_funcs['request'].method = 'GET'
+            camperapp.routes.parent_register()
+            render_template = mock_funcs['render_template']
+            call_args = render_template.call_args
+            template_name = call_args[0][0]
+            self.assertEqual(template_name, "parent_register.html")
+
     def test_campers_gets_calls_render_template(self):
         """Test that the Schedule endpoint calls the schedule Page"""
         login_user(self.admin)
@@ -304,6 +366,19 @@ class TestApp(unittest.TestCase):
         db.session.commit()
 
         queried_parent = User.query.filter_by(email=email).one()
+        self.assertTrue(queried_parent is not None)
+
+    def test_parent_save(self):
+        parent = Parent()
+        parent.first_name = "Jackie"
+        parent.last_name = "Mo"
+        parent.birth_date = datetime.now()
+        parent.gender = 'm'
+
+        db.session.add(parent)
+        db.session.commit()
+
+        queried_parent = Parent.query.filter_by(first_name='Jackie').one()
         self.assertTrue(queried_parent is not None)
 
     def test_campevent_save(self):
@@ -509,3 +584,8 @@ class TestApp(unittest.TestCase):
         db.session.commit()
 
         self.assertEqual(camper.age(), age)
+
+    def test_create_default_group(self):
+        camperapp.routes.create_default_group()
+        default_group = CampGroup.query.filter_by(name='None').first()
+        self.assertTrue(default_group is not None)

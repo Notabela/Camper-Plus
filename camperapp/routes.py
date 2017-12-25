@@ -167,7 +167,7 @@ def parent_register():
         camper.other_parent_phone = form.other_parent_cell.data
 
         camper.is_active = False
-        camper.group_id = CampGroup.query.filter_by(name='none').first().id
+        camper.group_id = CampGroup.query.filter_by(name='None').first().id
 
         db.session.add(camper)
         db.session.commit()
@@ -614,7 +614,7 @@ def create_default_group():
             this function is run before every request to make sure a group
             exists for camper's without groups
     """
-    if not CampGroup.query.filter_by(name='none').first():
+    if not CampGroup.query.filter_by(name='None').first():
         default_group = CampGroup('None', 'blue')
         db.session.add(default_group)
         db.session.commit()

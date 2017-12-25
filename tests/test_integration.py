@@ -303,3 +303,22 @@ class TestUrls(unittest.TestCase):
         option_tag = groups_field.find('option')
         self.assertTrue(option_tag)
         self.assertEqual(option_tag.text, group_name)
+
+    @patch.object(camperapp.login, 'current_user')
+    def test_post_parent_save_parent_db(self, mock_user):
+        """Tests whether event posted on calendar is saved into db"""
+        mock_user.role = Role.admin
+        camp_group = CampGroup('falcons', 'yellow')
+        db.session.add(camp_group)
+        db.session.commit()
+
+        json_data = {
+            'title': 'Test Event',
+            'start': '2017-8-8T12:00:00',
+            'end': '2017-8-8T12:00:00',
+            'group_id': '1'
+        }
+
+        self.app.post("/saveEvent", data=json.dumps(json_data), content_type='application/json')
+        events = CampEvent.query.all()
+        self.assertEqual(len(events), 1)
