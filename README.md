@@ -36,7 +36,7 @@ To sign in, you'll need to create an admin and/or a parent account
 To create an admin account(In ipython in Home Directory):
 
         ipython
-        from camperapp import db, User, Role
+        from camperapp.models import db, User, Role
         email = 'testadmin@mail.com'
         password = testadmin
         user = User(email, password, Role.admin)
@@ -45,7 +45,7 @@ To create an admin account(In ipython in Home Directory):
     
 To create a parent account(In ipython in Home Directory):
 
-        from camperapp import db, User, Parent, Role
+        from camperapp.models import db, User, Parent, Role
         email = 'testparent@mail.com'
         password = testparent
 
