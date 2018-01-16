@@ -64,7 +64,7 @@
               </div>
             </td>
             <td>
-                <a class="waves-effect waves-light btn-floating"><i class="material-icons">edit</i></a>
+                <a class="waves-effect waves-light btn-floating" onclick="editCamper({{ camper.id }})"><i class="material-icons">edit</i></a>
                 <a class="waves-effect waves-light btn-floating" onclick="deleteCamper({{ camper.id }})"><i class="material-icons">delete</i></a>
             </td>
           </tr>
@@ -223,40 +223,40 @@
 
       <div class="row">
         <div class="input-field col s6">
-            {{ child_form.first_name(required="true") }}
+            {{ child_form.first_name(required="true", id="child_first_name") }}
             {{ child_form.first_name.label }}
         </div>
         <div class="input-field col s6">
-            {{ child_form.last_name(required="true") }}
+            {{ child_form.last_name(required="true", id="child_last_name") }}
             {{ child_form.last_name.label }}
         </div>
       </div>
 
       <div class="row">
         <div class="input-field col s4">
-            {{ parent_form.birth_date(class="datepicker", required="true") }}
+            {{ parent_form.birth_date(class="datepicker", required="true", id="child_date") }}
             {{ parent_form.birth_date.label }}
         </div>
         <div class="input-field col s4">
-            {{ child_form.grade(required="true") }}
+            {{ child_form.grade(required="true", id="child_grade") }}
             {{ child_form.grade.label }}
         </div>
         <div class="input-field col s4">
-            {{ child_form.gender }}
+            {{ child_form.gender(id="child_gender") }}
             {{ child_form.gender.label }}
         </div>
       </div>
 
       <div class="row">
         <div class="input-field col s12">
-          {{ child_form.medical_notes(class="materialize-textarea") }}
+          {{ child_form.medical_notes(class="materialize-textarea", id="child_medic") }}
           {{ child_form.medical_notes.label }}
         </div>
       </div>
       <div class="row">
         <h5>Parent</h5>
         <div class="input-field col s6">
-            {{ child_form.parent(required="true") }}
+            {{ child_form.parent(required="true", id="child_parent_id") }}
         </div>
       </div>
       <div class="row">

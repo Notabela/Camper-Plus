@@ -200,6 +200,33 @@ class CampEventSchema(Schema):
     color = fields.Str()
 
 
+class CamperSchema(Schema):
+    """Schema for Camper
+
+        A Marshmallow Schema template to enable Camper
+        objects to converted to JSON Objects. See sample code
+    """
+    id = fields.Int()
+    first_name = fields.Str()
+    last_name = fields.Str()
+    birth_date = fields.Date()
+    grade = fields.Int()
+    gender = fields.Str()
+    medical_notes = fields.Str()
+    phone = fields.Str()
+    street_address = fields.Str()
+    city = fields.Str()
+    state = fields.Str()
+    zip_code = fields.Int()
+    is_active = fields.Bool()
+    other_parent_name = fields.Str()
+    other_parent_birth_date = fields.Date()
+    other_parent_email = fields.Str()
+    other_parent_phone = fields.Str()
+    group_id = fields.Int()
+    parent_id = fields.Int()
+
+
 class Parent(db.Model):
     """Parent Model
 

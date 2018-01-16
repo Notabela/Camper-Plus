@@ -40,9 +40,26 @@
   </nav>
 
 
-  <div class="parallax-container">
-    <div class="parallax"><img src="{{ url_for('static', filename='img/summer_camp_bg_e.jpg') }}"></div>
+  <div class="slider">
+    <ul class="slides">
+      <li>
+        <img alt="summer_camp" src="{{ url_for('static', filename='img/camp_image_one.jpg') }}"> <!-- random image -->
+        <div class="caption center-align">
+        </div>
+      </li>
+      <li>
+        <img src="{{ url_for('static', filename='img/camp_image_two.jpg') }}"> <!-- random image -->
+        <div class="caption left-align">
+        </div>
+      </li>
+      <li>
+        <img src="{{ url_for('static', filename='img/camp_image_three.jpg') }}"><!-- random image -->
+        <div class="caption right-align">
+        </div>
+      </li>
+    </ul>
   </div>
+
   <div class="section white">
     <div class="row container">
       <h2 class="header">Camper+</h2>
@@ -100,9 +117,9 @@
         </div>
       </div>
   </div>
-  <div class="parallax-container">
-    <div class="parallax"><img src="{{ url_for('static', filename='img/summer_camp_e.jpg') }}"></div>
-  </div>
+
+    <div class="bottom_image"><img src="{{ url_for('static', filename='img/summer_camp_e.jpg') }}"></div>
+
 
     <footer class="page-footer">
       <div class="container">
@@ -145,6 +162,10 @@
     <script>
       $(document).ready(function(){
         $('.parallax').parallax();
+        $('.slider').slider({
+            indicators: false,
+            height: 600
+        })
       });
     </script>
   </body>

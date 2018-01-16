@@ -9,7 +9,7 @@
 from datetime import datetime
 from camperapp import app
 from camperapp.models import db, CampEvent, CampGroup, CampEventSchema, Camper, \
-    Parent, User, Role, get_user_name, camp_season, registration_cost, camp_address
+    Parent, User, Role, get_user_name, camp_season, registration_cost, camp_address, CamperSchema
 from camperapp.forms import SignupFormAdmin, LoginForm, \
     ChildEnrollmentForm, CreateParentForm, CreateChildForm
 from camperapp.login import requires_roles
@@ -273,7 +273,7 @@ def submit_parent_management():
         return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 
-@app.route('/manage/camper', methods=['POST', 'DELETE', 'PATCH'])
+@app.route('/manage/camper', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 @login_required
 @requires_roles(Role.admin)
 def submit_camper_management():
@@ -291,8 +291,20 @@ def submit_camper_management():
             Only authenticated admins can access this endpoint
     """
     # a = request.get_json(force=True)
+    if request.method == 'GET':
+        # User passes the camper ID he/she wants to edit
+        try:
+            camper_id = request.args.get('camper_id')
+            camper = Camper.query.filter_by(id=camper_id).first()
+            camper_schema = CamperSchema(many=True)
+            result = camper_schema.dump([camper]).data
 
-    if request.method == 'POST':
+            return jsonify(result)
+
+        except Exception as e:
+            return jsonify({'success': False}), 400, {'ContentType': 'application/json'}
+
+    elif request.method == 'POST':
         child_form = CreateChildForm(request.form)
 
         parents = Parent.query.all()

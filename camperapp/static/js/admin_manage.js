@@ -105,6 +105,34 @@ function deleteCamper(camper_id) {
     }
 }
 
+function editCamper(camper_id) {
+     //Logic to delete the item
+    $.ajax({
+        url: "/manage/camper",
+        type: "GET",
+        contentType: "application/json",
+        data: {'camper_id': camper_id},
+    })
+        .done(function (response) {
+            if (response) {
+                // undefined behavior
+                var camper_data = response[0];
+                $('#campers_modal').modal('open');
+
+                $('#child_first_name').val(camper_data['first_name']);
+                $('#child_last_name').val(camper_data['last_name']);
+                $('#child_date').val(camper_data['date']);
+
+
+
+                Materialize.updateTextFields();
+            }
+        })
+        .fail(function () {
+            Materialize.toast('An Error Occurred', 4000)
+        })
+}
+
 function deleteGroup(group_id)
 {
   var result = confirm("Are you sure you want to delete? This cannot be undone");
